@@ -1,0 +1,17 @@
+editdistance
+datasets
+nltk
+numpy
+pandas>=1.0.1
+scipy==1.4.1
+torch
+transformers
+tokenizers
+tqdm>=4.27,<4.50.0
+ltp
+spacy>=3.0.0
+morfessor
+flashtext
+textattack
+wikidata
+fuzzywuzzy
