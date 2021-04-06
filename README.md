@@ -1,4 +1,4 @@
-<img src="images/logo.png" alt="Github Runner Covergae Status" height="100">
+<p align="center"><img src="images/logo.png" alt="Github Runner Covergae Status" height="100"></p>
 
 <p align="center">Unified Multilingual Robustness Evaluation Toolkit 
     for Natural Language Processing</p>
