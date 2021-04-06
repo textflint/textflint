@@ -3,7 +3,7 @@
 <p align="center">Unified Multilingual Robustness Evaluation Toolkit 
     for Natural Language Processing</p>
 <p align="center">
-  <a href="https://textattack.readthedocs.io/">[TextFlint Documentation on ReadTheDocs]</a> 
+  <a href="https://textflint.readthedocs.io/">[TextFlint Documentation on ReadTheDocs]</a> 
   <br> <br>
   <a href="#about">About</a> •
   <a href="#setup">Setup</a> •
