@@ -1,7 +1,7 @@
 from TextFlint.generation_layer.generator.coref_generator import CorefGenerator
 from TextFlint.input_layer.dataset import Dataset
 import unittest
-from ....data.coref_debug  import CorefDebug
+from test.data.coref_debug import CorefDebug
 
 sample1 = CorefDebug.coref_sample1()
 sample2 = CorefDebug.coref_sample2()
