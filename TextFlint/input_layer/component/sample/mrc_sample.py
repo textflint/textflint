@@ -26,7 +26,8 @@ class ConstituencyParse(object):
 
     Word-level constituents have |word| and |index| set and no children.
     Phrase-level constituents have no |word| or |index|
-        and have at least one child.
+    and have at least one child.
+
     """
 
     def __init__(self, tag, children=None, word=None, index=None):
@@ -61,7 +62,10 @@ class ConstituencyParse(object):
 
     @classmethod
     def from_corenlp(cls, s):
-        """Parses the "parse" attribute returned by CoreNLP parse annotator."""
+        r"""
+        Parses the "parse" attribute returned by CoreNLP parse annotator.
+
+        """
         s_spaced = s.replace('\n', ' ').replace('(', ' ( ').replace(')', ' ) ')
         tokens = [t for t in s_spaced.split(' ') if t]
         tree, index, num_words = cls._recursive_parse_corenlp(tokens, 0, 0)
@@ -121,6 +125,7 @@ class ConstituencyParse(object):
 class MRCSample(Sample):
     r"""
     MRC Sample class to hold the mrc data info and provide atomic operations.
+
     """
 
     STEMMER = LancasterStemmer()
@@ -134,16 +139,17 @@ class MRCSample(Sample):
     }
 
     def __init__(
-            self,
-            data,
-            origin=None,
-            sample_id=None
+        self,
+        data,
+        origin=None,
+        sample_id=None
     ):
         r"""
         The sample object for machine reading comprehension task
         :param dict data: The dict obj that contains data info.
         :param bool origin:
         :param int sample_id: sample index
+
         """
         self.context = None
         self.question = None
@@ -159,6 +165,7 @@ class MRCSample(Sample):
         r"""
         Check whether the input data is legal
         :param dict data: dict obj that contains data info
+
         """
         assert 'context' in data and isinstance(data['context'], str), \
             "Context should be in data, and the type of context should be str"
@@ -173,6 +180,7 @@ class MRCSample(Sample):
         r"""
         Validate whether the sample is legal
         :return: bool
+
         """
         for answer in self.answers:
             if untokenize(self.context.words[
@@ -184,9 +192,11 @@ class MRCSample(Sample):
     def convert_idx(text, tokens):
         r"""
         Get the start and end character idx of tokens in the context
+
         :param str text: context text
         :param list tokens: context words
         :return: list of spans
+
         """
         current = 0
         spans = []
@@ -201,8 +211,10 @@ class MRCSample(Sample):
     def load_answers(self, ans, spans):
         r"""
         Get word-level positions of answers
+
         :param dict ans: answers dict with character position and text
         :param list spans: the start idx and end idx of tokens
+
         """
         answers = [answer['text'] for answer in ans]
         span_starts = [answer['answer_start']
@@ -222,13 +234,16 @@ class MRCSample(Sample):
     def get_answers(self):
         r"""
         Get copy of answers
+
         :return: dict, answers
+
         """
         return deepcopy(self.answers)
 
     def set_answers_mask(self):
         r"""
         Set the answers with TASK_MASK
+
         """
         for answer in self.answers:
             y1, y2 = answer['start'], answer['end']
@@ -240,7 +255,9 @@ class MRCSample(Sample):
     def load(self, data):
         r"""
         Convert data dict which contains essential information to MRCSample.
+
         :param dict data: the dict obj that contains dict info
+
         """
         self.context = TextField(data['context'])
         self.question = TextField(data['question'])
@@ -262,7 +279,9 @@ class MRCSample(Sample):
     def dump(self):
         r"""
         Convert data dict which contains essential information to MRCSample.
+
         :return: dict object
+
         """
 
         if self.is_impossible:
@@ -285,18 +304,22 @@ class MRCSample(Sample):
     def delete_field_at_index(self, field, index):
         r"""
         Delete the word seat in del_index.
+
         :param str field:field name
         :param int|list|slice index: modified scope
         :return: modified sample
+
         """
         return self.delete_field_at_indices(field, [index])
 
     def delete_field_at_indices(self, field, indices):
         r"""
         Delete items of given scopes of field value.
+
         :param str field: field name
         :param list indices: list of int/list/slice, modified scopes
         :return: modified Sample
+
         """
         answers = deepcopy(self.answers)
         for index in indices:
@@ -313,11 +336,13 @@ class MRCSample(Sample):
     def insert_field_before_indices(self, field, indices, items):
         r"""
         Insert items of multi given scopes before indices of
-            field value at the same time.
+        field value at the same time.
+
         :param str field: field name
         :param list indices: list of int/list/slice, modified scopes
         :param list items: inserted items
         :return: modified Sample
+
         """
         answers = deepcopy(self.answers)
         for i, index in enumerate(indices):
@@ -339,20 +364,24 @@ class MRCSample(Sample):
     def insert_field_before_index(self, field, index, items):
         r"""
         Insert item before index of field value.
+
         :param str field: field name
         :param int index: modified scope
         :param items: inserted item
         :return: modified Sample
+
         """
         return self.insert_field_before_indices(field, [index], [items])
 
     def insert_field_after_index(self, field, index, new_item):
         r"""
         Insert item after index of field value.
+
         :param str field: field name
         :param int index: modified scope
         :param new_item: inserted item
         :return: modified Sample
+
         """
 
         return self.insert_field_after_indices(field, [index], [new_item])
@@ -360,11 +389,13 @@ class MRCSample(Sample):
     def insert_field_after_indices(self, field, indices, items):
         r"""
         Insert items of multi given scopes after indices of
-            field value at the same time.
+        field value at the same time.
+
         :param str field: field name
         :param list indices: list of int/list/slice, modified scopes
         :param list items: inserted items
         :return: modified Sample
+
         """
         answers = deepcopy(self.answers)
         for i, index in enumerate(indices):
@@ -386,11 +417,13 @@ class MRCSample(Sample):
     def unequal_replace_field_at_indices(self, field, indices, rep_items):
         r"""
         Replace scope items of field value with rep_items
-            which may not equal with scope.
+        which may not equal with scope.
+
         :param str field: field name
         :param list indices: list of int/list/slice, modified scopes
         :param list rep_items: replace items
         :return: modified sample
+
         """
         assert len(indices) == len(rep_items) > 0
         sample = self.clone(self)
@@ -417,7 +450,10 @@ class MRCSample(Sample):
 
     @staticmethod
     def get_answer_position(spans, answer_start, answer_end):
-        """Get answer tokens start position and end position"""
+        r"""
+        Get answer tokens start position and end position
+
+        """
         answer_span = []
         for idx, span in enumerate(spans):
             if not (answer_end <= span[0] or answer_start >= span[1]):
@@ -430,11 +466,13 @@ class MRCSample(Sample):
     def run_conversion(question, answer, tokens, const_parse):
         """
         Convert the question and answer to a declarative sentence
+
         :param str question: question
         :param str answer: answer
         :param list tokens: the semantic tag dicts of question
         :param const_parse: the constituency parse of question
         :return: a declarative sentence
+
         """
 
         for rule in CONVERSION_RULES:
@@ -447,11 +485,13 @@ class MRCSample(Sample):
     def convert_answer(answer, sent_tokens, question):
         """
         Replace the ground truth with fake answer based on specific rules
+
         :param str answer: ground truth, str
         :param list sent_tokens: sentence dicts, like [{'word': 'Saint',
             'pos': 'NNP', 'lemma': 'Saint', 'ner': 'PERSON'}...]
         :param str question: question sentence
         :return str: fake answer
+
         """
         tokens = MRCSample.get_answer_tokens(sent_tokens, answer)
         determiner = MRCSample.get_determiner_for_answers(answer)
@@ -463,10 +503,11 @@ class MRCSample(Sample):
 
     @staticmethod
     def alter_sentence(
-            sample,
-            nearby_word_dict=None,
-            pos_tag_dict=None,
-            rules=None):
+        sample,
+        nearby_word_dict=None,
+        pos_tag_dict=None,
+        rules=None
+    ):
         """
 
         :param sample: sentence dicts, like [{'word': 'Saint', 'pos': 'NNP',
@@ -476,8 +517,8 @@ class MRCSample(Sample):
             the most frequent pos tags
         :param rules: the rules to alter the sentence
         :return: alter_sentence, alter_sentence dicts
-        """
 
+        """
         used_words = [t['word'].lower() for t in sample]
         indices = []
         sentence = []
@@ -525,9 +566,11 @@ class MRCSample(Sample):
     def alter_special(token, **kwargs):
         """
         Alter special tokens
+
         :param token: the token to alter
         :param kwargs:
         :return: like 'US' ->  'UK'
+
         """
         w = token['word']
         if w in SPECIAL_ALTERATIONS:
@@ -538,9 +581,11 @@ class MRCSample(Sample):
     def alter_wordnet_antonyms(token, **kwargs):
         """
         Replace words with wordnet antonyms
+
         :param token: the token to replace
         :param kwargs:
         :return: like good -> bad
+
         """
         if token['pos'] not in MRCSample.POS_TO_WORDNET:
             return None
@@ -565,9 +610,11 @@ class MRCSample(Sample):
     def alter_wordnet_synonyms(token, **kwargs):
         """
         Replace words with synonyms
+
         :param token: the token to replace
         :param kwargs:
         :return: like good -> great
+
         """
 
         if token['pos'] not in MRCSample.POS_TO_WORDNET:
@@ -594,13 +641,13 @@ class MRCSample(Sample):
     def alter_nearby(pos_list, ignore_pos=False, is_ner=False):
         """
         Alter words based on glove embedding space
+
         :param pos_list: pos tags list
         :param bool ignore_pos: whether to match pos tag
         :param bool is_ner: indicate ner
         :return: like 'Mary' -> 'Rose'
+
         """
-
-
         def func(token, nearby_word_dict=None, pos_tag_dict=None, **kwargs):
             if token['pos'] not in pos_list:
                 return None
@@ -636,11 +683,12 @@ class MRCSample(Sample):
     def alter_entity_type(token, **kwargs):
         """
         Alter entity
+
         :param token: the word to replace
         :param kwargs:
         :return: like 'London' -> 'Berlin'
-        """
 
+        """
         pos = token['pos']
         ner = token['ner']
         word = token['word']
@@ -696,6 +744,7 @@ class MRCSample(Sample):
     def get_answer_tokens(sent_tokens, answer):
         """
         Extract the pos, ner, lemma tags of answer tokens
+
         :param list sent_tokens: a list of dicts
         :param str answer: answer
         :return: a list of dicts
@@ -704,6 +753,7 @@ class MRCSample(Sample):
             {'word': 'Bernadette', 'pos': 'NNP', 'lemma': 'Bernadette', ...},
             {'word': 'Soubirous', 'pos': 'NNP', 'lemma': 'Soubirous', ...]
             ]
+
         """
 
         sent = " ".join([t['word'] for t in sent_tokens])
@@ -723,12 +773,13 @@ class MRCSample(Sample):
     def ans_entity_full(ner_tag, new_ans):
         """
         Returns a function that yields new_ans iff every token has |ner_tag|
+
         :param str ner_tag: ner tag
         :param list new_ans: like [{'word': 'Saint', 'pos': 'NNP',
             'lemma': 'Saint', 'ner': 'PERSON'}...]
         :return: fake answer, str
-        """
 
+        """
         def func(a, tokens, q, **kwargs):
             for t in tokens:
                 if t['ner'] != ner_tag:
@@ -740,14 +791,9 @@ class MRCSample(Sample):
     @staticmethod
     def ans_abbrev(new_ans):
         """
+
         :param strnew_ans: answer words
         :return str: fake answer
-        """
-        """
-        Args:
-            new_ans: answer words, str
-
-        Returns: fake answer, str
 
         """
         def func(a, tokens, q, **kwargs):
@@ -763,12 +809,13 @@ class MRCSample(Sample):
         """
         Returns a function that yields new_ans
             if the question starts with |wh_word|
+
         :param str wh_word: question word
         :param list new_ans: like [{'word': 'Saint', 'pos': 'NNP',
             'lemma': 'Saint', 'ner': 'PERSON'}...]
         :return str: fake answers,
-        """
 
+        """
         def func(a, tokens, q, **kwargs):
             if q.lower().startswith(wh_word + ' '):
                 return new_ans
@@ -780,14 +827,15 @@ class MRCSample(Sample):
     def ans_pos(pos, new_ans, end=False, add_dt=False):
         """
         Returns a function that yields new_ans if the first/last token has |pos|
+
         :param str pos: pos tag
         :param list new_ans: like [{'word': 'Saint', 'pos': 'NNP',
             'lemma': 'Saint', 'ner': 'PERSON'}...]
         :param bool end: whether to use the last word to match the pos tag
         :param bool add_dt: whether to add a determiner
         :return str: fake answer
-        """
 
+        """
         def func(a, tokens, q, determiner, **kwargs):
             if end:
                 t = tokens[-1]
@@ -856,7 +904,10 @@ class MRCSample(Sample):
 
     @staticmethod
     def read_const_parse(parse_str):
-        """Construct a constituency tree based on constituency parser"""
+        """
+        Construct a constituency tree based on constituency parser
+
+        """
         tree = ConstituencyParse.from_corenlp(parse_str)
         new_tree = MRCSample.compress_whnp(tree)
         return new_tree
@@ -864,7 +915,10 @@ class MRCSample(Sample):
     @staticmethod
     # Rules for converting questions into declarative sentences
     def fix_style(s):
-        """Minor, general style fixes for questions."""
+        """
+        Minor, general style fixes for questions.
+
+        """
         s = s.replace('?', '')  # Delete question marks anywhere in sentence.
         s = s.strip(' .')
         if s[0] == s[0].lower():
@@ -892,7 +946,10 @@ class MRCSample(Sample):
 
     @staticmethod
     def _recursive_match_pattern(pattern_toks, stack, matches):
-        """Recursively try to match a pattern, greedily."""
+        """
+        Recursively try to match a pattern, greedily.
+
+        """
         if len(matches) == len(pattern_toks):
             # We matched everything in the pattern; also need stack to be empty
             return len(stack) == 0
@@ -958,8 +1015,9 @@ class ConversionRule(object):
 
 
 class ConstituencyRule(ConversionRule):
-    """
+    r"""
     A rule for converting question to sentence based on constituency parse.
+
     """
 
     def __init__(self, in_pattern, out_pattern, postproc=None):
@@ -1013,12 +1071,18 @@ class ConstituencyRule(ConversionRule):
         return output
 
     def gen_output(self, fmt_args):
-        """By default, use self.out_pattern.  Can be overridden."""
+        """
+        By default, use self.out_pattern.  Can be overridden.
+
+        """
         return self.out_pattern.format(*fmt_args)
 
 
 class ReplaceRule(ConversionRule):
-    """A simple rule that replaces some tokens with the answer."""
+    r"""
+    A simple rule that replaces some tokens with the answer.
+
+    """
 
     def __init__(self, target, replacement='{}', start=False):
         self.target = target
@@ -1046,7 +1110,10 @@ class ReplaceRule(ConversionRule):
 
 
 class FindWHPRule(ConversionRule):
-    """A rule that looks for $WHP's from right to left and does replacements."""
+    r"""
+    A rule that looks for $WHP's from right to left and does replacements.
+
+    """
     name = 'FindWHP'
 
     def _recursive_convert(self, node, q, a, tokens, found_whp):
@@ -1083,7 +1150,10 @@ class FindWHPRule(ConversionRule):
 
 
 class AnswerRule(ConversionRule):
-    """Just return the answer."""
+    r"""
+    Just return the answer.
+
+    """
     name = 'AnswerRule'
 
     def convert(self, q, a, tokens, const_parse, run_fix_style=True):

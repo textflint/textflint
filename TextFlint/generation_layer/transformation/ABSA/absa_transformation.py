@@ -1,7 +1,7 @@
 import random
 from abc import ABC
 from copy import deepcopy
-from nltk.corpus import wordnet as wn
+
 from ..transformation import Transformation
 from ....common.settings import NEGATIVE_WORDS_LIST, DEGREE_WORD_LIST
 __all__ = ['ABSATransformation']
@@ -20,6 +20,7 @@ class ABSATransformation(Transformation, ABC):
                                           key=lambda s: len(s), reverse=True)
         self.tokenize = self.processor.word_tokenize
         self.untokenize = self.processor.inverse_tokenize
+        self.get_antonyms = self.processor.get_antonyms
 
     def reverse(self, words_list, opinion_position):
         r"""
@@ -93,22 +94,6 @@ class ABSATransformation(Transformation, ABC):
             return tags[start:end]
         else:
             return tags[start:]
-
-    @staticmethod
-    def get_antonym_words(word):
-        r"""
-        Get antonym words.
-
-        :param str word: word
-        :return set: antonyms
-        """
-        antonyms = set()
-        for syn in wn.synsets(word):
-            for lemma in syn.lemmas():
-                if lemma.antonyms():
-                    antonyms.add(lemma.antonyms()[0].name())
-
-        return antonyms
 
     def refine_candidate(self, trans_words, opi_from, opi_to, candidate_list):
         r"""
@@ -348,7 +333,17 @@ class ABSATransformation(Transformation, ABC):
                 opinion_to,
                 self.untokenize(opinion_words)]
         elif [opinion_from, opinion_to] not in from_to:
-            candidate = self.get_antonym_words(opi)
+            opi_pos = self.get_postag(trans_words, opinion_from, opinion_to)
+            antonyms = self.get_antonyms(opi_pos)[0]
+            candidate = set()
+            for antonym in antonyms:
+                for ant_word in antonym.lemma_names(lang='eng'):
+                    if (
+                            (ant_word != opi)
+                            and ("_" not in ant_word)
+                    ):
+                        candidate.add(ant_word)
+
             refined_candidate = self.refine_candidate(
                 trans_words, opinion_from, opinion_to, candidate)
             if len(refined_candidate) == 0:

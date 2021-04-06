@@ -7,7 +7,7 @@ scipy==1.4.1
 torch
 transformers
 tokenizers
-tqdm>=4.27,<4.50.0
+tqdm
 ltp
 spacy>=3.0.0
 morfessor
@@ -15,3 +15,4 @@ flashtext
 textattack
 wikidata
 fuzzywuzzy
+plotly

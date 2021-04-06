@@ -31,6 +31,7 @@ class Prejudice(Transformation):
         :param str change_type: change type, only support ['Name', 'Loc']
         :param str prejudice_tendency: prejudice tendency, choose different
             tendency according to change_type
+
         """
         super().__init__()
         if change_type == 'Name':
@@ -126,6 +127,7 @@ class Prejudice(Transformation):
         :param int n: number of generated samples
         :param kwargs:
         :return list trans_samples: transformed sample list.
+
         """
         # get the word in sentence
         words = sample.get_words(field)
@@ -156,6 +158,7 @@ class Prejudice(Transformation):
         :param int n: number of generated samples
         :return list change_pos: transformed pos list.
         :return list change_items: transformed items list.
+
         """
         # Find the location of the name
         change_pos = []
@@ -190,6 +193,7 @@ class Prejudice(Transformation):
         :param int n: number of generated samples
         :return list change_pos: transformed pos list.
         :return list change_items: transformed items list.
+
         """
         change_pos = []
         change_items = []

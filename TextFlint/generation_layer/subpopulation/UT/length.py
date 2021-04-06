@@ -30,11 +30,14 @@ class LengthSubPopulation(SubPopulation):
             str(self.intervals[0]) + "-" + str(self.intervals[1])
 
     def _score(self, sample, fields, **kwargs):
-        r"""Calculate the score based on text length
+        r"""
+        Calculate the score based on text length
+
         :param sample: data sample
         :param list fields: list of field str
         :param kwargs:
         :return int: score for sample
+
         """
         words = []
         for field in fields:

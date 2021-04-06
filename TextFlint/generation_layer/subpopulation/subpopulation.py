@@ -31,10 +31,12 @@ class SubPopulation(ABC):
     def score(self, sample, field, **kwargs):
         r"""
         Score the sample
+
         :param sample: data sample
         :param str|list field: field str
         :param kwargs:
         :return int: score for sample
+
         """
 
         if not isinstance(field, list):
@@ -52,6 +54,7 @@ class SubPopulation(ABC):
         :param list fields: list of field str
         :param kwargs:
         :return int: score for sample
+
         """
         raise NotImplementedError
 
@@ -62,6 +65,7 @@ class SubPopulation(ABC):
         :param list scores: list of int
         :param dataset: Dataset
         :return: subset samples
+
         """
         indexes = sorted(range(len(scores)), key=lambda x: scores[x])
         sort_samples = [dataset[idx] for idx in indexes]
@@ -74,10 +78,12 @@ class SubPopulation(ABC):
     def slice_population(self, dataset, fields, **kwargs):
         r"""
         Extract a subset of samples.
+
         :param dataset: Dataset
         :param list fields: field str list
         :param kwargs:
         :return: Subset Dataset
+
         """
 
         scores = []
@@ -99,8 +105,8 @@ class SubPopulation(ABC):
             can be int index like 50
         :param size: the size of samples
         :return int : bound
-        """
 
+        """
         if isinstance(limit, str) and limit.endswith("%"):
             limit = float(limit.replace("%", "")) / 100
             return math.floor(limit * size)

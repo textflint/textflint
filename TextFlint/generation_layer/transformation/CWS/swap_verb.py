@@ -21,6 +21,7 @@ class SwapVerb(Transformation):
         :param list detachable_word_list: word can be replaced
             detachable word dictionary
         :param list AoneA_list: word can be replaced by a one a dictionary
+
         """
         super().__init__()
         self.AoneA_list = plain_lines_loader(download_if_needed(AONEA_PATH))
@@ -36,6 +37,7 @@ class SwapVerb(Transformation):
         get the list of pos tag
 
         :param list pos_tag: transform tuple to list
+
         """
         # get the list of pos tag
         pos_list = []
@@ -54,6 +56,7 @@ class SwapVerb(Transformation):
         :param **kwargs:
         :return: In this function, because there is only one deformation mode,
             only one set of outputs is output.
+
         """
         # get sentence token
         origin_words = sample.get_words()
@@ -81,6 +84,7 @@ class SwapVerb(Transformation):
         :param list labels: chinese sentence segmentation label
         :return: three list include the pos which changed the word which
             changed and the label which changed
+
         """
 
         change_pos = []
@@ -94,7 +98,8 @@ class SwapVerb(Transformation):
             flag1 = False
             flag2 = False
             if start + 1 < len(labels) and pos_tags[start] == 'v' \
-                    and pos_tags[start + 1] != 'v' and word[0] in self.AoneA_list:
+                    and pos_tags[start + 1] != 'v' \
+                    and word[0] in self.AoneA_list:
                 flag1 = True
             if word in self.detachable_word_list:
                 flag2 = True

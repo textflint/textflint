@@ -15,13 +15,16 @@ class SwapSyn(Transformation):
     r"""
     Replace word with its synonym.
 
-    Example:
+    Example::
+
         先生过奖了 -> 先生过誉了
+
     """
 
     def __init__(self, **kwargs):
         r"""
         :param dict synonym_dict: the dictionary of synonym
+
         """
         super().__init__()
         self.synonym_dict = self.make_dict(download_if_needed(SYNONYM_PATH))
@@ -36,6 +39,7 @@ class SwapSyn(Transformation):
 
         :param str path: the path of data
         :return dict: the dict of data
+
         """
         dic = {}
         lines = plain_lines_loader(path)
@@ -55,6 +59,7 @@ class SwapSyn(Transformation):
         :param ~TextFlint.CWSSample sample: the data which need be changed
         :param **kwargs:
         :return: In this function, there may be multiple outputs
+
         """
         # get sentence words
         origin_words = sample.get_words()
@@ -75,6 +80,7 @@ class SwapSyn(Transformation):
         :param int n: the number of transformations
         :return list: two list include the pos which changed the word which
             changed and the label which changed
+
         """
         start = 0
         change_pos = []

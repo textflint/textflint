@@ -52,6 +52,7 @@ class FlintModel(ABC):
     def evaluate(self, data_samples, prefix=''):
         r"""
         :param list[Sample] data_samples: list of Samples
+        :param str prefix: name prefix to add to metrics
         :return: dict obj to save metrics result
 
         """

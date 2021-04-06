@@ -45,6 +45,7 @@ class Engine:
             FlintModel abstract methods, not a necessary input.
         :return: save generated data to out dir
             and provide report in html format.
+
         """
         dataset, config, model = self.load(data_input, config, model)
 
@@ -62,6 +63,7 @@ class Engine:
         :param TextFlint.FlintModel model: model wrapper which implements
             FlintModel abstract methods, not a necessary input.
         :return: TextFlint.Dataset, TextFlint.Config, TextFlint.FlintModel
+
         """
         dataset = Adapter.get_dataset(
             data_input=data_input,
@@ -92,6 +94,7 @@ class Engine:
         :param TextFlint.FlintModel model: model wrapper which implements
             FlintModel abstract methods, not a necessary input.
         :return: save generated samples to json file.
+
         """
         generator = Adapter.get_generator(config)
         if model:
@@ -128,8 +131,8 @@ class Engine:
                         os.path.join(out_dir, 'trans' + out_suffix)
                     )
 
-                if model is not None:
-                    eval_json[trans_type] = {"size": len(original_samples)}
+                if model is not None and len(trans_samples):
+                    eval_json[trans_type] = {"size": len(trans_samples)}
                     eval_json[trans_type].update(
                         model.evaluate(original_samples.dump(), prefix="ori_")
                     )

@@ -45,11 +45,14 @@ class PhraseSubPopulation(SubPopulation):
         return match
 
     def _score(self, sample, fields, **kwargs):
-        """1 or 0 indicates whether sample fields match phrase groups
+        """
+        1 or 0 indicates whether sample fields match phrase groups
+
         :param sample: data sample
         :param list fields: list of field str
         :param kwargs:
         :return int: score for sample
+
         """
 
         text = ' '.join([sample.get_text(field) for field in fields])
@@ -58,7 +61,10 @@ class PhraseSubPopulation(SubPopulation):
         return match
 
     def get_slice(self, scores, dataset):
-        """Save the samples that mach the phrase groups"""
+        r"""
+        Save the samples that mach the phrase groups
+
+        """
         sub_samples = []
         for i, sample in enumerate(dataset):
             if scores[i]:

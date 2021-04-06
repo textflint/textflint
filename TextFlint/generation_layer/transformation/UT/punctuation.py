@@ -23,6 +23,7 @@ class Punctuation(Transformation):
         r"""
         :param bool add_bracket: whether add punctuation like bracket at the
             beginning and end of sentence.
+
         """
         super().__init__()
         self.add_bracket = add_bracket
@@ -38,6 +39,7 @@ class Punctuation(Transformation):
         :param str field: indicate which field to transform.
         :param int n: number of generated samples
         :return list trans_samples: transformed sample list.
+
         """
         trans_samples = []
         tokens = sample.get_words(field)
@@ -63,6 +65,7 @@ class Punctuation(Transformation):
 
         :param list tokens: word list
         :return list indices: indices list
+
         """
         indices = []
         for i in range(len(tokens) - 1, -1, -1):
@@ -81,6 +84,7 @@ class Punctuation(Transformation):
 
         :param int n:
         :return list: insert punctuations
+
         """
         bracket_puns = [
             ['"', '"'],

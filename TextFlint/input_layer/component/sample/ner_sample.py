@@ -14,11 +14,11 @@ class NERSample(Sample):
 
     """
     def __init__(
-            self,
-            data,
-            origin=None,
-            sample_id=None,
-            mode='BIO'
+        self,
+        data,
+        origin=None,
+        sample_id=None,
+        mode='BIO'
     ):
         r"""
         :param dict data: The dict obj that contains data info
@@ -40,6 +40,7 @@ class NERSample(Sample):
         Check rare data format.
 
         :param dict data: rare data input.
+
         """
         assert 'x' in data and isinstance(data['x'], (str, list)), \
             r"Type of 'x' should be 'str' or 'list'"
@@ -60,13 +61,12 @@ class NERSample(Sample):
         Parse data into sample field value.
 
         :param dict data: rare data input.
+
         """
         self.text = TextField(data['x'])
         self.tags = ListField(data['y'])
 
         # set mask to prevent UT transform modify entity word.
-
-
         if self.mode == 'BIO':
             self.entities = ListField(self.find_entities_BIO(
                 self.text.words, self.tags))
@@ -82,6 +82,7 @@ class NERSample(Sample):
         Convert sample info to input data json format.
 
         :return json: the dict of sentences and labels
+
         """
         if not self.is_legal():
             raise ValueError('A failed transformation which leads to '
@@ -96,7 +97,7 @@ class NERSample(Sample):
         Delete tokens and their NER tag.
 
         :param str field: field str
-        :param list indicies: list of int/list/slice
+        :param list indices: list of int/list/slice
                 shape：indices_num
                 each index can be int indicate delete single item or
                     their list like [1, 2, 3],
@@ -104,6 +105,7 @@ class NERSample(Sample):
                     from 0 to 3(not included),
                 can be slice which would be convert to list
         :return: Modified NERSample.
+
         """
         assert field == 'text'
         sample = self.clone(self)
@@ -126,6 +128,7 @@ class NERSample(Sample):
                     from 0 to 3(not included),
                 can be slice which would be convert to list
         :return: Modified NERSample
+
         """
         return self.delete_field_at_indices(field, [index])
 
@@ -139,6 +142,7 @@ class NERSample(Sample):
         :param list items: list of str/list
                 shape: indices_num, correspond to indices
         :return: Modified NERSample
+
         """
         assert field == 'text'
         sample = self.clone(self)
@@ -159,6 +163,7 @@ class NERSample(Sample):
         :param int ins_index: indicate which index to insert items
         :param str/list new_item: items to insert
         :return: Modified NERSample
+
         """
         return self.insert_field_before_indices(field, [ins_index], [new_item])
 
@@ -172,6 +177,7 @@ class NERSample(Sample):
         :param list items: list of str/list
                 shape: indices_num, correspond to indices
         :return: Modified NERSample
+
         """
         assert field == 'text'
         sample = self.clone(self)
@@ -193,6 +199,7 @@ class NERSample(Sample):
         :param str|list new_item: shape: indices_num,
             correspond to field_sub_items
         :return: Modified NERSample
+
         """
         return self.insert_field_after_indices(field, [ins_index], [new_item])
 
@@ -206,6 +213,7 @@ class NERSample(Sample):
         :return list entity_in_seq: a list of entities found in the sequence,
                 including the information of the start position & end position
                 in the sentence, the category, and the entity itself.
+
         """
         entity_in_seq = []
         entity = {'start': 0, 'end': 0, 'entity': "", 'tag': ""}
@@ -256,6 +264,7 @@ class NERSample(Sample):
         :return list entity_in_seq: a list of entities found in the sequence,
                 including the information of the start position & end position
                 in the sentence, the category, and the entity itself.
+
         """
         entity_in_seq = []
         entity = {'start': 0, 'end': 0, 'entity': "", 'tag': ""}
@@ -307,6 +316,7 @@ class NERSample(Sample):
         :param list entities_info: list of entity_info
         :param list candidates: candidate entities
         :return: Modified NERSample
+
         """
         assert len(entities_info) == len(candidates)
         assert isinstance(entities_info, list)
@@ -329,6 +339,7 @@ class NERSample(Sample):
         :param str entity: the entity to be replaced with
         :param str label: the category of the entity
         :return: Modified NERSample
+
         """
         assert start <= end, "start is before end!"
         sample = self.clone(self)

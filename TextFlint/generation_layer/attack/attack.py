@@ -36,7 +36,8 @@ from textattack.transformations import CompositeTransformation
 
 
 class Attack:
-    r"""An attack generates adversarial examples on text.
+    r"""
+    An attack generates adversarial examples on text.
 
     This is an abstract class that contains main helper functionality for
     attacks. An attack is comprised of a search method, goal function,
@@ -54,7 +55,8 @@ class Attack:
         transformation_cache_size=2 ** 15,
         constraint_cache_size=2 ** 15,
     ):
-        """Initialize an attack object. Attacks can be run multiple times.
+        """
+        Initialize an attack object. Attacks can be run multiple times.
 
         :param goal_function: A function for determining how well a perturbation
             is doing at achieving the attack's goal.
@@ -123,7 +125,8 @@ class Attack:
         self.constraints_cache = lru.LRU(constraint_cache_size)
 
     def init_goal_function(self, model):
-        """Initialize the goal function with model.
+        """
+        Initialize the goal function with model.
 
         :param model: the model to attack.
         """
@@ -159,7 +162,8 @@ class Attack:
 
     def _get_transformations_uncached(self, current_text, original_text=None,
                                       **kwargs):
-        """Applies ``self.transformation`` to ``text``, then filters the list
+        """
+        Applies ``self.transformation`` to ``text``, then filters the list
         of possible transformations through the applicable constraints.
 
 
@@ -180,7 +184,8 @@ class Attack:
         return transformed_texts
 
     def get_transformations(self, current_text, original_text=None, **kwargs):
-        """Applies ``self.transformation`` to ``text``, then filters the list
+        """
+        Applies ``self.transformation`` to ``text``, then filters the list
         of possible transformations through the applicable constraints.
 
         :param current_text: The current ``AttackedText`` on which to perform
@@ -223,7 +228,8 @@ class Attack:
     def _filter_transformations_uncached(
         self, transformed_texts, current_text, original_text=None
     ):
-        """Filters a list of potential transformaed texts based on
+        """
+        Filters a list of potential transformaed texts based on
         ``self.constraints``
 
         :param transformed_texts: A list of candidate transformed
@@ -260,7 +266,8 @@ class Attack:
     def filter_transformations(
         self, transformed_texts, current_text, original_text=None
     ):
-        """Filters a list of potential transformed texts based on
+        """
+        Filters a list of potential transformed texts based on
         ``self.constraints`` Utilizes an LRU cache to attempt to avoid
         recomputing common transformations.
 
@@ -271,6 +278,7 @@ class Attack:
         :param original_text: The original ``AttackedText`` from which the
             attack started.
         :return: The list of filtered ``AttackedText`.
+
         """
         # Remove any occurences of current_text in transformed_texts
         transformed_texts = [
@@ -297,7 +305,8 @@ class Attack:
         return filtered_texts
 
     def attack_one(self, initial_result):
-        """Calls the ``SearchMethod`` to perturb the ``AttackedText`` stored in
+        """
+        Calls the ``SearchMethod`` to perturb the ``AttackedText`` stored in
         ``initial_result``.
 
         :param initial_result: The initial ``GoalFunctionResult`` from which
@@ -327,7 +336,8 @@ class Attack:
                              f"{final_result.goal_status}")
 
     def _get_examples_from_dataset(self, dataset, indices=None):
-        """Gets examples from a dataset and tokenizes them.
+        """
+        Gets examples from a dataset and tokenizes them.
 
         :param dataset: An iterable of (text_input, ground_truth_output) pairs
         :param indices: An iterable of indices of the dataset that we want to
@@ -371,7 +381,8 @@ class Attack:
             yield dataset[i], goal_function_result
 
     def attack_dataset(self, dataset, indices=None):
-        """Runs an attack on the given dataset and outputs the results to the
+        """
+        Runs an attack on the given dataset and outputs the results to the
         console and the output file.
 
         :param dataset: An iterable of (text, ground_truth_output) pairs.
@@ -408,7 +419,8 @@ class Attack:
         return main_str
 
     def print(self):
-        """Prints attack parameters in a human-readable string.
+        """
+        Prints attack parameters in a human-readable string.
 
         Inspired by the readability of printing PyTorch nn.Modules:
         https://github.com/pytorch/pytorch/blob/master/torch/nn/modules/module.py

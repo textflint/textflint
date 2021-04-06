@@ -22,7 +22,8 @@ class RndInsert(Transformation):
         trans_p: proportion of inserted sentences; default 0.2
         processor: TextFlint.common.preprocess.TextProcessor.
 
-    Example:
+    Example::
+
         ori: {
             'sentences': [
                 ['I', 'came'], ['I', 'saw'], ['I', 'conquered'], 
@@ -51,13 +52,14 @@ class RndInsert(Transformation):
 
     def _transform(self, sample, n=5, **kwargs):
         r"""
-        :param ~TextFlint.input_layer.component.sample.CorefSample sample: a CorefSample
+        :param ~TextFlint.CorefSample sample: a CorefSample
         :param str|list fields: Not used
         :param int n: optional; number of generated samples
         :param list samples_other: optional, list of dict
             `samples_other` contains some other CorefSamples that also
             originate from conll-style dicts.
         :return list: samples_tfed, transformed sample list.
+
         """
         if sample.num_sentences() == 0: return [sample] * n
         samples_other = kwargs['samples_other']
@@ -84,6 +86,7 @@ class RndInsert(Transformation):
                 tfed_sen_idx = 1 + int(random.random() * (num_sentences + j - 1))
                 insert_at_idx = sum(sample_tfed.sen_map[:tfed_sen_idx])
                 sen_map = sample_tfed.sen_map
+
                 if insert_at_idx == sum(sen_map): 
                     # i have to do this to avoid bug in common.utils.list_op
                     sample_tfed = sample_tfed.insert_field_after_indices(
@@ -96,7 +99,8 @@ class RndInsert(Transformation):
                             .format(sen_map, sample_tfed.sen_map)
                     sample_tfed.sen_map[-1] -= len(k_sen)
                     sample_tfed.sen_map.append(len(k_sen))
-                else: # true main logic
+                else:
+                    # true main logic
                     sample_tfed = sample_tfed.insert_field_before_indices(
                         'x', [insert_at_idx], [k_sen])
                     assert sen_map[tfed_sen_idx] + len(k_sen) \

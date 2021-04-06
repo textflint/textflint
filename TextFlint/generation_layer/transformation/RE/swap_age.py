@@ -14,8 +14,9 @@ class SwapAge(Transformation):
 
     """
     def __init__(
-            self,
-            **kwargs):
+        self,
+        **kwargs
+    ):
         super().__init__()
 
     def __repr__(self):

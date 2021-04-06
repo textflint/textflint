@@ -2,7 +2,7 @@ import unittest
 
 from TextFlint.input_layer.component.sample.sa_sample import *
 from TextFlint.generation_layer.validator.sentence_encoding \
-    import SentenceEncodings
+    import SentenceEncoding
 from TextFlint.generation_layer.validator.max_words_perturbed \
     import MaxWordsPerturbed
 from TextFlint.generation_layer.validator.edit_distance \
@@ -30,7 +30,7 @@ class TestValidator(unittest.TestCase):
                 SASample({'x': trans_sentence, 'y': '1'}), sample_id=0)
 
         # test declutr encoder
-        score = SentenceEncodings(ori_dataset, trans_dataset, 'x').score
+        score = SentenceEncoding(ori_dataset, trans_dataset, 'x').score
         real_score = [1.0, 0.934, 0.844, 0.975, 0.880]
         for i, j in zip(score, real_score):
             self.assertAlmostEqual(i, j, 3)

@@ -42,6 +42,7 @@ class Tense(WordSubstitute):
         :param str pos: pos tag
         :param int n: max number of candidates
         :return list candidates: candidates list
+
         """
         if pos not in VERB_TAG:
             return []

@@ -12,7 +12,9 @@ from ..transformation import Transformation
 class DeleteSubTree(Transformation):
     r"""
     Transforms the input sentence by removing a subordinate clause.
-    Example:
+
+    Example::
+
         original: "The bill intends to restrict the RTC to
             Treasury borrowings only, unless the agency receives
             specific congressional authorization."

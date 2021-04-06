@@ -13,11 +13,11 @@ __all__ = ['TranslateScore']
 
 class TranslateScore(Validator):
     def __init__(
-            self,
-            origin_dataset,
-            trans_dataset,
-            fields,
-            type
+        self,
+        origin_dataset,
+        trans_dataset,
+        fields,
+        type
     ):
         r"""
         A constraint on Translate score difference.
@@ -28,6 +28,7 @@ class TranslateScore(Validator):
             the dataset of translate sample
         :param str|list fields: the name of the origin field need compare.
         :param str type: the type of the scoring index.
+
         """
         super().__init__(
             origin_dataset,
@@ -49,6 +50,7 @@ class TranslateScore(Validator):
         :param str transformed_text: transformed sentence
         :param str reference_text: origin sentence
         :return float: the score of two sentence
+
         """
         if self.type == 'bleu':
             return nltk.translate.bleu_score.sentence_bleu(

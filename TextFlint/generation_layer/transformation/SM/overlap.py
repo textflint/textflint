@@ -35,18 +35,21 @@ def repeaters(sentence):
 
 class Overlap(Transformation):
     r"""
-    Generate some samples by templates
-       implement follow
-       Right for the Wrong Reasons: Diagnosing Syntactic Heuristics in Natural
-       Language Inference ACL2019
+    Generate some samples by templates which implement follow
+        Right for the Wrong Reasons: Diagnosing Syntactic Heuristics in Natural
+        Language Inference ACL2019
+
        In order to generate some sample whose premise is the sequence of the
        hypothesis but the semantic are different.
-       exmaple:
+
+    Exmaple::
+
        {
             sentence1: I hope Tom can go to school.
             sentence2: Tom go to school.
             y: 0
        }
+
     """
 
     def __init__(self):
@@ -63,8 +66,8 @@ class Overlap(Transformation):
         :param int n: Default is 1. MAX number of unique augmented output
         :param **kwargs:
         :return: Augmented data
-        """
 
+        """
         transform_results = self._transform(n, **kwargs)
 
         if transform_results:
@@ -83,8 +86,8 @@ class Overlap(Transformation):
             only generate one sample
         :return list trans_samples: transformed sample list that only
             contain one sample
-        """
 
+        """
         example_counter = 0
         trans_list = []
 

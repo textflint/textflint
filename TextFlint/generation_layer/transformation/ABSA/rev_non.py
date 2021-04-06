@@ -13,7 +13,8 @@ class RevNon(ABSATransformation):
         with antonyms provided by WordNet or adding the negation that
         pre-defined in our negative word list.
 
-    Example:
+    Example::
+
         Original sentence: "BEST spicy tuna roll, great asian salad.
         （Target: spicy tuna roll)"
         Transformed sentence: "BEST spicy tuna roll, not great asian salad."
@@ -21,8 +22,9 @@ class RevNon(ABSATransformation):
     """
 
     def __init__(
-            self,
-            language="eng"):
+        self,
+        language="eng"
+    ):
         super().__init__()
 
         if language != "eng":
@@ -42,6 +44,7 @@ class RevNon(ABSATransformation):
             ABSA-specific transformations n=1
         :param str field:field name
         :return list: list of transformed ABSAsample
+
         """
         trans_samples = []
         self.sentence = sample.sentence.text
@@ -75,6 +78,7 @@ class RevNon(ABSATransformation):
 
         :param str term_id: term id
         :return: tokenized words and terms of transformed sentence
+
         """
         terms = self.terms
         aspect_term = terms[term_id]
@@ -114,6 +118,7 @@ class RevNon(ABSATransformation):
         :param list reverse_list: pre-defined reverse_list
         :param list exaggerate_list: pre-defined exaggerate_list
         :return: tokenized words and terms of transformed sentence
+
         """
         trans_terms = deepcopy(self.terms)
         other_id_list = [idx for idx in trans_terms]
@@ -154,6 +159,7 @@ class RevNon(ABSATransformation):
         :param list trans_words: tokenized words and terms of
             transformed sentence
         :return list: tokenized words and terms of transformed sentence
+
         """
         conjunction_list = ['and']
         conjunction_idx = self.get_conjunction_idx(

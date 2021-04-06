@@ -89,7 +89,8 @@ class ABSAGenerator(Generator):
 
     @staticmethod
     def get_extra_sentence(term_list, term_id, phrases):
-        r"""Get the extra sentence from phrases text.
+        r"""
+        Get the extra sentence from phrases text.
 
         :param dict term_list: term list
         :param str term_id: term id
@@ -125,7 +126,8 @@ class ABSAGenerator(Generator):
         return extra_sentence
 
     def get_extra_text(self):
-        r"""Get extra text from training dataset.
+        r"""
+        Get extra text from training dataset.
 
         :return: dict of extra text
         """
@@ -167,7 +169,8 @@ class ABSAGenerator(Generator):
                 'neutral': neutral_text}
 
     def generate_by_transformations(self, dataset, **kwargs):
-        """Generate samples by a list of transformation methods.
+        r"""
+        Generate samples by a list of transformation methods.
 
         :param dataset: the input dataset
         :return: (original samples, new samples, generated function string)

@@ -56,10 +56,16 @@ TRANSFORM_FIELDS = {
     'RE': 'x',
     'COREF': 'x'
 }
-TASK_SUBPOPULATION_PATH = dict((task, os.path.join(SUBPOPULATION_PATH, task))
-                               for task in NLP_TASK_MAP)
-TASK_TRANSFORMATION_PATH = dict((task, os.path.join(TRANSFORMATION_PATH, task))
-                                for task in NLP_TASK_MAP)
+TASK_SUBPOPULATION_PATH = dict(
+    (task, os.path.join(SUBPOPULATION_PATH, task))
+    for task in NLP_TASK_MAP
+)
+
+TASK_TRANSFORMATION_PATH = dict(
+    (task, os.path.join(TRANSFORMATION_PATH, task))
+    for task in NLP_TASK_MAP
+)
+
 # indicate allowed subpopulations of specific task
 UT_SUBPOPULATIONS = [
     "LengthSubPopulation",
@@ -168,7 +174,7 @@ TASK_TRANSFORMATIONS = {
         'AddSubTree'
     ],
     'MRC': [
-        # 'AddSentDiverse',
+        'AddSentDiverse',
         'ModifyPos',
         'PerturbAnswer',
         'PerturbQuestion'

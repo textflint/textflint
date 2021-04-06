@@ -3,7 +3,6 @@ Substitute short entities to longer ones
 ==========================================================
 """
 __all__ = ["SwapEnt"]
-import copy
 import random
 
 from ....common.settings import LONG_ENTITIES
@@ -59,22 +58,27 @@ class SwapEnt(Transformation):
         :return: Augmented data
         """
         rep_samples = []
+        rep_entities = []
         entities = sample.entities[::-1]
         candidates = []
 
         for entity in entities:
             if entity['entity'] in self.res_dic[entity['tag']]:
-                res_dic = copy.deepcopy(self.res_dic[entity['tag']]).remove(
-                    entity['entity'])
+                res_dic = self.res_dic
+                res_dic[entity['tag']].remove(entity['entity'])
             else:
                 res_dic = self.res_dic
-            candidates.append(random.sample(res_dic[entity['tag']], n))
+            if entity['tag'] == "PER" or entity['tag'] == "ORG" or \
+                    entity['tag'] == "LOC":
+                rep_entities.append(entity)
+                candidates.append(random.sample(res_dic[entity['tag']], n))
 
         for i in range(n):
             _candidates = [candidate[i] for candidate in candidates]
             if not _candidates:
                 return []
-            rep_samples.append(sample.entities_replace(entities, _candidates))
+            rep_samples.append(sample.entities_replace(
+                rep_entities, _candidates))
 
         return rep_samples
 

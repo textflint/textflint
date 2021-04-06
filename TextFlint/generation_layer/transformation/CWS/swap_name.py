@@ -18,8 +18,10 @@ class SwapName(Transformation):
     Make the first word of the surname and the preceding word form a word,
             and the last word of the name and the following word form a word
 
-    Example:
+    Example::
+
         我朝小明走了过去 -> 我朝向明走了过去
+
     """
 
     def __init__(self, **kwargs):
@@ -28,6 +30,7 @@ class SwapName(Transformation):
         :param list word_list: dictionary of words
         :param dict word_end_dict: a dictionary
         :param dict name_dict: A dictionary ending with a surname
+
         """
         super().__init__()
         self.firstname_list = plain_lines_loader(download_if_needed(NAME_PATH))
@@ -40,6 +43,7 @@ class SwapName(Transformation):
     def make_dict(self):
         r"""
         :return: Last name dictionary and first name dictionary
+
         """
         word_end_dict = {}
         name_dict = {}
@@ -81,7 +85,8 @@ class SwapName(Transformation):
             return []
 
         change_list = descartes(change_list, n)
-        return [sample.replace_at_ranges(change_pos, item) for item in change_list]
+        return [sample.replace_at_ranges(change_pos, item)
+                for item in change_list]
 
     def _get_transformations(self, sentence, label, ner_label, n):
         r"""

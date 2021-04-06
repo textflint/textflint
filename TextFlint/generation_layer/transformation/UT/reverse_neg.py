@@ -31,6 +31,7 @@ class ReverseNeg(Transformation):
         :param str|list field: indicate which field to transform
         :param int n: number of  generated samples
         :return list trans_samples:transformed sample list.
+        
         """
         trans_samples = []
 
@@ -57,19 +58,11 @@ class ReverseNeg(Transformation):
         r"""
         :param tokens: word list
         :return: transformed_text or None
+        
         """
         for i in tokens:
-            if i in [
-                'not',
-                'n\'t',
-                'don',
-                'didn',
-                'doesn',
-                'doesn',
-                'aren',
-                'isn',
-                'wasn',
-                    'weren']:
+            if i in ['not', 'n\'t', 'don', 'didn', 'doesn',
+                     'doesn', 'aren', 'isn', 'wasn', 'weren']:
                 return 'remove'
 
         return 'add'
@@ -78,35 +71,16 @@ class ReverseNeg(Transformation):
     def _check_sentence(tokens):
         """
         Check positive or negative
+        
         """
         if len(tokens) < 3:
             return False
         if '?' in tokens:
             return False
-        if tokens[0].lower() in [
-            'are',
-            'is',
-            'be',
-            'am',
-            'was',
-            'were',
-            'how',
-            'why',
-            'what',
-            'where',
-            'who',
-            'when',
-            'can',
-            'do',
-            'did',
-            'does',
-            'could',
-            'should',
-            'would',
-            'will',
-            'shall',
-            'thank',
-                'thanks']:
+        if tokens[0].lower() in ['are', 'is', 'be', 'am', 'was', 'were', 'how',
+                                 'why', 'what', 'where', 'who', 'when', 'can',
+                                 'do', 'did', 'does', 'could', 'should',
+                                 'would', 'will', 'shall', 'thank', 'thanks']:
             return False
         else:
             return True
@@ -150,17 +124,8 @@ class ReverseNeg(Transformation):
 
                         return del_sample
 
-            if token in [
-                'not',
-                'n\'t',
-                'don',
-                'didn',
-                'doesn',
-                'doesn',
-                'aren',
-                'isn',
-                'wasn',
-                    'weren']:
+            if token in ['not', 'n\'t', 'don', 'didn', 'doesn', 'doesn',
+                         'aren', 'isn', 'wasn', 'weren']:
                 return sample.delete_field_at_index(field, i)
 
         return []
@@ -179,15 +144,8 @@ class ReverseNeg(Transformation):
             return []
 
     def _add_sample(self, field, tokens, root_id, sample):
-        if tokens[root_id].lower() in [
-            'is',
-            'was',
-            'were',
-            'am',
-            'are',
-            '\'s',
-            '\'re',
-                '\'m']:
+        if tokens[root_id].lower() in ['is', 'was', 'were', 'am',
+                                       'are', '\'s', '\'re', '\'m']:
             add_sample = sample.insert_field_before_index(
                 field, root_id + 1, 'not')
             return add_sample
@@ -197,32 +155,17 @@ class ReverseNeg(Transformation):
                 field, root_id, 'not')
             return add_sample
 
-        if tokens[root_id].lower() in [
-            'do',
-            'does',
-            'did',
-            'can',
-            'could',
-            'could',
-            'would',
-            'will',
-            'have',
-                'should']:
+        if tokens[root_id].lower() in ['do', 'does', 'did', 'can',
+                                       'have', 'will', 'could', 'would',
+                                       'could', 'should']:
             add_sample = sample.insert_field_before_index(
                 field, root_id + 1, 'not')
             return add_sample
         else:
             token_pos = self.processor.get_pos(tokens[root_id])
             trans_sent = []
-            if token_pos[0][1] in [
-                'VB',
-                'VBP',
-                'VBZ',
-                'VBG',
-                'VBD',
-                'VBN',
-                'NNS',
-                    'NN']:
+            if token_pos[0][1] in ['VB', 'VBP', 'VBZ', 'VBG',
+                                   'VBD', 'VBN', 'NNS', 'NN']:
                 if token_pos[0][1] in ['VB', 'VBP', 'VBG']:
                     neg_word = ['do', 'not']
                 if token_pos[0][1] in ['VBD', 'VBN']:

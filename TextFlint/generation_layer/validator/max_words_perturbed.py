@@ -19,8 +19,8 @@ class MaxWordsPerturbed(Validator):
         the dataset of translate sample
     :param str|list fields: the name of the origin field need compare.
     :param bool need_tokens: if we need tokenize the sentence
-    """
 
+    """
     def __init__(
             self,
             origin_dataset,
@@ -45,6 +45,7 @@ class MaxWordsPerturbed(Validator):
         :param str transformed_text: transformed sentence
         :param str reference_text: origin sentence
         :return float: the score of two sentence
+
         """
         num_words_diff = self.get_lcs(reference_text, transformed_text)
 
@@ -58,6 +59,7 @@ class MaxWordsPerturbed(Validator):
         :param list token1: the first token list
         :param list token2: the second token list
         :return int: the longest common subsequence
+
         """
         l1 = len(token1)
         l2 = len(token2)

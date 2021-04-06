@@ -62,6 +62,7 @@ class SpellingError(WordSubstitute):
     r"""
     Transformation that leverage pre-defined spelling mistake dictionary to
     simulate spelling mistake.
+
     https://arxiv.org/ftp/arxiv/papers/1812/1812.04718.pdf
 
     """
@@ -89,6 +90,7 @@ class SpellingError(WordSubstitute):
         :param bool include_reverse:  whether build reverse map according to
             spelling error list.
         :param str rules_path: rules_path
+
         """
         super().__init__(
             trans_min=trans_min,
@@ -124,6 +126,7 @@ class SpellingError(WordSubstitute):
         :param int n: number of transformed tokens to generate.
         :param kwargs:
         :return: candidate list
+
         """
         return self.sample_num(self.rules.predict(word), n)
 

@@ -35,11 +35,13 @@ class ABSASample(Sample):
         Check the format of input data.
 
         :param dict data: data name
+
         """
         assert 'sentence' in data and isinstance(data['sentence'], str), \
             "Sentence should be in data, and type of sentence should be str."
         assert 'term_list' in data and isinstance(data['term_list'], dict), \
             "Term_list should be in data, and type of term_list should be dict."
+
         for term_id, term_dict in data['term_list'].items():
             assert isinstance(term_id, str), \
                 "Type of key of items in term_list should be str."
@@ -51,6 +53,7 @@ class ABSASample(Sample):
                 "Polarity should be in term_list, " \
                 "type of polarity should be str, " \
                 "and length of polarity should larger than 0."
+
             assert 'term' in term_dict and isinstance(term_dict['term'], str) \
                 and len(term_dict['term']) > 0, \
                 "Term should be in term_list, " \
@@ -60,6 +63,7 @@ class ABSASample(Sample):
                 and term_dict['from'] >= 0, \
                 "From should be in term_list, and from should be " \
                 "an int not less than 0."
+
             assert 'to' in term_dict and isinstance(term_dict['to'], int) \
                 and term_dict['to'] >= 0, \
                 "To should be in term_list, and to should be " \
@@ -70,6 +74,7 @@ class ABSASample(Sample):
                 "Opinion_words should be in term_list, " \
                 "and type of opinion_words should be list " \
                 "and the length of opinion_words should larger than 0."
+
             for opinion_word in term_dict['opinion_words']:
                 assert isinstance(opinion_word, str) \
                     and len(opinion_word) > 0, \
@@ -81,6 +86,7 @@ class ABSASample(Sample):
                 "Opinion_position should be in term_list, " \
                 "type of opinion_position should be str, " \
                 "and the length of opinion_position should larger than 0."
+
             for positions in term_dict['opinion_position']:
                 assert isinstance(positions, list) and len(positions) == 2, \
                     "The type of elements of opinion_position should be list " \
@@ -97,6 +103,7 @@ class ABSASample(Sample):
         Load the legal data and convert it into SASample.
 
         :param dict data: data name
+
         """
         self.tokenize = self.text_processor.word_tokenize
         self.untokenize = self.text_processor.inverse_tokenize
@@ -129,6 +136,7 @@ class ABSASample(Sample):
         Dump the legal data.
 
         :return dict: output of transformed data
+
         """
         self.update_term_list(self)
 
@@ -153,6 +161,7 @@ class ABSASample(Sample):
             in the correct position.
 
         :return bool: whether format of data is legal.
+
         """
 
         terms = self.terms
@@ -182,6 +191,7 @@ class ABSASample(Sample):
         Tokenize the term list of ABSASample.
 
         :return list: terms in ABSASample
+
         """
         terms = {}
         copy_sent = self.sentence.text
@@ -224,8 +234,8 @@ class ABSASample(Sample):
         Update the sentence of ABSASample.
 
         :param str|list trans_sentence: updated sentence
-        """
 
+        """
         if not isinstance(trans_sentence, str or list):
             raise TypeError("Transformed sentence requires 'list' or 'str, "
                             "but got {0}".format(trans_sentence))
@@ -241,8 +251,8 @@ class ABSASample(Sample):
         Update the terms of ABSASample.
 
         :param dict trans_terms: updated terms
-        """
 
+        """
         self.terms = trans_terms
 
     def update_term_list(self, sample):
@@ -250,8 +260,8 @@ class ABSASample(Sample):
         Update the term_list of ABSASample.
 
         :param ABSAsample sample: updated sample
-        """
 
+        """
         if not sample.is_legal():
             raise ValueError("Term list {0} is not legal, "
                              "aspect words or opinion words are "
@@ -300,7 +310,8 @@ class ABSASample(Sample):
         :param str field: transformed field
         :param list indices: indices of insert positions
         :param list items: insert items
-        :return ~TextFlint.input_layer.component.sample.ABSAsample: modified sample
+        :return ~TextFlint.ABSAsample: modified sample
+
         """
         new_items = items
         sample = self.clone(self)
@@ -344,7 +355,8 @@ class ABSASample(Sample):
         :param str field: transformed field
         :param int|list ins_index: index of insert position
         :param str|list new_item: insert item
-        :return ~TextFlint.input_layer.component.sample.ABSAsample: modified sample
+        :return ~TextFlint.ABSAsample: modified sample
+
         """
         return self.insert_field_before_indices(field, [ins_index], [new_item])
 
@@ -357,6 +369,7 @@ class ABSASample(Sample):
         :param list indices: indices of insert positions
         :param list items: insert items
         :return ABSAsample: modified sample
+
         """
         sample = self.clone(self)
 
@@ -397,7 +410,8 @@ class ABSASample(Sample):
         :param str field: transformed field
         :param int|list ins_index: index of insert position
         :param str|list new_item: insert item
-        :return ~TextFlint.input_layer.component.sample.ABSAsample: modified sample
+        :return ~TextFlint.ABSAsample: modified sample
+
         """
         return self.insert_field_after_indices(field, [ins_index], [new_item])
 
@@ -407,6 +421,7 @@ class ABSASample(Sample):
         :param str field: transformed field
         :param list indices: indices of delete positions
         :return ABSAsample: modified sample
+
         """
         assert len(indices) > 0
         sample = self.clone(self)
@@ -448,6 +463,7 @@ class ABSASample(Sample):
 
         :param str field: transformed field
         :param list del_index: index of delete position
-        :return ~TextFlint.input_layer.component.sample.ABSAsample: modified sample
+        :return ~TextFlint.ABSAsample: modified sample
+
         """
         return self.delete_field_at_indices(field, [del_index])

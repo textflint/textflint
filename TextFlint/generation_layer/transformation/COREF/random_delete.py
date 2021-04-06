@@ -18,7 +18,8 @@ class RndDelete(Transformation):
         trans_p: proportion of deleted sentences; default 0.2
         processor: TextFlint.common.preprocess.TextProcessor.
 
-    Example:
+    Example::
+
         ori: {
             'sentences': [
                 ['I', 'came'], ['I', 'saw'], ['I', 'conquered'], 
@@ -47,10 +48,11 @@ class RndDelete(Transformation):
 
     def _transform(self, sample, n=5, **kwargs):
         r"""
-        :param ~TextFlint.input_layer.component.sample.CorefSample sample: a CorefSample
+        :param ~TextFlint.CorefSample sample: a CorefSample
         :param str|list fields: Not used
         :param int n: optional; number of generated samples
         :return list: samples_tfed, transformed sample list.
+
         """
         if sample.num_sentences() <= 1: return [sample] * n
         num_sentences = sample.num_sentences()

@@ -130,7 +130,8 @@ class Analyzer:
     Convert evaluate result json to DataFrame for report generator,
     and analysis model robustness according to linguistic classification.
 
-    Evaluate json example:
+    Example::
+
         {
             "model_name": "BERT",
             "dataset_name": "medical data",
@@ -176,6 +177,7 @@ class Analyzer:
 
         :param dict evaluate_json: evaluate result of specific model.
         :return: pandas.DataFrame, list[ReportColumn]
+
         """
         bar_json_list = []
 
@@ -208,6 +210,7 @@ class Analyzer:
         :param dict evaluate_json: evaluate result of specific model.
         :param str metric: key metric to plot subburst figure.
         :return: pandas.DataFrame, dict
+
         """
         if "transformation" not in evaluate_json:
             raise ValueError("Cant find transformation in given json, "
@@ -251,6 +254,7 @@ class Analyzer:
         :param dict transformations: evaluation result of transformation
         :param str metric: key metric to plot subburst figure.
         :return: str legal metric name
+
         """
         if len(transformations) < 1:
             raise ValueError(f"Cant get metric of {transformations} to plot!")
@@ -284,6 +288,7 @@ class Analyzer:
 
         :param str transformation_str: transformation name
         :return: str linguistic classification name
+
         """
         parent = "Other"
 
@@ -301,6 +306,7 @@ class Analyzer:
 
         :param dict evaluate_json: evaluate result of specific model.
         :return: pandas.DataFrame
+
         """
         if "transformation" not in evaluate_json:
             raise ValueError("Cant find transformation in given json, "
@@ -343,6 +349,7 @@ class Analyzer:
         :param dict trans_json: evaluation result of specific
             transformation.
         :return: pandas.DataFrame
+
         """
         assert isinstance(trans_json, dict), \
             f"transformation evaluation should be dict type, " \
@@ -368,6 +375,7 @@ class Analyzer:
 
         :param dict trans_json: evaluation result.
         :return: dict, dict
+
         """
         original_result = {}
         transform_result = {}

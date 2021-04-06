@@ -22,7 +22,8 @@ class RndReplace(Transformation):
         trans_p: proportion of inserted sentences; default 0.2
         processor: TextFlint.common.preprocess.TextProcessor.
 
-    Example:
+    Example::
+
         ori: {
             'sentences': [
                 ['I', 'came'], ['I', 'saw'], ['I', 'conquered'], 
@@ -51,13 +52,14 @@ class RndReplace(Transformation):
 
     def _transform(self, sample, n=5, **kwargs):
         r"""
-        :param ~TextFlint.input_layer.component.sample.CorefSample sample: a CorefSample
+        :param ~TextFlint.CorefSample sample: a CorefSample
         :param str|list fields: Not used
         :param int n: optional; number of generated samples
         :param list samples_other: optional, list of dict
             `samples_other` contains some other CorefSamples that also
             originate from conll-style dicts.
         :return list: samples_tfed, transformed sample list.
+
         """
         if sample.num_sentences() <= 1: return [sample] * n
         samples_other = kwargs['samples_other']
@@ -73,6 +75,7 @@ class RndReplace(Transformation):
                 sample_other = samples_other[k]
                 k_sen_idx = int(random.random() * sample_other.num_sentences())
                 k_sen = sample_other.get_kth_sen(k_sen_idx)
+
                 # randomly choose tfed_sen_idx
                 # k_sen will replace position tfed_sen_idx sentence
                 # tfed_sen_idx in [1, num_sentences - 1):
@@ -95,4 +98,5 @@ class RndReplace(Transformation):
                     'x', [delete_span])
             # get the tfed sample and append to list
             samples_tfed.append(sample_tfed)
+
         return samples_tfed

@@ -13,8 +13,10 @@ class Reduplication(Transformation):
     r"""
     Replace word with reduplication such as AABB or ABAB.
 
-    Example:
+    Example::
+
         朦胧的月色 -> 朦朦胧胧的月色
+
     """
 
     def __init__(self, **kwargs):
@@ -22,6 +24,7 @@ class Reduplication(Transformation):
         :param list ABAB_list: word can be replaced by abab dictionary
         :param list AABB_list: word can be replaced by aabb dictionary
         :param **kwargs:
+
         """
         super().__init__()
         self.ABAB_list = plain_lines_loader(download_if_needed(ABAB_PATH))
@@ -39,6 +42,7 @@ class Reduplication(Transformation):
         :param **kwargs:
         :return: In this function, because there is only one deformation mode,
             only one set of outputs is output
+
         """
         # get sentence token
         origin_words = sample.get_words()
@@ -59,6 +63,7 @@ class Reduplication(Transformation):
         :param list words: chinese sentence words
         :return list: three list include the pos which changed the word which
             changed and the label which changed
+
         """
 
         change_pos = []

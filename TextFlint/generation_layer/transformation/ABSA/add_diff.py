@@ -19,7 +19,8 @@ class AddDiff(ABSATransformation):
     The difference part is extracted from the training set of SemEval2014
     or user's customization.
 
-    Example:
+    Example::
+
         Original sentence: "BEST spicy tuna roll, great asian salad.
         （Target: spicy tuna roll)"
         Transformed sentence: "BEST spicy tuna roll, great asian salad,
@@ -53,8 +54,8 @@ class AddDiff(ABSATransformation):
         :param str field:field name
         :param dict extra_text: extra text will be added to the original sentence
         :return list: list of transformed ABSAsample
-        """
 
+        """
         trans_samples = []
         self.trans_term_list = sample.term_list
         self.terms = sample.terms
@@ -93,8 +94,8 @@ class AddDiff(ABSATransformation):
         :param list add_text: extra text
         :param list all_term: all aspect term
         :return list: extra sentence that need to be added to original sentence
-        """
 
+        """
         sentence = self.sentence
         punctuation = '.'
         if sentence[-1] == string.punctuation:
@@ -131,6 +132,7 @@ class AddDiff(ABSATransformation):
         :param list add_sentence: extra sentence that need to be
             added to original sentence
         :return list: transformed sentence
+
         """
         sentence = self.sentence[:-1]
         opi_tag = self.get_postag(add_sentence, 0, 1)

@@ -20,7 +20,8 @@ from ....common.settings import WIKIDATA_STATEMENTS, \
 class AddSubTree(Transformation):
     r"""
     Transforms the input sentence by adding a subordinate clause from WikiData.
-    Example:
+
+    Example::
         original: "And it left mixed signals for London."
         transformed: "And it left mixed signals for London, which is a capital
             and largest city of the United Kingdom."

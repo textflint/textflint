@@ -14,10 +14,12 @@ class Contraction(Transformation):
 
     Each sample generate one transformed sample at most.
 
-    Example:
+    Example::
+
            "we're playing ping pang ball, you are so lazy. She's so beautiful!"
 
         >> "we are playing ping pang ball, you're so lazy. She is so beautiful!"
+
     """
     def __init__(
         self,
@@ -39,6 +41,7 @@ class Contraction(Transformation):
         :param int n: number of generated samples
         :param kwargs:
         :return list trans_samples: transformed sample list.
+
         """
         tokens = sample.get_words(field)
 

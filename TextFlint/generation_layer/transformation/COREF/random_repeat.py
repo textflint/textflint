@@ -23,7 +23,8 @@ class RndRepeat(Transformation):
         trans_p: proportion of repeated sentences; default 0.2
         processor: TextFlint.common.preprocess.TextProcessor.
 
-    Example:
+    Example::
+
         ori: {
             'sentences': [
                 ['I', 'came'], ['I', 'saw'], ['I', 'conquered'], 
@@ -52,14 +53,16 @@ class RndRepeat(Transformation):
 
     def _transform(self, sample, n=5, **kwargs):
         r"""
-        :param ~TextFlint.input_layer.component.sample.CorefSample sample: a CorefSample
+        :param ~TextFlint.CorefSample sample: a CorefSample
         :param str|list fields: Not used
         :param int n: optional; number of generated samples
         :return list: samples_tfed, transformed sample list.
+
         """
         if sample.num_sentences() == 0: return [sample] * n
         num_sentences = sample.num_sentences()
         samples_tfed = []
+
         for i in range(n):
             sample_tfed = CorefSample(sample.dump())
             # repeat times: trans_p * num_sentences; at least 1
@@ -70,6 +73,7 @@ class RndRepeat(Transformation):
                 k_sen = sample.get_kth_sen(ori_sen_idx)
                 clusters_pt = sample.part_conll([ori_sen_idx])\
                     .clusters.field_value
+
                 # randomly choose tfed_sen_idx:
                 # k_sen will be inserted after position tfed_sen_idx
                 # tfed_sen_idx in [0, num_sentences + j - 1):
@@ -82,6 +86,7 @@ class RndRepeat(Transformation):
                 insert_at_idx = sum(sen_map[:tfed_sen_idx+1])
                 sample_tfed = sample_tfed.insert_field_after_indices(
                     'x', [insert_at_idx-1], [k_sen])
+
                 assert sen_map[tfed_sen_idx] + len(k_sen) \
                     == sample_tfed.sen_map[tfed_sen_idx], \
                     "Assert failed in RndRepeat: sentence lengths " \
@@ -91,12 +96,14 @@ class RndRepeat(Transformation):
                 sample_tfed.sen_map = sample_tfed.sen_map[:tfed_sen_idx] \
                     + [sen_map[tfed_sen_idx], len(k_sen)] \
                     + sample_tfed.sen_map[tfed_sen_idx+1:]
+
                 setattr(sample_tfed, 'clusters', 
                     ListField([c1 + c2 for c1, c2 in zip(
                         [
                             [[b+insert_at_idx, e+insert_at_idx] for [b, e] in c] 
                             for c in clusters_pt], 
                         sample_tfed.clusters.field_value)]))
+
             # get the tfed sample and append to list
             samples_tfed.append(sample_tfed)
         return samples_tfed

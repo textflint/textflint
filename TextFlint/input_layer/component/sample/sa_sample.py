@@ -13,16 +13,17 @@ __all__ = ['SASample']
 
 class SASample(Sample):
     def __init__(
-            self,
-            data,
-            origin=None,
-            sample_id=None
+        self,
+        data,
+        origin=None,
+        sample_id=None
     ):
         r"""
 
         :param dict data:  The json obj that contains data info.
         :param ~Sample origin: Original sample obj.
         :param int sample_id: sample index
+
         """
         self.x = None
         self.y = None
@@ -32,7 +33,10 @@ class SASample(Sample):
         return 'SASample'
 
     def is_legal(self):
-        """Validate whether the sample is legal """
+        """
+        Validate whether the sample is legal
+
+        """
         if len(self.x.mask) == len(self.x.words):
             return True
         else:
@@ -44,6 +48,7 @@ class SASample(Sample):
 
         :param dict data: contains 'x', 'y' keys.
         :return:
+
         """
         assert 'x' in data and isinstance(data['x'], str), \
             "x should be in data, and the type of context should be str"
@@ -55,8 +60,8 @@ class SASample(Sample):
 
         :param dict data: contains 'x', 'y' keys.
         :return:
-        """
 
+        """
         self.x = TextField(data['x'])
         self.y = Field(data['y'])
         if not self.is_legal():
@@ -83,6 +88,7 @@ class SASample(Sample):
             the key string is n-tuples spliced into strings, and the key indices
              is the index of n-tuples in the original sentence
         :return list tup_list
+
         """
         assert isinstance(max_name_len, int), "max_name_len must be type int"
         assert max_name_len > 0, 'max_name_len must be upper than zero'

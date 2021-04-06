@@ -51,7 +51,6 @@ class DPSample(Sample):
         :param dict data: contains 'word', 'postag', 'head', 'deprel' keys.
 
         """
-
         assert data['deprel'][-1] == 'punct', \
             "The sentence should end with a punctuation."
         words = data['word']
@@ -256,26 +255,15 @@ class DPSample(Sample):
         del_len = del_scope[1] - del_scope[0]
 
         sample = self.clone(self)
-        sample = super(
-            DPSample,
-            sample).delete_field_at_indices(
-            field,
-            [del_scope])
-        sample = super(
-            DPSample,
-            sample).delete_field_at_indices(
-            'postag',
-            [del_scope])
-        sample = super(
-            DPSample,
-            sample).delete_field_at_indices(
-            'head',
-            [del_scope])
-        sample = super(
-            DPSample,
-            sample).delete_field_at_indices(
-            'deprel',
-            [del_scope])
+        sample = super(DPSample, sample)\
+            .delete_field_at_indices(field, [del_scope])
+        sample = super(DPSample, sample)\
+            .delete_field_at_indices('postag', [del_scope])
+        sample = super(DPSample, sample)\
+            .delete_field_at_indices('head', [del_scope])
+
+        sample = super(DPSample, sample)\
+            .delete_field_at_indices('deprel', [del_scope])
 
         head_obj = sample.get_value('head')
         rep_obj = sample.head

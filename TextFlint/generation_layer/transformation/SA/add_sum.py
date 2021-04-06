@@ -16,7 +16,8 @@ class AddSum(Transformation):
     Transforms an input by adding summaries of person and movies provided
     by csv.
 
-    Example:
+    Example::
+
         ori: Titanic is my favorite movie.
         trans: Titanic(A seventeen-year-old aristocrat falls in love with a
         kind but poor artist aboard the
@@ -24,9 +25,10 @@ class AddSum(Transformation):
     """
 
     def __init__(
-            self,
-            entity_type='person',
-            **kwargs):
+        self,
+        entity_type='person',
+        **kwargs
+    ):
         r"""
         init AddEntitySummary Class
 
@@ -60,8 +62,8 @@ class AddSum(Transformation):
             generate one sample
         :return list trans_samples: transformed sample list that only contain
             one sample
-        """
 
+        """
         # To speed up the query, dividing the original sentence into n-tuple
         # string
         tup_list = sample.concat_token(self.max_entity_len)
@@ -84,8 +86,8 @@ class AddSum(Transformation):
             original sentence and corresponding indices
         :return list indices: indices that will be insert
         :return list summaries: summaries that will be insert
-        """
 
+        """
         insert_summaries = []
         insert_indices = []
 

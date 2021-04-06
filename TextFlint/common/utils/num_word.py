@@ -34,9 +34,8 @@ def _get_contradictory_hypothesis(tokens, index, number):
     :param index: the position for the number word
     :param number: number word (int)
     :return: The sentence changed the number word
+
     """
-
-
     prob = np.random.binomial(1, 0.5)
 
     if prob < 0.5:

@@ -16,6 +16,7 @@ class CnTextField(Field):
 
     :param str or list field_value: the value of the field.
     :param int mask: mask label.
+
     """
 
     cn_processor = CnProcessor()

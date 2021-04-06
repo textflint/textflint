@@ -15,9 +15,8 @@ from .tokenizer import tokenize, untokenize, sentence_tokenize
 
 
 class EnProcessor:
-
-    """ Text Processor class implement NER, POS tag, lexical tree parsing with ``nltk`` toolkit.
-
+    r"""
+    Text Processor class implement NER, POS tag, lexical tree parsing.
     EnProcessor is designed by single instance mode.
 
     """
@@ -48,15 +47,13 @@ class EnProcessor:
 
     @staticmethod
     def word_tokenize(sent, is_one_sent=False, split_by_space=False):
-        """ Split sentences and tokenize.
+        r"""
+        Split sentences and tokenize.
 
-        Args:
-            sent: target string
-            is_one_sent: whether split sentence
-            split_by_space: whether split bu space or tokenizer
-
-        Returns:
-            tokens
+        :param str sent: target string
+        :param bool is_one_sent: whether split sentence
+        :param bool split_by_space: whether split bu space or tokenizer
+        :return: list[str]
 
         """
         assert isinstance(sent, str)
@@ -65,10 +62,24 @@ class EnProcessor:
 
     @staticmethod
     def inverse_tokenize(tokens):
+        r"""
+        Convert tokens to sentence.
+
+        :param list[str]r tokens: target string
+        :return: str
+
+        """
         assert isinstance(tokens, list)
         return untokenize(tokens)
 
     def sentence_tokenize(self, paras):
+        r"""
+        Split paragraph to sentences.
+
+        :param str paras: paragraph string
+        :return: list[str]
+
+        """
         assert isinstance(paras, str)
         if self.__sent_tokenizer is None:
             self.__sent_tokenizer = sentence_tokenize
@@ -76,10 +87,14 @@ class EnProcessor:
         return self.__sent_tokenizer(paras)
 
     def get_pos(self, sentence):
-        """ POS tagging function.
+        r"""
+        POS tagging function.
 
-        Example:
-            EnProcessor().get_pos('All things in their being are good for something.')
+        Example::
+
+            EnProcessor().get_pos(
+                'All things in their being are good for something.'
+            )
 
             >> [('All', 'DT'),
                 ('things', 'NNS'),
@@ -92,12 +107,8 @@ class EnProcessor:
                 ('something', 'NN'),
                 ('.', '.')]
 
-        Args:
-            sentence: str or list.
-                A sentence which needs to be tokenized.
-
-        Returns:
-            Tokenized tokens with their POS tags.
+        :param str|list sentence: A sentence which needs to be tokenized.
+        :return: Tokenized tokens with their POS tags.
 
         """
         assert isinstance(sentence, (str, list))
@@ -126,12 +137,15 @@ class EnProcessor:
         return label
 
     def get_ner(self, sentence, return_char_idx=True):
-        """ NER function.
+        r"""
+        NER function.
+        This method uses implemented based on spacy model.
 
-        This method uses spacy tokenizer and Stanford NER toolkit which requires Java installed.
+        Example::
 
-        Example:
-            EnProcessor().get_ner('Lionel Messi is a football player from Argentina.')
+            EnProcessor().get_ner(
+                'Lionel Messi is a football player from Argentina.'
+            )
 
             if return_word_index is False
             >>[('Lionel Messi', 0, 12, 'PERSON'),
@@ -141,16 +155,13 @@ class EnProcessor:
             >>[('Lionel Messi', 0, 2, 'PERSON'),
                ('Argentina', 7, 8, 'LOCATION')]
 
-        Args:
-            sentence: str or list
-                A sentence that we want to extract named entities.
-            return_char_idx: bool
-                if set True, return character start to end index, else return char start to end index.
-
-        Returns:
-            A list of tuples, *(entity, start, end, label)*
+        :param str|list sentence: text string or token list
+        :param bool return_char_idx: if set True, return character start to
+         end index, else return char start to end index.
+        :return: A list of tuples, *(entity, start, end, label)*
 
         """
+
         if self.__ner is None:
             self.__ner = self.nlp.pipeline[3][1]
 
@@ -163,8 +174,9 @@ class EnProcessor:
             tokens = self.word_tokenize(sentence)  # list of tokens
         else:
             raise ValueError(
-                'Support string or token list input, while your input type is {0}'.format(
-                    type(sentence)))
+                'Support string or token list input, '
+                'while your input type is {0}'.format(type(sentence))
+            )
 
         tokens = self.__word2vec(Doc(self.nlp.vocab, words=tokens))
         ner = self.__ner(tokens)
@@ -177,43 +189,44 @@ class EnProcessor:
                 for ent in ner.ents]
 
     def get_parser(self, sentence):
-        """ Lexical tree parsing.
+        r"""
+        Lexical tree parsing function based on NLTK toolkit.
 
-        This method uses Stanford LexParser to generate a lexical tree which requires Java installed.
+        Example::
 
-        Example:
             EnProcessor().get_parser('Messi is a football player.')
 
-            >>'(ROOT\n  (S\n    (NP (NNP Messi))\n    (VP (VBZ is) (NP (DT a) (NN football) (NN player)))\n    (. .)))'
+            >>'(ROOT\n  (S\n    (NP (NNP Messi))\n    (VP (VBZ is) (NP (DT a)
+            (NN football) (NN player)))\n    (. .)))'
 
-        Args:
-            sentence: str or list.
-                A sentence needs to be parsed.
 
-        Returns:
-            The result tree of lexicalized parser in string format.
+        :param str|list sentence: A sentence needs to be parsed.
+        :return:The result tree of lexicalized parser in string format.
 
         """
-
         if self.__parser is None:
             self.__parser = self.model_manager.load(CFG_PARSER)
 
         if not isinstance(sentence, (str, list)):
-            raise ValueError('Support string or token list input, while your input type is {0}'.format(
-                type(sentence)))
+            raise ValueError('Support string or token list input, while your '
+                             'input type is {0}'.format(type(sentence)))
         elif sentence in ['', []]:
             return ''
 
-        sentence = untokenize(sentence) if isinstance(
-            sentence, list) else sentence  # concatenate tokens
+        sentence = untokenize(sentence) \
+            if isinstance(sentence, list) else sentence  # concatenate tokens
 
         return str(list(self.__parser(sentence))[0])
 
     def get_dep_parser(self, sentence, is_one_sent=True, split_by_space=False):
-        """ Dependency parsing.
+        r"""
+        Dependency parsing based on spacy model.
 
-        Example:
-            EnProcessor().get_dep_parser('The quick brown fox jumps over the lazy dog.')
+        Example::
+
+            EnProcessor().get_dep_parser(
+            'The quick brown fox jumps over the lazy dog.'
+            )
 
             >>
                 The	DT	4	det
@@ -226,13 +239,10 @@ class EnProcessor:
                 lazy	JJ	9	amod
                 dog	NN	5	obl
 
-        Args:
-            sentence: str or list.
-                A sentence needs to be parsed.
-            is_one_sent: bool
-            split_by_space: bool
-
-        Returns:
+        :param str|list sentence: input text string
+        :param bool is_one_sent: whether do sentence tokenzie
+        :param bool split_by_space: whether tokenize sentence by split with " "
+        :return: dp tags.
 
         """
         if self.__dp_parser is None:
@@ -247,26 +257,32 @@ class EnProcessor:
         if isinstance(sentence, list):
             tokens = sentence
         elif isinstance(sentence, str):
-            tokens = self.word_tokenize(sentence, is_one_sent, split_by_space)  # list of tokens
+            # list of tokens
+            tokens = self.word_tokenize(sentence, is_one_sent, split_by_space)
         else:
-            raise ValueError('Support string or token list input, while your input type is {0}'.format(
-                type(sentence)))
+            raise ValueError(
+                'Support string or token list input, '
+                'while your input type is {0}'.format(type(sentence))
+            )
 
-        tokens = self.__pos_tag(self.__word2vec(Doc(self.nlp.vocab, words=tokens)))
+        tokens = self.__pos_tag(
+            self.__word2vec(Doc(self.nlp.vocab, words=tokens))
+        )
         parse = self.__dp_parser(tokens)
 
-        return [(word.text, word.tag_, word.head.i + 1 if word.dep_ != 'ROOT' else 0, word.dep_) for word in parse]
+        return [
+            (word.text, word.tag_,
+             word.head.i + 1 if word.dep_ != 'ROOT' else 0, word.dep_)
+            for word in parse
+        ]
 
     def get_lemmas(self, token_and_pos):
-        """ Lemmatize function.
-
+        r"""
+        Lemmatize function.
         This method uses ``nltk.WordNetLemmatier`` to lemmatize tokens.
 
-        Args:
-            token_and_pos: list,  *(token, POS)*.
-
-        Returns:
-            A lemma or a list of lemmas depends on your input.
+        :param list token_and_pos: *(token, POS)*.
+        :return: A lemma or a list of lemmas depends on your input.
 
         """
         if not isinstance(token_and_pos, list):
@@ -293,15 +309,11 @@ class EnProcessor:
         return [token.lemma_ for token in tokens]
 
     def get_all_lemmas(self, pos):
-        """ Lemmatize function for all words in WordNet.
+        r"""
+        Lemmatize function for all words in WordNet.
 
-        This method uses ``nltk.WordNetLemmatier`` to lemmatize tokens.
-
-        Args:
-            pos: POS tag pr a list of POS tag.
-
-        Returns:
-            A list of lemmas that have the given pos tag.
+        :param pos: POS tag pr a list of POS tag.
+        :return: A list of lemmas that have the given pos tag.
 
         """
         if self.__lemmatize is None:
@@ -313,19 +325,17 @@ class EnProcessor:
             return [self.__lemmatize(_pos) for _pos in pos]
 
     def get_delemmas(self, lemma_and_pos):
-        """ Delemmatize function.
+        r"""
+        Delemmatize function.
 
-        This method uses a pre-processed dict which maps (lemma, pos) to original token for delemmatizing.
+        This method uses a pre-processed dict which maps (lemma, pos) to
+        original token for delemmatizing.
 
-        Args:
-            lemma_and_pos: list or tuple.
-                A tuple or a list of tuples, *(lemma, POS)*.
-
-        Returns:
-            A word or a list of words, each word represents the specific form of input lemma.
+        :param tuple|list lemma_and_pos: A tuple or a list of *(lemma, POS)*.
+        :return: A word or a list of words, each word represents the specific
+            form of input lemma.
 
         """
-
         if self.__delemmatize is None:
             self.__delemmatize = self.model_manager.load(NLTK_WORDNET_DELEMMA)
         if not isinstance(lemma_and_pos, list):
@@ -337,22 +347,19 @@ class EnProcessor:
         else:
             return [
                 self.__delemmatize[token][pos]
-                if (token in self.__delemmatize) and (pos in self.__delemmatize[token])
-                else token
+                if (token in self.__delemmatize) and
+                   (pos in self.__delemmatize[token]) else token
                 for token, pos in lemma_and_pos
             ]
 
     def get_synsets(self, tokens_and_pos, lang="eng"):
-        """ Get synsets from WordNet.
+        r"""
+        Get synsets from WordNet.
 
-        This method uses NTLK WordNet to generate synsets, and uses "lesk" algorithm which
-        is proposed by Michael E. Lesk in 1986, to screen the sense out.
+        :param list tokens_and_pos: A list of tuples, *(token, POS)*.
+        :param str lang: language name
+        :return: A list of str, represents the sense of each input token.
 
-        Args:
-            tokens_and_pos: A list of tuples, *(token, POS)*.
-
-        Returns:
-            A list of str, represents the sense of each input token.
         """
         if self.__wordnet is None:
             self.__wordnet = self.model_manager.load(NLTK_WORDNET)
@@ -381,16 +388,18 @@ class EnProcessor:
         return ret
 
     def get_antonyms(self, tokens_and_pos, lang="eng"):
-        """ Get antonyms from WordNet.
+        r"""
+        Get antonyms from WordNet.
 
-        This method uses NTLK WordNet to generate antonyms, and uses "lesk" algorithm which
-        is proposed by Michael E. Lesk in 1986, to screen the sense out.
+        This method uses NTLK WordNet to generate antonyms, and uses "lesk"
+        algorithm which is proposed by Michael E. Lesk in 1986, to screen
+        the sense out.
 
-        Args:
-            tokens_and_pos: A list of tuples, *(token, POS)*.
 
-        Returns:
-            A list of str, represents the sense of each input token.
+        :param list tokens_and_pos: A list of tuples, *(token, POS)*.
+        :param str lang: language name.
+        :return: A list of str, represents the sense of each input token.
+
         """
         if self.__wordnet is None:
             self.__wordnet = self.model_manager.load(NLTK_WORDNET)
@@ -425,14 +434,14 @@ class EnProcessor:
         return ret
 
     def filter_candidates_by_pos(self, token_and_pos, candidates, lang="eng"):
-        """ Filter synonyms not contain the same pos tag with given token.
+        r"""
+        Filter synonyms not contain the same pos tag with given token.
 
-        Args:
-            token_and_pos: list/tuple
-            candidates: list
+        :param list|tuple token_and_pos: *(token, pos)*
+        :param list candidates: strings to verify
+        :param str lang: language name
+        :return: filtered candidates list.
 
-        Returns:
-            filtered candidates list.
         """
         def lesk(word, pos, candidates):
             can_word_pos = []
@@ -452,11 +461,11 @@ class EnProcessor:
         return lesk(word, self.normalize_pos(pos), candidates)
 
     def feature_extract(self, sent):
-        """Generate linguistic tags for tokens
-        Args:
-            sent: str
+        r"""
+        Generate linguistic tags for tokens.
 
-        Returns: list of dict
+        :param str sent: input sentence
+        :return: list of dict
 
         """
         sent_pos = self.get_pos(sent)

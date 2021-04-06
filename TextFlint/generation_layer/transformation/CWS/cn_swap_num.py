@@ -13,16 +13,19 @@ class CnSwapNum(Transformation):
     r"""
     Make short numbers grow into long numbers.
 
-    Example:
+    Example::
+
         九百 -> 八百九十九
+
     """
 
     def __init__(self, **kwargs):
         r"""
         :param list num_list: the list which include all the number we need
-                    if you want to change it you must change NUM_LIST,
-                    NUM_FLAG1, NUM_FLAG2, NUM_BEGIN, NUM_END
+            if you want to change it you must change NUM_LIST,
+            NUM_FLAG1, NUM_FLAG2, NUM_BEGIN, NUM_END
         :param **kwargs:
+
         """
         super().__init__()
         self.num_list = NUM_LIST
@@ -34,7 +37,7 @@ class CnSwapNum(Transformation):
         r"""
         We randomly generated five sets of data.
 
-        :param ~TextFlint.CWSSample sample: sample the data which need be changed
+        :param ~TextFlint.CWSSample sample: the data which need be changed
         :param int n: number of generated data
         :param **kwargs:
         :return: trans_sample a list of sample
@@ -64,6 +67,7 @@ class CnSwapNum(Transformation):
         :param list label: Chinese word segmentation tag
         :return list: three list include the pos which are changed the words
             which are changed and the labels which are changed
+
         """
         assert len(sentence) == len(label)
 
@@ -78,6 +82,7 @@ class CnSwapNum(Transformation):
                 if label[start] == 'S' and \
                         sentence[start - 1:start] != '第' \
                         and sentence[start] != '一':
+
                     if self.num_list.index(sentence[start]) < 10:
                         # if single number
                         # create a 至 b
@@ -130,6 +135,7 @@ class CnSwapNum(Transformation):
 
         :param int pos: the max length of number
         :return: the new number
+
         """
         # create chinese number
         if pos <= NUM_FLAG1:
@@ -155,6 +161,7 @@ class CnSwapNum(Transformation):
         :param int end: the end pos of the sentence
         :return str: the new number
         :return list: the label of new number
+
         """
         assert len(label) == len(sentence)
         # Digital conversion of start to end

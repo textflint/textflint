@@ -18,12 +18,13 @@ class WordSubstitute(Transformation):
     """
 
     def __init__(
-            self,
-            trans_min=1,
-            trans_max=10,
-            trans_p=0.1,
-            stop_words=None,
-            **kwargs):
+        self,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words=None,
+        **kwargs
+    ):
         r"""
         :param int trans_min: Minimum number of word will be augmented.
         :param int trans_max: Maximum number of word will be augmented. If None
@@ -36,6 +37,7 @@ class WordSubstitute(Transformation):
             augment operation.
         :param ~TextFlint.common.preprocess.EnProcessor processor:
         :param bool get_pos: whether pass pos tag to _get_substitute_words API.
+
         """
         super().__init__()
         self.trans_min = trans_min
@@ -53,6 +55,7 @@ class WordSubstitute(Transformation):
         :param str fields: indicate which field to apply transformation
         :param int n: number of generated samples
         :return list: transformed sample list.
+
         """
 
         tokens = sample.get_words(field)
@@ -94,6 +97,7 @@ class WordSubstitute(Transformation):
         :param None|list pos: None or list of pos tags
         :param int n: max candidates for each word to be substituted
         :return list: list of list
+
         """
         # process each legal words to get maximum transformed samples
         legal_words = [words[index] for index in legal_indices]
@@ -123,6 +127,7 @@ class WordSubstitute(Transformation):
         :param str word:
         :param str pos: the pos tag
         :return list: candidates list
+
         """
         raise NotImplementedError
 
@@ -133,6 +138,7 @@ class WordSubstitute(Transformation):
 
         :param list tokens: tokenized words or word with pos tag pairs
         :return list: the index of the replaced tokens
+
         """
         raise NotImplementedError
 
@@ -142,6 +148,7 @@ class WordSubstitute(Transformation):
 
         :param str token: the input word to be judged
         :return bool: is a stop word or not
+
         """
         return self.stop_words is not None and token in self.stop_words
 
@@ -154,6 +161,7 @@ class WordSubstitute(Transformation):
                 Indicates whether each word is allowed to be substituted.
                 ORIGIN is allowed, while TASK_MASK and MODIFIED_MASK is not.
         :return list: List of possible substituted token index.
+
         """
         assert len(tokens) == len(mask)
         results = []
@@ -178,6 +186,7 @@ class WordSubstitute(Transformation):
 
         :param int size: the size of target sentence
         :return int: number of words to apply transformation.
+
         """
 
         cnt = int(self.trans_p * size)

@@ -45,11 +45,14 @@ class LMSubPopulation(SubPopulation):
         self.model.to(self.device)
 
     def _score(self, sample, fields, **kwargs):
-        r"""Calculate the score based on text perplexity
+        r"""
+        Calculate the score based on text perplexity
+
         :param sample: data sample
         :param list fields: list of field str
         :param kwargs:
         :return int: score for sample
+
         """
         if not self.model:
             self.load_model()

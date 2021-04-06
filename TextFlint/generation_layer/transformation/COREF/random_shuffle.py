@@ -19,7 +19,8 @@ class RndShuffle(Transformation):
         trans_p: proportion of deleted sentences; default 0.2
         processor: TextFlint.common.preprocess.TextProcessor.
 
-    Example:
+    Example::
+
         ori: {
             'sentences': [
                 ['I', 'came'], ['I', 'saw'], ['I', 'conquered'], 
@@ -47,17 +48,20 @@ class RndShuffle(Transformation):
 
     def _transform(self, sample, n=5, **kwargs):
         r"""
-        :param ~TextFlint.input_layer.component.sample.CorefSample sample: a CorefSample
+        :param ~TextFlint.CorefSample sample: a CorefSample
         :param str|list fields: Not used
         :param int n: optional; number of generated samples
         :param list samples_other: optional, list of dict
             `samples_other` contains some other CorefSamples that also
             originate from conll-style dicts.
         :return list: samples_tfed, transformed sample list.
+
         """
-        if sample.num_sentences() <= 1: return [sample] * n
+        if sample.num_sentences() <= 1:
+            return [sample] * n
         num_sentences = sample.num_sentences()
         samples_tfed = []
+
         for i in range(n):
             # shuffle: swap for trans_p * num_sentences (at least 1) times
             tfed_sen_idxs = list(range(num_sentences))
@@ -71,4 +75,5 @@ class RndShuffle(Transformation):
             # get the tfed sample and append to list
             sample_tfed = sample.shuffle_conll(tfed_sen_idxs)
             samples_tfed.append(sample_tfed)
+
         return samples_tfed

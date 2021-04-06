@@ -112,6 +112,7 @@ class Keyboard(WordSubstitute):
     For example, people may type i as o incorrectly.\
     One keyboard distance is leveraged to replace character by possible
     keyboard error.
+
     """
     def __init__(
         self,
@@ -149,6 +150,7 @@ class Keyboard(WordSubstitute):
         :param str lang: Indicate built-in language model. Default value is
             'en'. Possible values are 'en' and 'th'. If custom model is used
             (passing model_path), this value will be ignored.
+
         """
         super().__init__(
             min_char=min_char,
@@ -193,6 +195,7 @@ class Keyboard(WordSubstitute):
         :param int n: number of transformed tokens to generate.
         :param kwargs:
         :return list replaced_tokens: replaced tokens list
+
         """
 
         replaced_tokens = []
@@ -236,11 +239,13 @@ class Keyboard(WordSubstitute):
             numeric=True,
             upper_case=True,
             lang="en",
-            rules_path=None):
+            rules_path=None
+    ):
         return KeyboardRules(
             special_char=special_char,
             numeric=numeric,
             upper_case=upper_case,
             lang=lang,
-            rules_path=rules_path)
+            rules_path=rules_path
+        )
 

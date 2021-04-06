@@ -1,7 +1,7 @@
 r"""
 BirthSwap class for birth-related transformation
 """
-from TextFlint.input_layer.component.sample import RESample
+from ....input_layer.component.sample import RESample
 from ...transformation import Transformation
 
 __all__ = ["SwapBirth"]
@@ -14,8 +14,9 @@ class SwapBirth(Transformation):
     """
 
     def __init__(
-            self,
-            **kwargs):
+        self,
+        **kwargs
+    ):
         super().__init__()
 
     def __repr__(self):

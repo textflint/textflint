@@ -16,12 +16,14 @@ class Transformation(ABC):
     r"""
     An abstract class for transforming a sequence of text to produce a list of
     potential adversarial example.
+
     """
     processor = EnProcessor()
 
     def __init__(
-            self,
-            **kwargs):
+        self,
+        **kwargs
+    ):
         pass
 
     def __repr__(self):
@@ -37,6 +39,7 @@ class Transformation(ABC):
         :param str|list field: Indicate which fields to apply transformations.
         :param dict **kwargs: other auxiliary params.
         :return: list of Sample
+
         """
         if n < 1:
             return []
@@ -80,7 +83,7 @@ class Transformation(ABC):
             logger.error(str(e))
             raise FlintError("You hit an internal error. "
                              "Please open an issue in "
-                             "https://github.com/TextFlint"
+                             "https://github.com/textflint/textflint"
                              " to report it.")
         if transform_results:
             return [sample for sample in transform_results
@@ -99,6 +102,7 @@ class Transformation(ABC):
         :param str field: Indicate which field to apply transformations.
         :param dict **kwargs: other auxiliary params.
         :return: list of Sample
+
         """
         raise NotImplementedError
 
@@ -110,6 +114,7 @@ class Transformation(ABC):
         :param list x: list to sample
         :param int num: sample number
         :return: max 'num' unique samples.
+
         """
         if isinstance(x, list):
             num = min(num, len(x))

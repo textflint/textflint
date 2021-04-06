@@ -70,20 +70,3 @@ class TextCNNTorch(TorchModel):
 
         return [x], y
 
-
-if __name__ == "__main__":
-    from ..test_model.model_helper import data_loader_csv
-    import os
-    curPath = os.path.abspath(os.path.dirname(__file__))
-    sa_data_set = data_loader_csv(
-        os.path.join(curPath, '../test_model/sa_test.csv')
-    )
-
-    train_data_set = sa_data_set[:int(len(sa_data_set) * 0.7)]
-    test_data_set = sa_data_set[int(len(sa_data_set) * 0.7):]
-    # sa_data_set = [{"x": "I hate you", "y": "negative"},
-    #                {"x": "I love you", "y": "positive"}]
-    print("finish load!")
-    textcnn_wrapper = TextCNNTorch()
-
-    print(textcnn_wrapper.evaluate(sa_data_set))

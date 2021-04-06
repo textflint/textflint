@@ -13,14 +13,17 @@ class SwapContraction(Transformation):
     r"""
     Replace abbreviations with full names.
 
-    Example:
+    Example::
+
         央视 -> 中央电视台
+
     """
 
     def __init__(self, **kwargs):
         r"""
         :param dict abbreviation_dict: the dictionary of abbreviation
         :param **kwargs:
+
         """
         super().__init__()
         self.abbreviation_dict = self.make_dict(
@@ -36,6 +39,7 @@ class SwapContraction(Transformation):
 
         :param str path: the path of data
         :return: the dic of data
+
         """
         dic = {}
         lines = plain_lines_loader(path)
@@ -52,6 +56,7 @@ class SwapContraction(Transformation):
         :param **kwargs:
         :return: In this function, because there is only one deformation mode,
             only one set of outputs is output
+
         """
         # get sentence and label
         origin_words = sample.get_words()
@@ -73,6 +78,7 @@ class SwapContraction(Transformation):
         :return: change_pos, change_sentence, change_label
                 three list include the pos which changed the word which changed
                 and the label which changed
+
         """
         assert isinstance(words, list), \
             'The type of wrods must be a list not {0}'.format(type(words))
