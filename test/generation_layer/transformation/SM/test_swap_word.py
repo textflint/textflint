@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.sm_sample import SMSample
-from TextFlint.generation_layer.transformation.SM import SwapWord
+from textflint.input_layer.component.sample.sm_sample import SMSample
+from textflint.generation_layer.transformation.SM import SwapWord
 
 sample1 = SMSample({'sentence1': 'There are two little boys smiling.',
         'sentence2': 'Two little boys are smiling and laughing while one is '

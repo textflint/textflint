@@ -1,6 +1,6 @@
 import unittest
-from TextFlint.input_layer.component.sample.ner_sample import NERSample
-from TextFlint.generation_layer.transformation.NER.concat_sent import ConcatSent
+from textflint.input_layer.component.sample.ner_sample import NERSample
+from textflint.generation_layer.transformation.NER.concat_sent import ConcatSent
 
 sent1 = 'EU rejects German call to boycott British lamb .'
 sent_list = ['EU', 'rejects', 'German', 'call', 'to', 'boycott',

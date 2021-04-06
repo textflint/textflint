@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.common.preprocess.tokenizer import *
+from textflint.common.preprocess.tokenizer import *
 
 sents = [
         "we're playing ping pang ball, you are so lazy. She's so beautiful!",

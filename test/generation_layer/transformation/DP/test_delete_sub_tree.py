@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.dp_sample import DPSample
-from TextFlint.generation_layer.transformation.DP.delete_sub_tree \
+from textflint.input_layer.component.sample.dp_sample import DPSample
+from textflint.generation_layer.transformation.DP.delete_sub_tree \
     import DeleteSubTree
 
 word = ['Influential', 'members', 'of', 'the', 'House', 'Ways', 'and',

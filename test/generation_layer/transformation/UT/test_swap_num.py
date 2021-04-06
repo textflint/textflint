@@ -1,8 +1,8 @@
 import unittest
 import editdistance
 
-from TextFlint.input_layer.component.sample import SASample
-from TextFlint.generation_layer.transformation.UT.swap_num import SwapNum
+from textflint.input_layer.component.sample import SASample
+from textflint.generation_layer.transformation.UT.swap_num import SwapNum
 
 
 class TestNumber(unittest.TestCase):

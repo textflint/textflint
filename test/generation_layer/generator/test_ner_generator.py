@@ -1,6 +1,6 @@
 import unittest
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.generation_layer.generator.ner_generator import NERGenerator
+from textflint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.ner_generator import NERGenerator
 
 sample1 = {'x': 'Amy lives in a city , which is called NYK .',
            'y': ['B-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O']}

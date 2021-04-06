@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.common.preprocess.en_processor import EnProcessor
+from textflint.common.preprocess.en_processor import EnProcessor
 
 
 class TestEnProcessor(unittest.TestCase):

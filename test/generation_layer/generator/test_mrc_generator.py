@@ -1,7 +1,7 @@
 import unittest
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.generation_layer.generator.mrc_generator import MRCGenerator
-from TextFlint.input_layer.component.sample import MRCSample
+from textflint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.mrc_generator import MRCGenerator
+from textflint.input_layer.component.sample import MRCSample
 
 context = 'Super Bowl 50 was an American football game to determine ' \
           'the champion of the National Football League ' \

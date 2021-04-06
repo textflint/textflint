@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.generation_layer.transformation.POS.prefix_swap import SwapPrefix
-from TextFlint.input_layer.component.sample.pos_sample import *
+from textflint.generation_layer.transformation.POS.prefix_swap import SwapPrefix
+from textflint.input_layer.component.sample.pos_sample import *
 
 data = {'x': ['That', 'is', 'a', 'prefixed', 'survey'],
         'y': ['DT', 'VBZ', 'DT', 'JJ', 'NN']}

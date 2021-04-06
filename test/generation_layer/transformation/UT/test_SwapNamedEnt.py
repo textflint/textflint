@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample import SASample
-from TextFlint.generation_layer.transformation.UT.swap_named_ent \
+from textflint.input_layer.component.sample import SASample
+from textflint.generation_layer.transformation.UT.swap_named_ent \
     import SwapNamedEnt
 
 

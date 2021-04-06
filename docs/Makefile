@@ -5,7 +5,7 @@
 SPHINXOPTS    =
 SPHINXAPIDOC  = sphinx-apidoc
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = TextFlint
+SPHINXPROJ    = textflint
 SOURCEDIR     = source
 BUILDDIR      = build
 

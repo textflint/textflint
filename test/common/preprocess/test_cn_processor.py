@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.common.preprocess.cn_processor import CnProcessor
+from textflint.common.preprocess.cn_processor import CnProcessor
 
 
 class TestCnProcessor(unittest.TestCase):

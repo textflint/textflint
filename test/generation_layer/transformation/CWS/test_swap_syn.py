@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.generation_layer.transformation.CWS.swap_syn import SwapSyn
-from TextFlint.input_layer.component.sample.cws_sample import CWSSample
+from textflint.generation_layer.transformation.CWS.swap_syn import SwapSyn
+from textflint.input_layer.component.sample.cws_sample import CWSSample
 
 sent1 = '大哥过奖了'
 data_sample = CWSSample({'x': sent1, 'y': ['B', 'E', 'B', 'E', 'S']})

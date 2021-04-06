@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample import SASample
-from TextFlint.generation_layer.transformation.UT.mlm_suggestion import MLMSuggestion
+from textflint.input_layer.component.sample import SASample
+from textflint.generation_layer.transformation.UT.mlm_suggestion import MLMSuggestion
 
 
 class TestMLM(unittest.TestCase):

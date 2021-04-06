@@ -7,8 +7,8 @@ ssl._create_default_https_context = ssl._create_unverified_context
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
-from TextFlint.input_layer.component.sample.re_sample import RESample
-from TextFlint.generation_layer.transformation.RE.swap_employee \
+from textflint.input_layer.component.sample.re_sample import RESample
+from textflint.generation_layer.transformation.RE.swap_employee \
     import SwapEmployee
 
 data = {'x': ["``", "The", "situation", "is", "very", "serious", ",", "''",

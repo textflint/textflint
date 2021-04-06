@@ -3,8 +3,8 @@ import unittest
 
 import pandas as pd
 
-from TextFlint.report_layer.analyzer.analyzer import *
-from TextFlint.report_layer.report_generator.report_generator \
+from textflint.report_layer.analyzer.analyzer import *
+from textflint.report_layer.report_generator.report_generator \
     import BarChart, ReportGenerator
 
 test_evaluate_result = {

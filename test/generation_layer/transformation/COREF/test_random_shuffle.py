@@ -1,5 +1,5 @@
-from TextFlint.generation_layer.generator.coref_generator import CorefGenerator
-from TextFlint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.coref_generator import CorefGenerator
+from textflint.input_layer.dataset import Dataset
 import unittest
 from test.data.coref_debug import CorefDebug
 

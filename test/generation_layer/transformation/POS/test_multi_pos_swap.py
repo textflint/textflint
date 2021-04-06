@@ -1,8 +1,8 @@
 import unittest
 
-from TextFlint.generation_layer.transformation.POS.multi_pos_swap \
+from textflint.generation_layer.transformation.POS.multi_pos_swap \
     import SwapMultiPOS
-from TextFlint.input_layer.component.sample.pos_sample import *
+from textflint.input_layer.component.sample.pos_sample import *
 
 data = {'x': ['That', 'is', 'a', 'pretty', 'prefixed', 'survey'],
         'y': ['DT', 'VBZ', 'DT', 'RB', 'JJ', 'NN']}

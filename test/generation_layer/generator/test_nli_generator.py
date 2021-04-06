@@ -1,8 +1,8 @@
 import unittest
 
-from TextFlint.common import logger
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.generation_layer.generator.nli_generator import NLIGenerator
+from textflint.common import logger
+from textflint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.nli_generator import NLIGenerator
 
 sample1 = {'hypothesis': 'MR zhang has 10 students',
         'premise': 'Mr zhang has 20 students',

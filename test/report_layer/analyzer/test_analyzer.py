@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.report_layer.analyzer import Analyzer
+from textflint.report_layer.analyzer import Analyzer
 
 
 evaluate_result = {

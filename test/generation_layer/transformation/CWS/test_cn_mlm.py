@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.generation_layer.transformation.CWS.cn_mlm import CnMLM
-from TextFlint.input_layer.component.sample.cws_sample import CWSSample
+from textflint.generation_layer.transformation.CWS.cn_mlm import CnMLM
+from textflint.input_layer.component.sample.cws_sample import CWSSample
 
 sent1 = '小明 喜欢 看书 。'
 data_sample = CWSSample({'x': sent1, 'y': []})

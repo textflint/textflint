@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample import SASample
-from TextFlint.generation_layer.transformation.UT.insert_adv import InsertAdv
+from textflint.input_layer.component.sample import SASample
+from textflint.generation_layer.transformation.UT.insert_adv import InsertAdv
 
 sent1 = 'The quick brown fox jumps over the lazy dog .'
 data_sample = SASample({'x': sent1, 'y': "negative"})

@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.generation_layer.generator.sm_generator import SMGenerator
+from textflint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.sm_generator import SMGenerator
 
 sample1 = {'sentence1': 'MR zhang has 10 students',
         'sentence2': 'Mr zhang has 20 students',

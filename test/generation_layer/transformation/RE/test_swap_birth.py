@@ -8,8 +8,8 @@ curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
 
-from TextFlint.input_layer.component.sample.re_sample import RESample
-from TextFlint.generation_layer.transformation.RE.swap_birth import SwapBirth
+from textflint.input_layer.component.sample.re_sample import RESample
+from textflint.generation_layer.transformation.RE.swap_birth import SwapBirth
 
 data = {'x': ["``", "The", "situation", "is", "very", "serious", ",", "''",
               "Mattis", ",", "30", ",", "told", "reporters", "after",

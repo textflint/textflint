@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.generation_layer.generator.re_generator import REGenerator
+from textflint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.re_generator import REGenerator
 
 sample1 = {'x': ["``", "The", "situation", "is", "very", "serious", ",", "''",
                  "Mattis", ",", "30", ",", "told", "reporters", "after",

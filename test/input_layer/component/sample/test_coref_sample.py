@@ -1,4 +1,4 @@
-from TextFlint.input_layer.component.sample.coref_sample import *
+from textflint.input_layer.component.sample.coref_sample import *
 import unittest
 import random
 from test.data.coref_debug import CorefDebug

@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.ner_sample import *
+from textflint.input_layer.component.sample.ner_sample import *
 
 data = {'x': ['EU', 'rejects', 'German', 'call', 'to', 'boycott', 'British',
               'lamb', '.'],

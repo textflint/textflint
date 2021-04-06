@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.sa_sample import SASample
-from TextFlint.generation_layer.transformation.SA.double_denial \
+from textflint.input_layer.component.sample.sa_sample import SASample
+from textflint.generation_layer.transformation.SA.double_denial \
     import DoubleDenial
 
 data = {'x': "It's a Bad movie. Bad actor",

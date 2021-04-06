@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.generation_layer.subpopulation.UT import PrejudiceSubPopulation
-from TextFlint.input_layer.component.sample import NLISample
+from textflint.generation_layer.subpopulation.UT import PrejudiceSubPopulation
+from textflint.input_layer.component.sample import NLISample
 
 sub = PrejudiceSubPopulation(mode='man')
 

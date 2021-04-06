@@ -1,8 +1,8 @@
 import unittest
 
-from TextFlint.generation_layer.transformation.CWS.swap_contraction \
+from textflint.generation_layer.transformation.CWS.swap_contraction \
     import SwapContraction
-from TextFlint.input_layer.component.sample.cws_sample import CWSSample
+from textflint.input_layer.component.sample.cws_sample import CWSSample
 
 sent1 = '来自 央视 报道 。'
 data_sample = CWSSample({'x': sent1, 'y': []})

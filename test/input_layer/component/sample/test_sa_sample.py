@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.sa_sample import *
+from textflint.input_layer.component.sample.sa_sample import *
 
 data = {'x': "Brilliant and moving performances by "
              "Tom Courtenay and Peter Finch",

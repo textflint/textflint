@@ -1,10 +1,10 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.mrc_sample import MRCSample
-from TextFlint.generation_layer.transformation.MRC import AddSentDiverse
-from TextFlint.common.settings import NEAR_DICT_PATH, POS_DICT_PATH
-from TextFlint.common.utils.install import download_if_needed
-from TextFlint.common.utils import load_supporting_file
+from textflint.input_layer.component.sample.mrc_sample import MRCSample
+from textflint.generation_layer.transformation.MRC import AddSentDiverse
+from textflint.common.settings import NEAR_DICT_PATH, POS_DICT_PATH
+from textflint.common.utils.install import download_if_needed
+from textflint.common.utils import load_supporting_file
 
 seed = 123
 

@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.generation_layer.subpopulation.UT import PhraseSubPopulation
-from TextFlint.input_layer.component.sample import NLISample
+from textflint.generation_layer.subpopulation.UT import PhraseSubPopulation
+from textflint.input_layer.component.sample import NLISample
 sent1 = 'Mr Zhang has 10 students in Fudan university.'
 sent2 = 'Mr Zhang has 10 students.'
 sample1 = NLISample({

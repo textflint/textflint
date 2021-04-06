@@ -1,6 +1,6 @@
 import unittest
-from TextFlint.input_layer.component.sample.ner_sample import NERSample
-from TextFlint.generation_layer.transformation.NER.swap_ent import SwapEnt
+from textflint.input_layer.component.sample.ner_sample import NERSample
+from textflint.generation_layer.transformation.NER.swap_ent import SwapEnt
 
 sent1 = 'SOCCER - JAPAN GET LUCKY WIN , CHINA IN SURPRISE DEFEAT .'
 tags = []
