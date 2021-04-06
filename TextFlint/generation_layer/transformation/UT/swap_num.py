@@ -32,6 +32,7 @@ class SwapNum(WordSubstitute):
         :param str pos: pos tag
         :param int n: max number of candidates
         :return list candidates: candidates list
+
         """
         n = max(n, 1)
         candidates = []

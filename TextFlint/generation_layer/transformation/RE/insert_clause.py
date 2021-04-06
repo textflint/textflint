@@ -7,6 +7,8 @@ import wikidata
 from wikidata.client import Client
 import random
 import json
+
+from ....common.utils.error import FlintError
 from ...transformation import Transformation
 from ....input_layer.component.sample.re_sample import RESample
 from ....common.settings import WIKIDATA_STATEMENTS_no_zero, \
@@ -19,7 +21,10 @@ class InsertClause(Transformation):
 
     """
 
-    def __init__(self, **kwargs):
+    def __init__(
+        self,
+        **kwargs
+    ):
         super().__init__()
 
     def __repr__(self):
@@ -32,8 +37,13 @@ class InsertClause(Transformation):
         :return list: information of query entity
         """
         search = scbase + query
-        url = urllib.request.urlopen(search)
-        data = json.loads(url.read().decode())
+        try:
+            url = urllib.request.urlopen(search)
+        except OSError:
+            raise FlintError('Time out to access Wikidata, '
+                             'plz check your network!')
+        else:
+            data = json.loads(url.read().decode())
         return data['search']
 
     def _get_clause(self, entid):
@@ -93,8 +103,7 @@ class InsertClause(Transformation):
 
         sh, st, oh, ot = sample.get_en()
         text, relation = sample.get_sent()
-        subj = ' '.join(text[sh:st + 1])
-        obj = ' '.join(text[oh:ot + 1])
+
         trans_sample = {}
         head_entity_span = [sh, st]
         head_entity_name = ' '.join(
@@ -119,10 +128,11 @@ class InsertClause(Transformation):
         if clauseadd:
             if tail_entity_span[1] < head_entity_span[0]:  # tail ... head
                 head_entity_span[0], head_entity_span[1] = \
-                    head_entity_span[0] + len(clauseadd), head_entity_span[
-                    1] + len(clauseadd)
+                    head_entity_span[0] + len(clauseadd), \
+                    head_entity_span[1] + len(clauseadd)
             new_text = new_text[:tail_entity_span[1] + 1] + \
                        clauseadd + new_text[tail_entity_span[1] + 1:]
+
         assert head_entity_name == " ".join(
             new_text[head_entity_span[0]:head_entity_span[1] + 1])
         assert tail_entity_name == " ".join(

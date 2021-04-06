@@ -22,13 +22,16 @@ class CWSSample(Sample):
         you must input an empty list and x must each word in x is separated by
         a space or split into each element of the list
     Note that punctuation should be separated into a single word
-    example:
+
+    Example::
+
         1. input {'x':'小明好想送Jo圣诞礼物', 'y' = ['B', 'E', 'B', 'E', 'S', 'B',
             'E', 'B', 'E', 'B', 'E']}
         2. input {'x':['小明','好想送Jo圣诞礼物'], 'y' = ['B', 'E', 'B', 'E', 'S',
             'B', 'E', 'B', 'E', 'B', 'E']}
         3. input {'x':'小明 好想 送 Jo 圣诞 礼物', 'y' = []}
         4. input {'x':['小明', '好想', '送', 'Jo', '圣诞', '礼物'], 'y' = []}
+
     """
 
     def __init__(self, data, origin=None, sample_id=None):
@@ -36,13 +39,9 @@ class CWSSample(Sample):
         :param dict data: The dict obj that contains data info
         :param int sample_id: the id of sample
         :param bool origin: if the sample is origin
+
         """
         super().__init__(data, origin=origin, sample_id=sample_id)
-        r"""
-        :param dict data: The dict obj that contains data info
-        :param int sample_id: the id of sample
-        :param bool origin: if the sample is origin
-        """
 
     def __repr__(self):
         return 'CWSSample'
@@ -54,10 +53,11 @@ class CWSSample(Sample):
     def check_data(self, data):
         r"""
         Check the whether the data legitimate but we don't check that the label
-            is correct if the data is not legal but acceptable format, change
-            the format of data
+        is correct if the data is not legal but acceptable format, change
+        the format of data
 
         :param dict data: The dict obj that contains data info
+
         """
         assert 'x' in data and 'y' in data
         assert isinstance(data['y'], list), \
@@ -92,7 +92,7 @@ class CWSSample(Sample):
             assert tag in cws_tag
 
     def load(self, data):
-        """
+        r"""
         Convert data dict which contains essential information to CWSSample.
 
         :param dict data: The dict obj that contains data info
@@ -124,10 +124,11 @@ class CWSSample(Sample):
         return self.x.ner()
 
     def get_words(self):
-        """
+        r"""
         Get the words from the sentence.
 
         :return list: the words in sentence
+
         """
         start = 0
         words = []
@@ -153,6 +154,7 @@ class CWSSample(Sample):
         :param list new_items: The list of the item need to be changed.
         :param list y_new_items: The list of the mask info need to be changed.
         :return: replaced CWSSample object.
+
         """
         indices, items, mask, y_new_items = self.check(
             indices, new_items, y_new_items)
@@ -229,7 +231,7 @@ class CWSSample(Sample):
         r"""
         Get the label of the word.
 
-        :param str word: The word you want to get labels.
+        :param str words: The word you want to get labels.
         :return list: the label of the words.
         """
         assert isinstance(words, str), \

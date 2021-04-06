@@ -2,7 +2,8 @@ import random
 import numpy as np
 
 """ Overlap templates for NLI transformation NLIOverlap
-    Heavily borrowed from Right for the Wrong Reasons: Diagnosing Syntactic Heuristics in Natural Language Inference ACL2019.
+    Heavily borrowed from Right for the Wrong Reasons: Diagnosing Syntactic 
+    Heuristics in Natural Language Inference ACL2019.
     For code, please check the following link:
     https://github.com/tommccoy1/hans
 """
@@ -1016,7 +1017,8 @@ const_quot_templates = [
         ["(ROOT (S (NP (DT The) (", "nn,1", " ", 1, ")) (VP (VBD ", 2,
          ") (SBAR (IN that) (S (NP (DT the) (", "nn,5", " ",
          5, ")) ", "pvp,6", "))) (. .)))"], ["(ROOT (S (NP (DT The) (",
-                                             "nn,5", " ", 5, ")) ", "pvp,6", " (. .)))"]))
+                                             "nn,5", " ", 5, ")) ", "pvp,6",
+                                             " (. .)))"]))
 ]
 # All appear at least 100 with S complements "seemed", "appeared", "told",
 # "reported"
@@ -1125,7 +1127,8 @@ const_quot_ent_templates = [(1.0, (
     ["(ROOT (S (NP (DT The) (", "nn,1", " ", 1, ")) (VP (VBD ", 2,
      ") (SBAR (IN that) (S (NP (DT the) (", "nn,5", " ", 5,
      ")) ", "pvp,6", "))) (. .)))"], ["(ROOT (S (NP (DT The) (",
-                                      "nn,5", " ", 5, ")) ", "pvp,6", " (. .)))"]))]
+                                      "nn,5", " ", 5, ")) ", "pvp,6",
+                                      " (. .)))"]))]
 
 # Constituent: Conjunction
 const_conj_templates = [

@@ -13,6 +13,7 @@ from ....common.utils.word_op import *
 class Typos(WordSubstitute):
     r"""
     Transformation that simulate typos error to transform sentence.
+
     https://arxiv.org/pdf/1711.02173.pdf
 
     """
@@ -42,6 +43,7 @@ class Typos(WordSubstitute):
             'delete'].
         :param bool skip_first_char: whether skip the first char of target word.
         :param bool skip_last_char: whether skip the last char of target word.
+
         """
         super().__init__(
             trans_min=trans_min,
@@ -75,6 +77,7 @@ class Typos(WordSubstitute):
         :param int n: number of transformed tokens to generate.
         :param kwargs:
         :return list replaced_tokens: replaced tokens list
+
         """
         candidates = set()
 

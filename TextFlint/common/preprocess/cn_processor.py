@@ -9,7 +9,8 @@ __all__ = ['CnProcessor']
 
 class CnProcessor:
     r"""
-        Text Processor class implement NER.
+    Text Processor class implement NER.
+
     """
     _instance_lock = threading.Lock()
 

@@ -4,8 +4,10 @@ Replacing its words with antonyms provided by WordNet
 """
 __all__ = ["SwapWord"]
 from nltk.wsd import lesk
+
 from ...transformation import Transformation
 from ....common.settings import BLACK_LIST_WORD
+
 
 class SwapWord(Transformation):
     r"""
@@ -18,17 +20,19 @@ class SwapWord(Transformation):
 
     https://www.aclweb.org/anthology/C18-1198/
 
-    exmaple:
-    {
-        sentence1: I hate this book.
-        sentence2: This book is my favorite.
-        y: 0
-    }
+    Example::
+
+        {
+            sentence1: I hate this book.
+            sentence2: This book is my favorite.
+            y: 0
+        }
     """
 
     def __init__(
-            self,
-            language="eng"):
+        self,
+        language="eng"
+    ):
         r"""
         :param string language: language of transformation
         """
@@ -48,8 +52,8 @@ class SwapWord(Transformation):
         :param int n: Default is 1. MAX number of unique augmented output
         :param **kwargs:
         :return: Augmented data
-        """
 
+        """
         transform_results = self._transform(sample, **kwargs)
 
         if transform_results:
@@ -60,7 +64,7 @@ class SwapWord(Transformation):
     def _transform(self, sample, **kwargs):
         r"""
         Transform text string, this kind of transformation
-            can only produce one sample.
+        can only produce one sample.
 
         :param ~NLISample sample: input data, a NLISample contains
             'sentence1' field, 'sentence2' field and 'y' field
@@ -68,8 +72,8 @@ class SwapWord(Transformation):
             can only generate one sample
         :return list trans_samples: transformed sample list that
             only contain one sample
-        """
 
+        """
         label_tag = sample.get_value('y')
 
         if label_tag != '1':
@@ -82,10 +86,12 @@ class SwapWord(Transformation):
         for num, each_word in enumerate(tokens2):
             if each_word not in self.blacklist_words:
                 best_sense = lesk(tokens2, each_word)
+
                 if best_sense is not None and (
                         best_sense.pos() == 's' or best_sense.pos() == 'n'):
                     for lemma in best_sense.lemmas():
                         possible_antonyms = lemma.antonyms()
+
                         for antonym in possible_antonyms:
                             if "_" in antonym._name or \
                                     antonym._name == "civilian":

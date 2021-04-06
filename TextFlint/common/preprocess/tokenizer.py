@@ -42,7 +42,9 @@ def tokenize_one_sent(text, split_by_space=False):
     else:
         return [
             word.text.replace("''", '"')
-                .replace("``", '"') for word in nlp.tokenizer(text) if word.text != ' ' * len(word)]
+                .replace("``", '"') for word in nlp.tokenizer(text)
+            if word.text != ' ' * len(word)
+        ]
 
 
 def tokenize(text, is_one_sent=False, split_by_space=False):

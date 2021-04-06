@@ -20,13 +20,14 @@ class Validator(ABC):
         the dataset of translate sample
     :param str|list fields: the name of the origin field need compare.
     :param bool need_tokens: if we need tokenize the sentence
+
     """
     def __init__(
-            self,
-            origin_dataset,
-            trans_dataset,
-            fields,
-            need_tokens=False
+        self,
+        origin_dataset,
+        trans_dataset,
+        fields,
+        need_tokens=False
     ):
         assert isinstance(origin_dataset, Dataset), f"Input must be a {Dataset}"
         assert isinstance(trans_dataset, Dataset), f"Input must be a {Dataset}"
@@ -51,12 +52,14 @@ class Validator(ABC):
         :param str transformed_text: transformed sentence
         :param str reference_text: origin sentence
         :return float: the score of two sentence
+
         """
         raise NotImplementedError()
 
     def check_data(self):
         r"""
         Check whether the input data is legal
+
         """
         self.id2loc = {}
         for i in range(len(self.ori_dataset)):
@@ -94,19 +97,23 @@ class Validator(ABC):
         Calculate the score of the deformed sentence
 
         :return list: a list of translate sentence score
+
         """
         if not self._score:
             self.check_data()
             self._score = []
+
             for trans_sample in self.trans_dataset:
                 for field in self.fields:
                     score = []
                     trans = trans_sample.get_words(field) \
                         if self.need_tokens else trans_sample.get_text(field)
+
                     ori = self.ori_dataset[self.id2loc[trans_sample.sample_id]]
                     ori = ori.get_words(field) if self.need_tokens \
                         else ori.get_text(field)
                     score.append(self.validate(trans, ori))
+
                 self._score.append(numpy.mean(score))
             assert len(self._score) == len(self.trans_dataset), \
                 "The len of the score not equal transset."

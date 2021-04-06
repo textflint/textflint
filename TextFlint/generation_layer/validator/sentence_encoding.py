@@ -13,10 +13,10 @@ __all__ = ['SentenceEncoding']
 
 class SentenceEncoding(Validator):
     def __init__(
-            self,
-            origin_dataset,
-            trans_dataset,
-            fields
+        self,
+        origin_dataset,
+        trans_dataset,
+        fields
     ):
         r"""
         Constraint using similarity between sentence encodings of origin and
@@ -27,6 +27,7 @@ class SentenceEncoding(Validator):
         :param ~TextFlint.input_layer.dataset trans_dataset:
             the dataset of translate sample
         :param str|list fields: the name of the origin field need compare.
+
         """
         super().__init__(
             origin_dataset,
@@ -54,6 +55,7 @@ class SentenceEncoding(Validator):
         :param str transformed_texts: transformed sentence
         :param str reference_text: origin sentence
         :return float: the score of two sentence
+
         """
         transformed_embeddings = self.encode(transformed_texts)
         reference_embeddings = self.encode(reference_text).expand(

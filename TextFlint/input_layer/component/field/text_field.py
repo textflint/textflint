@@ -12,20 +12,14 @@ from ....common.settings import ORIGIN, TASK_MASK, MODIFIED_MASK
 
 
 class TextField(Field):
-    """A helper class that represents input string that to be modified.
+    """
+    A helper class that represents input string that to be modified.
 
     Text that Sample contains parsed in data set,
     ``TextField`` provides multiple methods for Sample to modify.
 
-    Support sentence level and word level modification, default using word level API.
-
-    Attributes:
-        field_value: str / list
-            Sentence string or tokenized words.
-        is_one_sent: bool
-            whether input is a sentence
-        split_by_space: bool
-            splitting sentence by white or tokenizer
+    Support sentence level and word level modification,
+    default using word level API.
 
     """
     text_processor = EnProcessor()
@@ -38,6 +32,15 @@ class TextField(Field):
             split_by_space=False,
             **kwargs
     ):
+        r"""
+
+        :param str|list field_value: Sentence string or tokenized words.
+        :param list mask: list of mask values
+        :param bool is_one_sent: whether input is a sentence
+        :param boo split_by_space: whether tokenize sentence by split space
+        :param kwargs:
+
+        """
         if isinstance(field_value, str):
             # lazy load
             self._words = None
@@ -47,7 +50,9 @@ class TextField(Field):
             self._text = None
         else:
             raise ValueError(
-                'TextField supports string/token list, given {0}'.format(type(field_value)))
+                'TextField supports string/token list, given {0}'
+                .format(type(field_value))
+            )
 
         super().__init__(field_value, field_type=(str, list), **kwargs)
 
@@ -86,27 +91,28 @@ class TextField(Field):
                     index, len(
                         self.mask) - 1))
         if value not in [ORIGIN, TASK_MASK, MODIFIED_MASK]:
-            raise ValueError('Support mask value in {0}, ' 'while input mask value is {1}!'.format(
-                [ORIGIN, TASK_MASK, MODIFIED_MASK], value))
+            raise ValueError(
+                'Support mask value in {0},  while input mask value is {1}!'
+                .format([ORIGIN, TASK_MASK, MODIFIED_MASK], value)
+            )
         self._mask[index] = value
 
     def replace_mask(self, values):
         if not isinstance(values, list):
             raise ValueError(f"Cant replace mask values with {values}")
         if len(values) != len(self.words):
-            raise ValueError(f"Mask values length {len(values)} unequal with words length {len(self.words)}")
+            raise ValueError(f"Mask values length {len(values)} "
+                             f"unequal with words length {len(self.words)}")
 
         for index, value in enumerate(values):
             self.set_mask(index, value)
 
     def pos_of_word_index(self, desired_word_idx):
-        """ Get pos tag of given index.
+        r"""
+        Get pos tag of given index.
 
-        Args:
-            desired_word_idx: int
-
-        Returns:
-            pos tag of word of desired_word_idx.
+        :param int desired_word_idx: desire index to get pos tag
+        :return:  pos tag of word of desired_word_idx.
 
         """
         if (desired_word_idx < 0) or (
@@ -118,13 +124,12 @@ class TextField(Field):
 
     @staticmethod
     def _get_mirror_mask(mirror_list):
-        """ Get list with all values MODIFIED_MASK and the same shape of mirror_list
+        r"""
+        Get list with all values MODIFIED_MASK and the same shape of mirror_list
 
-        Args:
-            mirror_list: list of list
-                shape [[rep_0_0, ..., rep_0_i], ... , [rep_n_0, ..., rep_n_m]]
-
-        Returns:
+        :param list mirror_list:
+            shape [[rep_0_0, ..., rep_0_i], ... , [rep_n_0, ..., rep_n_m]]
+        :return: modified mask values with the same shape of mirror_list
 
         """
         assert isinstance(mirror_list, list)
@@ -137,19 +142,18 @@ class TextField(Field):
         return mask_list
 
     def replace_at_indices(self, indices, new_items):
-        """ Replace words at indices and set their mask to MODIFIED_MASK.
+        r"""
+        Replace words at indices and set their mask to MODIFIED_MASK.
 
-        Args:
-            indices: list of int/list/slice
-                each index can be int indicate replace single item or their list like [1, 2, 3].
-                each index can be list like (0,3) indicate replace items from 0 to 3(not included)
-                    or their list like [(0, 3), (5,6)]
-                each index can be slice which would be convert to list.
-            new_items: list of str/list/tuple
-                items corresponding indices.
+        :param [int|list\slice] indices:
+            each index can be int indicate replace single item
+                or their list like [1, 2, 3].
+            each index can be list like (0,3) indicate replace items
+                from 0 to 3(not included) or their list like [(0, 3), (5,6)]
+            each index can be slice which would be convert to list.
+        :param [str|list|tuple] new_items: items corresponding indices.
+        :return: Replaced TextField object.
 
-        Returns:
-            Replaced TextField object.
         """
         replace_mask = self._get_mirror_mask(new_items)
         mask_value = replace_at_scopes(self.mask, indices, replace_mask)
@@ -158,34 +162,31 @@ class TextField(Field):
         return self.new_field(field_value, mask=mask_value)
 
     def replace_at_index(self, index, new_items):
-        """ Replace words at indices and set their mask to MODIFIED_MASK.
+        r"""
+        Replace words at indices and set their mask to MODIFIED_MASK.
 
-        Args:
-            index: int/list/slice
-                can be int indicate replace single item or their list like [1, 2, 3].
-                can be list like (0,3) indicate replace items from 0 to 3(not included)
-                    or their list like [(0, 3), (5,6)]
-                can be slice which would be convert to list.
-            new_items: list of str/list/tuple
-                items corresponding index.
+        :param int\list\slice index:
+            can be int indicate replace single item or their list like [1, 2, 3]
+            can be list like (0,3) indicate replace items
+                from 0 to 3(not included) or their list like [(0, 3), (5,6)]
+            can be slice which would be convert to list.
+        :param str|list\tuple new_items: items corresponding index.
+        :return: Replaced TextField object.
 
-        Returns:
-            Replaced TextField object.
         """
         return self.replace_at_indices([index], [new_items])
 
     def delete_at_indices(self, indices):
-        """ Delete words at indices and remove their mask value.
+        r"""
+        Delete words at indices and remove their mask value.
 
-        Args:
-            indices: list of int/list/slice
-                each index can be int indicate replace single item or their list like [1, 2, 3].
-                each index can be list like (0,3) indicate replace items from 0 to 3(not included)
-                    or their list like [(0, 3), (5,6)]
-                each index can be slice which would be convert to list.
-
-        Returns:
-            Modified TextField object.
+        :param [int|list|slice] indices:
+            each index can be int indicate replace single item
+                or their list like [1, 2, 3].
+            each index can be list like (0,3) indicate replace items
+                from 0 to 3(not included) or their list like [(0, 3), (5,6)]
+            each index can be slice which would be convert to list.
+        :return: Modified TextField object.
 
         """
         mask_value = delete_at_scopes(self.mask, indices)
@@ -194,30 +195,30 @@ class TextField(Field):
         return self.new_field(field_value, mask=mask_value)
 
     def delete_at_index(self, index):
-        """ Delete words at index and remove their mask value.
+        r"""
+        Delete words at index and remove their mask value.
 
-        Args:
-            index: int/list/slice
-                can be int indicate replace single item or their list like [1, 2, 3].
-                can be list like (0,3) indicate replace items from 0 to 3(not included)
-                    or their list like [(0, 3), (5,6)]
-                can be slice which would be convert to list.
+        :param int|list|slice index:
+            can be int indicate replace single item or their list like [1, 2, 3]
+            can be list like (0,3) indicate replace items
+                from 0 to 3(not included) or their list like [(0, 3), (5,6)]
+            can be slice which would be convert to list.
+        :return: Modified TextField object.
 
-        Returns:
-            Modified TextField object.
         """
-
         return self.delete_at_indices([index])
 
     def insert_before_indices(self, indices, new_items):
-        """ Insert words before indices.
+        r"""
+        Insert words before indices.
 
-        Args:
-            indices: list of int
-            new_items: list of str/list/tuple
-
-        Returns:
-            new field object.
+        :param [int] indices:
+            can be int indicate replace single item or their list like [1, 2, 3]
+            can be list like (0,3) indicate replace items
+                from 0 to 3(not included) or their list like [(0, 3), (5,6)]
+            can be slice which would be convert to list.
+        :param [str|list|tuple] new_items: items corresponding index.
+        :return: new TextField object.
 
         """
         insert_mask = self._get_mirror_mask(new_items)
@@ -227,26 +228,31 @@ class TextField(Field):
         return self.new_field(field_value, mask=mask_value)
 
     def insert_before_index(self, index, new_items):
-        """ Insert words before index and remove their mask value.
+        r"""
+        Insert words before index and remove their mask value.
 
-        Args:
-             index: int
-            new_items: str/list/tuple
+        :param int index:
+            can be int indicate replace single item or their list like [1, 2, 3]
+            can be list like (0,3) indicate replace items
+                from 0 to 3(not included) or their list like [(0, 3), (5,6)]
+            can be slice which would be convert to list.
+        :param str|list|tuple new_items: items corresponding index.
+        :return: new TextField object.
 
-        Returns:
-            Modified TextField object.
         """
         return self.insert_before_indices([index], [new_items])
 
     def insert_after_indices(self, indices, new_items):
-        """ Insert words after indices.
+        r"""
+        Insert words after indices.
 
-        Args:
-            indices: list of int
-            new_items: list of str/list/tuple
-
-        Returns:
-            Modified TextField object.
+        :param [int] indices:
+            can be int indicate replace single item or their list like [1, 2, 3]
+            can be list like (0,3) indicate replace items
+                from 0 to 3(not included) or their list like [(0, 3), (5,6)]
+            can be slice which would be convert to list.
+        :param [str|list|tuple] new_items: items corresponding index.
+        :return: new TextField object.
 
         """
         insert_mask = self._get_mirror_mask(new_items)
@@ -256,26 +262,27 @@ class TextField(Field):
         return self.new_field(field_value, mask=mask_value)
 
     def insert_after_index(self, index, new_items):
-        """ Insert words after index and remove their mask value.
+        r"""
+        Insert words before index and remove their mask value.
 
-        Args:
-             index: int
-            new_items: str/list/tuple
+        :param int index:
+            can be int indicate replace single item or their list like [1, 2, 3]
+            can be list like (0,3) indicate replace items
+                from 0 to 3(not included) or their list like [(0, 3), (5,6)]
+            can be slice which would be convert to list.
+        :param str|list|tuple new_items: items corresponding index.
+        :return: new TextField object.
 
-        Returns:
-            Modified TextField object.
         """
         return self.insert_after_indices([index], [new_items])
 
     def swap_at_index(self, first_index, second_index):
-        """ Swap items between first_index and second_index of origin_list
+        r"""
+        Swap items between first_index and second_index of origin_list
 
-        Args:
-            first_index: int
-            second_index: int
-
-        Returns:
-             Modified TextField object.
+        :param int first_index: index of first item
+        :param int second_index: index of second item
+        :return:  Modified TextField object.
 
         """
         mask_value = replace_at_scopes(
@@ -313,7 +320,10 @@ class TextField(Field):
             return self._words
         else:
             self._words = self.text_processor.word_tokenize(
-                self.text, is_one_sent=self.is_one_sent, split_by_space=self.split_by_space)
+                self.text,
+                is_one_sent=self.is_one_sent,
+                split_by_space=self.split_by_space
+            )
             return self._words
 
     @property
@@ -336,9 +346,11 @@ class TextField(Field):
 
     @property
     def pos_tagging(self):
-        """ Get NER tags.
+        r"""
+        Get POS tags.
 
-        Example:
+        Example::
+
             given sentence 'All things in their being are good for something.'
 
             >> [('All', 'DT'),
@@ -352,8 +364,7 @@ class TextField(Field):
                 ('something', 'NN'),
                 ('.', '.')]
 
-        Returns:
-            Tokenized tokens with their POS tags.
+        :return:  Tokenized tokens with their POS tags.
 
         """
         if not self._pos_tags:
@@ -367,16 +378,17 @@ class TextField(Field):
 
     @property
     def ner(self):
-        """ Get NER tags.
+        """
+        Get NER tags.
 
-        Example:
+        Example::
+
             given sentence 'Lionel Messi is a football player from Argentina.'
 
             >>[('Lionel Messi', 0, 2, 'PERSON'),
                ('Argentina', 7, 8, 'LOCATION')]
 
-        Returns:
-            A list of tuples, *(entity, start, end, label)*
+        :return: A list of tuples, *(entity, start, end, label)*
 
         """
         if not self._ner_tags:
@@ -387,9 +399,11 @@ class TextField(Field):
 
     @property
     def dependency_parsing(self):
-        """ Dependency parsing.
+        r"""
+        Dependency parsing.
 
-        Example:
+        Example::
+
             given sentence: 'The quick brown fox jumps over the lazy dog.'
 
             >>
@@ -403,6 +417,8 @@ class TextField(Field):
                 lazy	JJ	9	amod
                 dog	NN	5	obl
 
+        :return: A list of tuples, *(token, pos, target, type)*
+
         """
         if not self._dp_tags:
             self._dp_tags = self.text_processor.get_dep_parser(
@@ -411,47 +427,3 @@ class TextField(Field):
                 is_one_sent=self.is_one_sent)
 
         return self._dp_tags
-
-
-if __name__ == "__main__":
-    x = TextField(
-        "Fudan University natural language processing group. Shanghai yangpu area.")
-    print(x.field_value, x.words, x.sentences)
-
-    print(x.pos_tagging)
-    # test ner
-    print(x.ner)
-    print(x.dependency_parsing)
-
-    print('--------------------test operations-------------------------')
-    # test insert
-    print(x.field_value)
-    insert_before = x.insert_before_index(0, ['test '])
-    print(insert_before.field_value)
-    insert_before = x.insert_before_indices(
-        [0, 2, 4], ['Wang', 'Xiao', ['fdu', 'jiangwan', 'cross_2']])
-    print(insert_before.field_value)
-
-    insert_after = x.insert_after_index(len(x.words) - 1, [' haha', 'test'])
-    print(insert_after.field_value)
-    insert_after = x.insert_after_indices(
-        [0, 2, 7], ['Wang', 'Xiao', ['fdu', 'jiangwan', 'cross_2']])
-    print(insert_after.field_value)
-
-    # test swap
-    swap = x.swap_at_index(0, 1)
-    print(x.field_value)
-    print(swap.field_value)
-
-    # test delete
-    delete = x.delete_at_index(0)
-    print(x.field_value)
-    print(delete.field_value)
-    delete = x.delete_at_indices([0, [2, 4], len(x.words) - 1])
-
-    # test replace
-    replace = x.replace_at_index(0, '$')
-    print(x.field_value)
-    print(replace.field_value)
-    replace = x.replace_at_indices(
-        [0, [2, 4], [7, 8]], ['$', ['wang', 'xiao'], 'fDu'])

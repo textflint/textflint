@@ -4,6 +4,7 @@ Extract samples with gender bias
 
 """
 __all__ = ['PrejudiceSubPopulation']
+
 from flashtext import KeywordProcessor
 from ..subpopulation import SubPopulation
 from ....common.settings import PREJUDICE_PATH
@@ -102,6 +103,7 @@ class PrejudiceSubPopulation(SubPopulation):
     def _score(self, sample, fields, **kwargs):
         r"""
         1 or 0 indicate whether sample fields match mode and prejudice words
+
         :param sample: data sample
         :param list fields: list of field str
         :param kwargs:
@@ -122,7 +124,10 @@ class PrejudiceSubPopulation(SubPopulation):
             return not woman_match and not man_match
 
     def get_slice(self, scores, dataset):
-        """Save the samples that mach the phrase groups and mode"""
+        r"""
+        Save the samples that mach the phrase groups and mode
+
+        """
         sub_samples = []
         for i, sample in enumerate(dataset):
             if scores[i]:

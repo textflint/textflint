@@ -34,12 +34,12 @@ class BilstmCRFTorchModel(nn.Module):
 
     """
     def __init__(
-            self,
-            init_embedding=None,
-            hidden_size=100,
-            dropout=0.5,
-            tag_vocab=None,
-            model_path=None
+        self,
+        init_embedding=None,
+        hidden_size=100,
+        dropout=0.5,
+        tag_vocab=None,
+        model_path=None
     ):
         super().__init__()
         self.emb_layer = init_embedding
@@ -73,37 +73,3 @@ class BilstmCRFTorchModel(nn.Module):
 
     def get_input_embeddings(self):
         return self.emb_layer.embedding
-
-
-if __name__ == "__main__":
-
-    # load data
-    ner_train_data_path = r'conll/train.txt'
-    ner_dev_data_path = r'conll/dev.txt'
-    ner_test_data_set = r'conll/test.txt'
-    data_bundle, embedding = load_data(ner_train_data_path,
-                                       ner_dev_data_path,
-                                       ner_test_data_set)
-    # train stage
-    bilstm_crf = BilstmCRFTorchModel(init_embedding=embedding,
-                                tag_vocab=data_bundle.get_vocab('target'))
-    optimizer = optim.SGD(bilstm_crf.parameters(), lr=0.0009, momentum=0.9)
-    ckpt_dir = './test_model/ckpt/'
-    trainer = Trainer(data_bundle.get_dataset('train'),
-                      bilstm_crf,
-                      optimizer,
-                      batch_size=4,
-                      sampler=BucketSampler(),
-                      num_workers=0,
-                      n_epochs=5,
-                      dev_data=data_bundle.get_dataset('dev'),
-                      metrics=SpanFPreRecMetric(
-                          tag_vocab=data_bundle.get_vocab('target'),
-                          encoding_type='bio'),
-                      dev_batch_size=4,
-                      device=device,
-                      test_use_tqdm=False,
-                      use_tqdm=True,
-                      print_every=300,
-                      save_path=ckpt_dir)
-    trainer.train(load_best_model=False)

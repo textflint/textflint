@@ -18,12 +18,13 @@ class EditDistance(Validator):
     :param ~TextFlint.input_layer.dataset trans_dataset:
         the dataset of translate sample
     :param str|list fields: the name of the origin field need compare.
+
     """
     def __init__(
-            self,
-            origin_dataset,
-            trans_dataset,
-            fields
+        self,
+        origin_dataset,
+        trans_dataset,
+        fields
     ):
         super().__init__(
             origin_dataset,
@@ -41,6 +42,7 @@ class EditDistance(Validator):
         :param str transformed_text: transformed sentence
         :param str reference_text: origin sentence
         :return float: the score of two sentence
+
         """
         dis = editdistance.eval(transformed_text, reference_text)
         return 1 - min(dis, len(reference_text)) / len(reference_text)

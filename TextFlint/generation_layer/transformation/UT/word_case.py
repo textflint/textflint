@@ -45,6 +45,7 @@ class WordCase(Transformation):
         :param int n: number of generated samples
         :param kwargs:
         :return list trans_samples: transformed sample list.
+
         """
         field_value = sample.get_value(field)
 

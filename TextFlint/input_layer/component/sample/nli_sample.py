@@ -12,10 +12,10 @@ __all__ = ['NLISample']
 
 class NLISample(Sample):
     def __init__(
-            self,
-            data,
-            origin=None,
-            sample_id=None
+        self,
+        data,
+        origin=None,
+        sample_id=None
     ):
         r"""
         NLI Sample class to hold the necessary info
@@ -24,8 +24,8 @@ class NLISample(Sample):
         :param json data:  THe json obj that contains data info.
         :param ~Sample origin: Original sample obj.
         :param int sample_id: sample index
-        """
 
+        """
         super().__init__(data, origin=origin, sample_id=sample_id)
 
     def __repr__(self):
@@ -37,6 +37,7 @@ class NLISample(Sample):
 
         :param dict data: contains 'hypothesis', 'premise', 'y' keys.
         :return:
+
         """
         assert 'hypothesis' in data and isinstance(data['hypothesis'], str), \
             "hypothesis should be in data, and " \
@@ -53,6 +54,7 @@ class NLISample(Sample):
 
         :param dict data: contains 'hypothesis', 'premise', 'y' keys.
         :return:
+
         """
         self.hypothesis = TextField(data['hypothesis'])
         self.premise = TextField(data['premise'])
@@ -71,7 +73,9 @@ class NLISample(Sample):
     def is_legal(self):
         r"""
         Validate whether the sample is legal
+
         :return: bool
+
         """
         if self.y.field_value not in ['entailment', 'neutral',
                                       'contradiction', 'non-entailment']:

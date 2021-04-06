@@ -26,13 +26,15 @@ sample_map = get_sample_map()
 class Dataset:
     r"""
     Any iterable of (label, text_input) pairs qualifies as a ``Dataset``.
+
     """
     def __init__(
-            self,
-            task='UT'
+        self,
+        task='UT'
     ):
         r"""
         :param str task: indicate data sample format.
+
         """
         self._i = 0
         self.dataset = []
@@ -73,12 +75,18 @@ class Dataset:
         self._i = 0
 
     def free(self):
-        """ Fully clear dataset. """
+        r"""
+        Fully clear dataset.
+
+        """
         self._i = 0
         self.dataset = []
 
     def dump(self):
-        """ Return dataset in json object format."""
+        r"""
+        Return dataset in json object format.
+
+        """
         json_samples = []
         for sample in self.dataset:
             try:
@@ -91,7 +99,10 @@ class Dataset:
     def load(self, dataset):
         r"""
         Loads json object and prepares it as a Dataset.
-        Support two formats input, for example:
+
+        Support two formats input,
+        Example::
+
         1. {'x': [
                       'The robustness of deep neural networks has received
                       much attention recently',
@@ -117,8 +128,8 @@ class Dataset:
                 ]
         :param list|dict dataset:
         :return:
-        """
 
+        """
         sample_id = 0
 
         if isinstance(dataset, (Sample, list, dict)):
@@ -143,6 +154,7 @@ class Dataset:
     def load_json(self, json_path, encoding='utf-8', fields=None, dropna=True):
         r"""
         Loads json file, each line of the file is a json string.
+
         :param json_path: file path
         :param encoding: file's encoding, default: utf-8
         :param fields: json object's fields that needed, if None,
@@ -150,6 +162,7 @@ class Dataset:
         :param dropna: weather to ignore and drop invalid data,
             :if False, raise ValueError when reading invalid data. default: True
         :return:
+
         """
         json_dics = []
         for line, json_dic in read_json(
@@ -167,6 +180,7 @@ class Dataset:
             dropna=True):
         r"""
         Loads csv file, one line correspond one sample.
+
         :param csv_path: file path
         :param encoding: file's encoding, default: utf-8
         :param headers: file's headers, if None, make file's first line
@@ -175,8 +189,8 @@ class Dataset:
         :param dropna: weather to ignore and drop invalid data,
             :if False, raise ValueError when reading invalid data. default: True
         :return:
-        """
 
+        """
         json_dics = []
         for line, json_dic in read_csv(
                 csv_path, encoding=encoding, headers=headers,
@@ -189,21 +203,23 @@ class Dataset:
         r"""
         Loads a dataset from HuggingFace ``datasets``
         and prepares it as a Dataset.
+
         :param name: the dataset name
         :param subset: the subset of the main dataset.
         :return:
-        """
 
+        """
         raise NotImplementedError
 
     def append(self, data_sample, sample_id=-1):
         r"""
         Load single data sample and append to dataset.
+
         :param dict|sample data_sample:
         :param int sample_id: useful to identify sample, default -1
         :return: True / False indicate whether append action successful.
-        """
 
+        """
         load_success = False
         # default Sample input with sample_id
         if isinstance(data_sample, Sample):
@@ -242,10 +258,11 @@ class Dataset:
     def extend(self, data_samples):
         r"""
         Load multi data samples and extend to dataset.
+
         :param list|dict|Sample data_samples:
         :return:
-        """
 
+        """
         success_count = 0
         norm_samples = self.norm_input(data_samples)
 
@@ -259,7 +276,8 @@ class Dataset:
     def norm_input(data_samples):
         r"""
         Convert various data input to list of dict.
-        Examples:
+        Example::
+
              {'x': [
                       'The robustness of deep neural networks has received
                       much attention recently',
@@ -287,8 +305,8 @@ class Dataset:
             ]
         :param list|dict|Sample data_samples:
         :return: Normalized data.
-        """
 
+        """
         if isinstance(data_samples, list):
             norm_samples = data_samples
         elif isinstance(data_samples, dict):
@@ -319,12 +337,14 @@ class Dataset:
     def save_csv(self, out_path, encoding='utf-8', headers=None, sep=','):
         r"""
         Save dataset to csv file.
+
         :param out_path: file path
         :param encoding: file's encoding, default: utf-8
         :param headers: file's headers, if None, make file's first line
             as headers. default: None
         :param sep: separator for each column. default: ','
         :return:
+
         """
         save_csv(
             self.dump(),
@@ -337,11 +357,13 @@ class Dataset:
     def save_json(self, out_path, encoding='utf-8', fields=None):
         r"""
         Save dataset to json file which contains json object in each line.
+
         :param out_path: file path
         :param encoding: file's encoding, default: utf-8
         :param fields: json object's fields that needed, if None,
             all fields are needed. default: None
         :return:
+
         """
         save_json(self.dump(), out_path, encoding=encoding, fields=fields)
         logger.info('Save samples to {0}!'.format(out_path))

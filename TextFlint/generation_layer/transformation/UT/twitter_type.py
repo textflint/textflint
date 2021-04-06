@@ -20,6 +20,7 @@ class TwitterType(Transformation):
     Transforms input by common abbreviations in TwitterType.
 
     :param str mode: Twitter type, only support ['at', 'url', 'random']
+
     """
     def __init__(
         self,
@@ -44,6 +45,7 @@ class TwitterType(Transformation):
         :param int n: number of generated samples
         :param kwargs:
         :return list trans_samples: transformed sample list.
+
         """
         trans_samples = []
         # replace sub strings by contractions
@@ -77,6 +79,7 @@ class TwitterType(Transformation):
         :param str field: field str
         :return list indices: list of contractions indices list
         :return list contractions: list of contractions list
+
         """
         tokens = sample.get_words(field)
         contractions = []

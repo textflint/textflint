@@ -42,6 +42,7 @@ class SwapNamedEnt(Transformation):
         :param int n: number of generated samples
         :param kwargs:
         :return list trans_samples: transformed sample list.
+
         """
         trans_samples = []
         entities_info = sample.get_ner(field)
@@ -68,17 +69,20 @@ class SwapNamedEnt(Transformation):
         r"""
         Decompose given entities and normalize entity tag to ['LOCATION',
         'PERSON', 'ORGANIZATION']
-        Example:
+
+        Example::
+
             [('Lionel Messi', 0, 2, 'PERSON'),
             ('Argentina', 7, 8, 'LOCATION')]
 
         >> [[0, 2], [7, 8]], ['Lionel Messi', 'Argentina'],
-        ['PERSON', 'LOCATION']
+            ['PERSON', 'LOCATION']
 
         :param dict entities_info: parsed by default ner component.
         :return list indices: indices
         :return list entities: entity values
         :return list categories: categories
+
         """
         indices = []
         entities = []
@@ -100,6 +104,7 @@ class SwapNamedEnt(Transformation):
         :param list categories:
         :param int n:
         :return list rand_entities: indices and random entities respectively
+
         """
         rand_entities = []
 

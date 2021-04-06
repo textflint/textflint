@@ -13,7 +13,12 @@ __all__ = ['SMSample']
 
 class SMSample(Sample):
 
-    def __init__(self, data, origin=None, sample_id=None):
+    def __init__(
+        self,
+        data,
+        origin=None,
+        sample_id=None
+    ):
         r"""
         SM Sample class to hold the necessary info
         and provide atomic operations.
@@ -21,8 +26,8 @@ class SMSample(Sample):
         :param json data:  THe json obj that contains data info.
         :param ~Sample origin: Original sample obj.
         :param int sample_id: sample index
-        """
 
+        """
         super().__init__(data, origin=origin, sample_id=sample_id)
 
     def __repr__(self):
@@ -34,8 +39,8 @@ class SMSample(Sample):
 
         :param dict data: contains 'sentence1', 'sentence2', 'y' keys.
         :return:
-        """
 
+        """
         assert 'sentence1' in data and isinstance(data['sentence1'], str), \
             "sentence1 should be in data, and the type of context should be str"
         assert 'sentence2' in data and isinstance(data['sentence2'], str), \
@@ -49,8 +54,8 @@ class SMSample(Sample):
 
         :param dict data: contains 'sentence1', 'sentence2', 'y' keys.
         :return:
-        """
 
+        """
         self.sentence1 = TextField(data['sentence1'])
         self.sentence2 = TextField(data['sentence2'])
         self.y = Field(data['y'], field_type=str)
@@ -67,7 +72,9 @@ class SMSample(Sample):
     def is_legal(self):
         r"""
         Validate whether the sample is legal
+
         :return: bool
+
         """
         if self.y.field_value not in ['0', '1']:
             return False

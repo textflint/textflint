@@ -16,9 +16,10 @@ class SwapEnt(Transformation):
 
     """
     def __init__(
-            self,
-            type='lowfreq',
-            **kwargs):
+        self,
+        type='lowfreq',
+        **kwargs
+    ):
         super().__init__()
         self.type = type
         if type == 'lowfreq':
@@ -73,6 +74,7 @@ class SwapEnt(Transformation):
         :param RESample sample: re_sample input
         :param int n: number of generated samples
         :return list: transformed sample list
+
         """
         assert(isinstance(n, int)), \
             f"the type of 'n' should be int, got {type(n)} instead"
@@ -93,9 +95,10 @@ class SwapEnt(Transformation):
         assert(entity[4] in self.type_dict.keys() and entity[5]
                in self.type_dict.keys()), \
             f"both entity types should be in the type dict, type " \
-            f"{entity[4]} and {entity[5]} do \
-                                                                                            not satisfy this requirement"
+            f"{entity[4]} and {entity[5]} do not satisfy this requirement"
+
         trans_samples = []
+
         for i in range(n):
             sh, st, oh, ot, subj_type, obj_type = entity
             token, relation = sample.get_sent()
@@ -184,6 +187,7 @@ class SwapEnt(Transformation):
         :param RESample sample: re_sample input
         :param int n: number of generated samples
         :return list: transformed sample list
+
         """
         assert(isinstance(sample, RESample)), \
             f"the type of 'sample' should be RESample, " \

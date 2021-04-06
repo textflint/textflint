@@ -9,17 +9,18 @@ from ....common.utils.install import download_if_needed
 from ....common.utils.load import json_loader
 from ....input_layer.component.sample.re_sample import RESample
 
-titles_dict = json_loader(download_if_needed(TITLE))
-
 
 class SwapEmployee(Transformation):
     r"""
     Entity position swap with paraphrase(employee related)
 
     """
+    titles_dict = json_loader(download_if_needed(TITLE))
+
     def __init__(
-            self,
-            **kwargs):
+        self,
+        **kwargs
+    ):
         super().__init__()
 
     def __repr__(self):
@@ -101,6 +102,7 @@ class SwapEmployee(Transformation):
             and right entity
         :return bool : indicator or whether the middle part is
             attributive or not
+
         """
         assert(isinstance(left, list)), \
             f"the type of 'left' should be list, got {type(left)} instead"
@@ -192,6 +194,7 @@ class SwapEmployee(Transformation):
         :param RESample sample: sample input
         :param int n: number of generated samples (no more than one)
         :return list: transformed sample list
+
         """
         assert(isinstance(sample, RESample)), \
             f"the type of 'sample' should be RESample, " \
@@ -224,7 +227,7 @@ class SwapEmployee(Transformation):
                 middle_text = " ".join(middle_words)
                 is_title = False
                 title_pos = [0, 0]
-                for title in titles_dict:
+                for title in self.titles_dict:
                     if title.lower() in middle_text.lower():
                         is_title = True
                         title_pos[0] = len((middle_text.split(
@@ -235,8 +238,8 @@ class SwapEmployee(Transformation):
                         reverse, left, right, left_words, right_words,
                         middle_words, title_pos)
 
-        new_sample['subj'], new_sample['obj'], new_sample['y'] = subj, obj, \
-                                                                 relation
+        new_sample['subj'], new_sample['obj'], new_sample['y'] \
+            = subj, obj, relation
         trans_samples = sample.replace_sample_fields(new_sample)
 
         return [trans_samples]

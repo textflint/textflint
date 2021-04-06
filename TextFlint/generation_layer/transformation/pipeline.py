@@ -12,13 +12,14 @@ class Pipeline(Transformation, list):
     r"""
     Apply sequential transformations to input sample.
     Default generate transformed samples of combination number of contained
-        transformations.
+    transformations.
 
     """
 
     def __init__(
-            self,
-            transform_objs):
+        self,
+        transform_objs
+    ):
         Transformation.__init__(self)
         list.__init__(self, [])
 
@@ -43,6 +44,7 @@ class Pipeline(Transformation, list):
             and indicate which field to apply transformations.
         :param dict kwargs: Other auxiliary params.
         :return: list of Sample
+
         """
         trans_samples = [sample]
         if isinstance(field, str):
@@ -71,5 +73,6 @@ class Pipeline(Transformation, list):
     def get_transformations(self):
         r"""
         :return: List of transformation string.
+
         """
         return [str(trans_obj) for trans_obj in self]

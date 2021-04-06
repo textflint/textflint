@@ -32,6 +32,7 @@ class BackTrans(Transformation):
             original language
         :param device: indicate utilize cpu or which gpu device to
             run neural network
+
         """
         super().__init__()
         self.device = self.get_device(device) if device else default_device
@@ -55,6 +56,7 @@ class BackTrans(Transformation):
                            "cpu" means use cpu device.
                            "cuda:0" means use gpu device which index is 0.
         :return: device in torch.
+
         """
         if "cuda" not in device:
             return torch.device("cpu")

@@ -16,7 +16,8 @@ class TestNumber(unittest.TestCase):
 
         self.assertTrue(3 == len(x))
         for sample in x:
-            self.assertTrue(editdistance.distance(sample.get_text('x'), sent1) == 1)
+            self.assertTrue(editdistance.distance(sample.get_text('x'),
+                                                  sent1) == 1)
             self.assertTrue("negative" == sample.get_value('y'))
 
         self.assertTrue(x[0].get_text('x') == "Here's 1 bug.")

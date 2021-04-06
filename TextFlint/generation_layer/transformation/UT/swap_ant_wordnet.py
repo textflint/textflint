@@ -12,6 +12,7 @@ class SwapAntWordNet(WordSubstitute):
     r"""
     Transforms an input by replacing its words with antonym provided by WordNet.
     Download nltk_data before running.
+
     Just support adj pos word antonym replace.
 
     """
@@ -38,6 +39,7 @@ class SwapAntWordNet(WordSubstitute):
         r"""
         Returns a list containing all possible words with 1 character replaced
         by a homoglyph.
+
         """
         candidates = set()
         # filter different pos in get_wsd function
@@ -66,6 +68,7 @@ class SwapAntWordNet(WordSubstitute):
         :param list mask: mask list
         :param list|None pos:
         :return adj_indices: list of allowed indices.
+
         """
         nor_pos = []
         adj_indices = []

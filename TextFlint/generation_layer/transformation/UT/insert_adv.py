@@ -38,6 +38,7 @@ class InsertAdv(Transformation):
         :param int n: number of generated samples
         :param kwargs:
         :return list trans_samples: transformed sample list.
+
         """
         pos_tags = sample.get_pos(field)
         _insert_indices = self._get_verb_location(pos_tags)

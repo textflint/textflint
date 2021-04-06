@@ -16,9 +16,11 @@ class AppendIrr(Transformation):
     r"""
     Extend sentences by irrelevant sentences.
 
-    Example:
+    Example::
+
         given "input sentence"
     ->  beginning + "input sentence" + proverb
+
     """
 
     def __init__(

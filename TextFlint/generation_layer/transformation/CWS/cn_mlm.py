@@ -14,8 +14,10 @@ class CnMLM(Transformation):
     r"""
     Use Bert to generate words.
 
-    Example:
+    Example::
+
         小明喜欢看书 -> 小明喜欢看报纸
+
     """
 
     def __init__(self, **kwargs):
@@ -32,9 +34,10 @@ class CnMLM(Transformation):
         In this function, because there is only one deformation mode, only one
         set of outputs is output.
 
-        :param ~TextFlint.CWSSample sample: sample the data which need be changed
+        :param ~TextFlint.CWSSample sample: the data which need be changed
         :param **kwargs:
         :return: trans_sample a list of sample
+
         """
         # get sentence label and pos tag
         origin_sentence = sample.get_value('x')
@@ -53,6 +56,7 @@ class CnMLM(Transformation):
 
         :param str sentence: the sentence with [MASK]
         :return: the change sentence
+
         """
         tokenizer = BertTokenizer.from_pretrained('bert-base-chinese')
         text = '[CLS] ' + sentence
@@ -96,6 +100,7 @@ class CnMLM(Transformation):
         :param list label: Chinese word segmentation tag
         :param list pos_tags: sentence's pos tag
         :return list: two list include the pos and labels which are changed
+
         """
         assert len(sentence) == len(label)
         cnt = 0
@@ -162,6 +167,7 @@ class CnMLM(Transformation):
         :param str sentence: input sentence string
             sentence: input sentence string
         :return bool: is a word or not
+        
         """
         if sentence[0] == sentence[1]:
             return True

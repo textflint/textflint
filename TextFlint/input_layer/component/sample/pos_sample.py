@@ -15,11 +15,12 @@ class POSSample(Sample):
     POS Sample class to hold the necessary info and provide atomic operations.
 
     """
-    def __init__(self,
-                 data,
-                 origin=None,
-                 sample_id=None
-                 ):
+    def __init__(
+        self,
+        data,
+        origin=None,
+        sample_id=None
+    ):
         self.x = None
         self.y = None
         super().__init__(data, origin=origin, sample_id=sample_id)
@@ -33,12 +34,14 @@ class POSSample(Sample):
 
         :param field: str
         :return: list, a pos tag list.
+
         """
         return self.y.field_value
 
     def check_data(self, data):
         r"""
         Check rare data format.
+
         """
         assert 'x' in data and isinstance(data['x'], list), \
             "x should be in data, and the type of x should be list"
@@ -48,6 +51,7 @@ class POSSample(Sample):
     def is_legal(self):
         r"""
         Validate whether the sample is legal
+
         """
         if len(self.x.words) != len(self.y.field_value) \
                 or len(self.x.words) == 0:
@@ -57,6 +61,7 @@ class POSSample(Sample):
     def delete_field_at_indices(self, field, indices):
         r"""
         See sample.py for details.
+
         """
         sample = self.clone(self)
         field_obj = getattr(sample, field)
@@ -77,6 +82,7 @@ class POSSample(Sample):
     def insert_field_before_indices(self, field, indices, items):
         r"""
         See sample.py for details.
+
         """
         sample = self.clone(self)
 
@@ -104,6 +110,7 @@ class POSSample(Sample):
     def insert_field_after_indices(self, field, indices, items):
         r"""
         See sample.py for details.
+
         """
         sample = self.clone(self)
 
@@ -131,6 +138,7 @@ class POSSample(Sample):
     def unequal_replace_field_at_indices(self, field, indices, rep_items):
         r"""
         See sample.py for details.
+
         """
         assert len(indices) == len(rep_items) > 0
         sample = self.clone(self)
@@ -158,6 +166,7 @@ class POSSample(Sample):
     def load(self, data):
         r"""
         Parse data into sample field value.
+
         """
         self.x = TextField(data['x'])
         self.y = ListField(data['y'])
@@ -168,6 +177,7 @@ class POSSample(Sample):
     def dump(self):
         r"""
         Convert sample info to input data json format.
+
         """
         if not self.is_legal():
             raise ValueError("Data sample {0} is not legal, "
@@ -176,25 +186,3 @@ class POSSample(Sample):
         return {'x': self.x.words,
                 'y': self.y.field_value,
                 'sample_id': self.sample_id}
-
-
-if __name__ == "__main__":
-    x = ['That', 'is', 'a', 'good', 'survey']
-    y = ['DT', 'VBZ', 'DT', 'JJ', 'NN']
-
-    data_sample = POSSample({'x': x, 'y': y})
-
-    print('-----------test insert before index------------------')
-    print(data_sample.dump())
-    ins_bef = data_sample.insert_field_before_index('x', 0, '$$$')
-    print(ins_bef.dump())
-
-    print('-----------test insert after index------------------')
-    print(data_sample.dump())
-    ins_aft = data_sample.insert_field_after_index('x', 2, '$$$')
-    print(ins_aft.dump())
-
-    print('-----------test delete------------------')
-    print(data_sample.dump())
-    del_sample = data_sample.delete_field_at_index('x', 1)
-    print(del_sample.dump())

@@ -11,14 +11,16 @@ class DoubleDenial(Transformation):
     r"""
     Transforms an input by replacing its words with double denial forms.
 
-    Example:
+    Example::
+
         ori: The leading actor is good
         trans: The leading actor is not bad
     """
 
     def __init__(
-            self,
-            **kwargs):
+        self,
+        **kwargs
+    ):
         super().__init__()
         self.polarity_dict = SA_DOUBLE_DENIAL_DICT
 
@@ -36,6 +38,7 @@ class DoubleDenial(Transformation):
             only generate one sample
         :return list trans_samples: transformed sample list that only contain
             one sample
+
         """
         tokens = sample.get_words('x')
         sub_indices, sub_words = self._get_double_denial_info(tokens)
@@ -58,6 +61,7 @@ class DoubleDenial(Transformation):
         :return list indices:  indices of tokens that should be replaced
         :return list double_denial_words: The new words that correspond to
             indices and is used to replace them
+
         """
         if tokens is str:
             tokens = [tokens]

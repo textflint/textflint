@@ -12,10 +12,10 @@ __all__ = ['GPT2Perplexity']
 
 class GPT2Perplexity(Validator):
     def __init__(
-            self,
-            origin_dataset,
-            trans_dataset,
-            fields
+        self,
+        origin_dataset,
+        trans_dataset,
+        fields
     ):
         r"""
         Constraint using OpenAI GPT2 language model perplexity of x_adv.
@@ -25,17 +25,20 @@ class GPT2Perplexity(Validator):
         :param ~TextFlint.input_layer.dataset trans_dataset:
             the dataset of translate sample
         :param str|list fields: the name of the origin field need compare.
+
         """
         super().__init__(
             origin_dataset,
             trans_dataset,
-            fields)
+            fields
+        )
         r"""
         :param ~TextFlint.input_layer.dataset origin_dataset:
                 the dataset of origin sample
         :param ~TextFlint.input_layer.dataset trans_dataset:
             the dataset of translate sample
         :param str|list fields: the name of the origin field need compare.
+        
         """
         self.tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
         self.tokenizer.pad_token = self.tokenizer.eos_token

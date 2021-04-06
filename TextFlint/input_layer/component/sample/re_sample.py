@@ -17,15 +17,16 @@ __all__ = ["RESample"]
 
 
 class RESample(Sample):
-    r"""transform and retrieve features of RESample
+    r"""
+    transform and retrieve features of RESample
 
     """
 
     def __init__(
-            self,
-            data,
-            origin=None,
-            sample_id=None
+        self,
+        data,
+        origin=None,
+        sample_id=None
     ):
         super().__init__(data, origin=origin, sample_id=sample_id)
         self.data = data
@@ -34,9 +35,11 @@ class RESample(Sample):
         return 'RESample'
 
     def check_data(self, data):
-        r"""check whether type of data is correct
+        r"""
+        check whether type of data is correct
 
         :param dict data: data dict containing 'x', 'subj', 'obj' and 'y'
+
         """
         assert 'x' in data and isinstance(data['x'], list), \
             "x should be in data, and the type of x should be list"
@@ -48,7 +51,10 @@ class RESample(Sample):
             "y should be in data, and the type of y should be str"
 
     def is_legal(self):
-        r"""Validate whether the sample is legal """
+        r"""
+        Validate whether the sample is legal
+
+        """
         sent_len = len(self.x.words)
         if not isinstance(self.y, str):
             return False
@@ -67,9 +73,11 @@ class RESample(Sample):
         return True
 
     def get_sent_ids(self):
-        r"""Generate sentence ID
+        r"""
+        Generate sentence ID
 
         :return: string: sentence ID
+
         """
         list = case_letters + uncase_letters + number
         num = random.sample(list, 10)
@@ -79,9 +87,11 @@ class RESample(Sample):
         return value
 
     def load(self, data):
-        r""" Convert data dict which contains essential information to SASample.
+        r"""
+        Convert data dict which contains essential information to SASample.
 
         :params: dict data: contains 'token', 'subj' ,'obj', 'relation' keys.
+
         """
         if type(data).__name__ == 'dict':
             if 'token' in data.keys():
@@ -108,10 +118,12 @@ class RESample(Sample):
             self.x.set_mask(i, TASK_MASK)
 
     def get_dp(self):
-        r"""get dependency parsing
+        r"""
+        get dependency parsing
 
         :return Tuple(list, list):  dependency tag of
             sentence and head of sentence
+
         """
         new_data = copy.deepcopy(self.data['x'])
         pars = TextField(new_data).dependency_parsing
@@ -129,11 +141,13 @@ class RESample(Sample):
         return deprel, head
 
     def get_en(self):
-        r""" get entity index
+        r"""
+        get entity index
 
         :return Tuple(int, int, int, int): start index of subject entity,
-        end index of subject entity, start index of object entity
-        and end index of object entity
+            end index of subject entity, start index of object entity
+            and end index of object entity
+
         """
         self.sh, self.st = self.subj[0], self.subj[1]
         self.oh, self.ot = self.obj[0], self.obj[1]
@@ -145,10 +159,12 @@ class RESample(Sample):
         return sh, st, oh, ot
 
     def get_type(self):
-        r"""get entity type
+        r"""
+        get entity type
 
         :return Tuple(string, string): entity type of subject and
-        entity type of object
+            entity type of object
+
         """
         self.ner = self.stan_ner_transform()
         if self.ner == 0:
@@ -159,19 +175,23 @@ class RESample(Sample):
         return self.subj_type, self.obj_type, self.ner
 
     def get_sent(self):
-        r""" get tokenized sentence
+        r"""
+        get tokenized sentence
 
         :return Tuple(list, string): tokenized sentence and relation
+
         """
         return copy.deepcopy(self.data['x']), self.y
 
     def delete_field_at_indices(self, field, indices):
-        r"""delete word of given indices in sentence
+        r"""
+        delete word of given indices in sentence
 
         :param string field: field to be operated on
         :param list indices: a list of index to be deleted
 
         :return dict: contains 'token', 'subj' ,'obj'  keys
+
         """
         sample = self.clone(self)
         text = self.data['x']
@@ -199,10 +219,12 @@ class RESample(Sample):
             obj_to_delete = [i for i in range(oh, ot + 1) if i in ob]
         new_text, new_data = [], {}
         delete = list(set(delete))
+
         if len(subj_to_delete) > 0 or len(obj_to_delete) > 0:
             print('You should not delete entity')
             return sample
         subj_before, obj_before = 0, 0
+
         for idx in delete:
             if idx < sh:
                 subj_before += 1
@@ -215,16 +237,19 @@ class RESample(Sample):
             new_text, [sh - subj_before, st - subj_before], \
             [oh - obj_before, ot - obj_before], self.data['y']
         sample.load(new_data)
+
         return sample
 
     def insert_field_after_indices(self, field, indices, new_item):
-        r"""insert word before given indices in sentence
+        r"""
+        insert word before given indices in sentence
 
         :param string field: field to be operated on
         :param list indices: a list of index to be inserted
         :param list new_item: list of items to be inserted
 
         :return dict: contains 'token', 'subj' ,'obj'  keys
+
         """
         for i, item in enumerate(new_item):
             if type(item).__name__ == 'list':
@@ -269,7 +294,8 @@ class RESample(Sample):
         return sample
 
     def insert_field_before_indices(self, field, indices, new_item):
-        r"""insert word after given indices in sentence
+        r"""
+        insert word after given indices in sentence
 
         :param string field: field to be operated on
         :param list indices: a list of index to be inserted
@@ -321,10 +347,12 @@ class RESample(Sample):
         return sample
 
     def replace_sample_fields(self, data):
-        r""" replace sample fields for RE transformation
+        r"""
+        replace sample fields for RE transformation
 
         :param dict data: contains transformed x, subj, obj keys
         :return RESample: transformed sample
+
         """
         sample = self.clone(self)
         sample.load(data)
@@ -332,9 +360,11 @@ class RESample(Sample):
         return sample
 
     def stan_ner_transform(self):
-        r"""Generate ner list
+        r"""
+        Generate ner list
 
         :return list: ner tags
+
         """
         text = self.data['x']
         ners = ['O'] * len(text)
@@ -348,16 +378,20 @@ class RESample(Sample):
         return ners
 
     def get_pos(self):
-        r"""get pos tagging of sentence
+        r"""
+        get pos tagging of sentence
 
         :return list: pos tags
+
         """
         return self.x.pos_tagging
 
     def dump(self):
-        r"""output data sample
+        r"""
+        output data sample
 
         :return dict: containing x, subj, obj, y and sample_id
+
         """
         if not self.is_legal():
             raise ValueError("Data sample {0} is not legal, "
@@ -371,6 +405,3 @@ class RESample(Sample):
             'y': self.y,
             'sample_id': self.sample_id
         }
-
-
-

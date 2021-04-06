@@ -22,18 +22,18 @@ class Config:
     """
 
     def __init__(
-            self,
-            task='UT',
-            max_trans=1,
-            fields=None,
-            transformation_methods=None,
-            transformation_config=None,
-            return_unk=True,
-            subpopulation_methods=None,
-            subpopulation_config=None,
-            attack_methods=None,
-            validate_methods=None,
-            **kwargs
+        self,
+        task='UT',
+        max_trans=1,
+        fields=None,
+        transformation_methods=None,
+        transformation_config=None,
+        return_unk=True,
+        subpopulation_methods=None,
+        subpopulation_config=None,
+        attack_methods=None,
+        validate_methods=None,
+        **kwargs
     ):
         """
         :param str task: task name
@@ -123,6 +123,7 @@ class Config:
         :param dict task_to_methods: map allowed methods by task name.
         :param bool allow_pipeline: whether allow pipeline input
         :return: list of transformation/subpopulation.
+
         """
         allowed_methods = task_to_methods[self.task]
         legal_methods = []

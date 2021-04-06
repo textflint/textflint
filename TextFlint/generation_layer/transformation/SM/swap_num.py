@@ -14,12 +14,15 @@ __all__ = ['SwapNum']
 class SwapNum(Transformation):
     r"""
     Transforms an input by replacing its number word
-    exmaple:
+
+    Exmaple::
+
     {
         sentence1: Every people has two hands.
         sentence2: There are five hands with all of us.
         label: 0
     }
+
     """
 
     def __init__(self):
@@ -36,8 +39,8 @@ class SwapNum(Transformation):
         :param int n: Default is 1. MAX number of unique augmented output
         :param **kwargs:
         :return: Augmented data
+
         """
-        
         transform_results = self._transform(sample, **kwargs)
 
         if transform_results:
@@ -49,11 +52,14 @@ class SwapNum(Transformation):
         r"""
         Transform text string, this kind of transformation can only produce one sample.
 
-        :param ~NLISample sample: input data, a NLISample contains 'sentence1' field, 'sentence2' field and 'y' field
-        :param int n: number of generated samples, this transformation can only generate one sample
-        :return list trans_samples: transformed sample list that only contain one sample
-        """
+        :param ~NLISample sample: input data, a NLISample contains
+            'sentence1' field, 'sentence2' field and 'y' field
+        :param int n: number of generated samples,
+            this transformation can only generate one sample
+        :return list trans_samples: transformed sample list
+            that only contain one sample
 
+        """
         tokens = sample.get_words('sentence2')
         original_text = sample.get_text('sentence2')
         flag = False
@@ -71,7 +77,7 @@ class SwapNum(Transformation):
         if not flag:
             return None
 
-        sample = sample.replace_fields(['sentence1', 'sentence2', 'y'], [
-                                       original_text, cont_hyp, '0'])
+        sample = sample.replace_fields(['sentence1', 'sentence2', 'y'],
+                                       [original_text, cont_hyp, '0'])
 
         return [sample]

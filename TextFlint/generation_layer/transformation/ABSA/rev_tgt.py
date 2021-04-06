@@ -15,15 +15,17 @@ class RevTgt(ABSATransformation):
     with antonyms provided by WordNet or adding the negation that
     pre-defined in our negative word list.
 
-    Example:
-    Original sentence: "BEST spicy tuna roll, great asian salad.
-    (Target: spicy tuna roll)"
-    Transformed sentence: "BAD spicy tuna roll, great asian salad."
+    Example::
+
+        Original sentence: "BEST spicy tuna roll, great asian salad.
+        (Target: spicy tuna roll)"
+        Transformed sentence: "BAD spicy tuna roll, great asian salad."
     """
 
     def __init__(
-            self,
-            language="eng"):
+        self,
+        language="eng"
+    ):
         super().__init__()
         if language != "eng":
             raise ValueError(f"Language {language} is not available.")
@@ -37,11 +39,12 @@ class RevTgt(ABSATransformation):
         r"""
         Transform data sample to a list of Sample.
 
-        :param ~TextFlint.input_layer.component.sample.ABSAsample sample: input ABSAsample
+        :param ~TextFlint.ABSAsample sample: input ABSAsample
         :param int n: the number of transformation,
             in ABSA-specific transformations n=1
         :param str field:field name
         :return list: list of transformed ABSAsample
+
         """
         trans_samples = []
         self.terms = sample.terms
@@ -75,6 +78,7 @@ class RevTgt(ABSATransformation):
 
         :param str term_id: term id
         :return: opinion words, polarity, terms of transformed aspect
+
         """
         aspect_term = self.terms[term_id]
         words_list = self.words_list
@@ -108,6 +112,7 @@ class RevTgt(ABSATransformation):
         :param list trans_words: tokenized words of transformed sentence
         :param str trans_polarity: transformed polarity
         :return list: tokenized words of transformed sentence
+
         """
         term_list = self.term_list
         aspect_opinions = set()
@@ -138,6 +143,7 @@ class RevTgt(ABSATransformation):
         :param dict term_to_position_list: position list of terms
         :param str term_id: term id
         :return set: return opinions and polarities of other terms
+
         """
         other_polarity = set()
         other_opinions = set()

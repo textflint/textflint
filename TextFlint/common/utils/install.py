@@ -15,7 +15,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "True"
 
 
 def textflint_url(uri):
-    return "https://nlp.fudan.edu.cn//TextFlint/download/" + uri
+    return "http://textflint.oss-cn-beijing.aliyuncs.com/download/" + uri
 
 
 def path_in_cache(file_path):
@@ -29,7 +29,10 @@ def path_in_cache(file_path):
 
 
 def unzip_file(path_to_zip_file, unzipped_folder_path):
-    """Unzips a .zip file to folder path."""
+    """
+    Unzips a .zip file to folder path.
+
+    """
     logger.info(
         f"Unzipping file {path_to_zip_file} to {unzipped_folder_path}.")
     with zipfile.ZipFile(path_to_zip_file, "r") as zip_ref:
@@ -37,7 +40,10 @@ def unzip_file(path_to_zip_file, unzipped_folder_path):
 
 
 def set_cache_dir(cache_dir):
-    """Sets all relevant cache directories to ``TR_CACHE_DIR``."""
+    """
+    Sets all relevant cache directories to ``TR_CACHE_DIR``.
+
+    """
     # Tensorflow Hub cache directory
     os.environ["TFHUB_CACHE_DIR"] = cache_dir
     # HuggingFace `transformers` cache directory
@@ -93,9 +99,12 @@ def download_if_needed(folder_name):
 
 
 def http_get(folder_name, out_file, proxies=None):
-    """Get contents of a URL and save to a file.
+    """
+    Get contents of a URL and save to a file.
+
     https://github.com/huggingface/transformers/blob/master/src
     /transformers/file_utils.py
+
     """
     folder_url = textflint_url(folder_name)
     logger.info(f"Downloading {folder_url}.")

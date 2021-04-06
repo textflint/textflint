@@ -51,6 +51,7 @@ class MLMSuggestion(WordSubstitute):
             augmented.
         :param list stop_words: List of words which will be skipped from augment
             operation.
+
         """
         super().__init__(
             trans_min=trans_min,
@@ -86,7 +87,7 @@ class MLMSuggestion(WordSubstitute):
     def pre_calculate_allowed_tokens(self):
         r"""
         Precalculate meaningful tokens, filter tokens which is not an alphabetic
-         string.
+        string.
 
         Pre filter would accelerate procedure of verifying pos tags of
         candidates.
@@ -107,8 +108,8 @@ class MLMSuggestion(WordSubstitute):
             pos_to_token_id_dict[pos[1][:2]].append(index)
 
         for pos, indices in pos_to_token_id_dict.items():
-            pos_to_token_id_dict[pos] = torch.tensor(
-                indices, dtype=torch.long, device=self.device)
+            pos_to_token_id_dict[pos] \
+                = torch.tensor(indices, dtype=torch.long, device=self.device)
 
         return pos_to_token_id_dict
 
@@ -121,6 +122,7 @@ class MLMSuggestion(WordSubstitute):
         :param int n: number of generated samples
         :param kwargs:
         :return list trans_samples: transformed sample list.
+
         """
 
         if not self.pos_allowed_token_id:
@@ -160,13 +162,8 @@ class MLMSuggestion(WordSubstitute):
 
         return trans_samples
 
-    def _get_substitute_words(
-            self,
-            words,
-            legal_indices,
-            sentences_tokens,
-            pos=None,
-            n=5):
+    def _get_substitute_words(self, words, legal_indices, sentences_tokens,
+                              pos=None, n=5):
         r"""
         Returns a list containing all possible words .
 
@@ -181,8 +178,8 @@ class MLMSuggestion(WordSubstitute):
         :param int n:max candidates for each word to be substituted
         :return list candidates_list: list of candidates list
         :return list candidates_indices: list of candidates_indices list
-        """
 
+        """
         sub_indices, sub_sentences, sub_sent_indices = \
             self._get_relate_sub_info(words, sentences_tokens, legal_indices)
 
@@ -257,13 +254,8 @@ class MLMSuggestion(WordSubstitute):
 
         return sub_indices, sub_sentences, sub_sent_indices
 
-    def _get_candidates(
-            self,
-            batch_tokens_tensor,
-            segments_tensors,
-            mask_indices,
-            mask_word_pos_list,
-            n=5):
+    def _get_candidates(self, batch_tokens_tensor, segments_tensors,
+                        mask_indices,mask_word_pos_list, n=5):
         with torch.no_grad():
             output = self.model(batch_tokens_tensor, segments_tensors)
 

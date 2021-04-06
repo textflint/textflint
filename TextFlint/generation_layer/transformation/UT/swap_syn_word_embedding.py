@@ -46,6 +46,7 @@ class SwapSynWordEmbedding(WordSubstitute):
         :param str pos:
         :param int n: max number of candidates
         :return : candidates list
+
         """
         sim_list = self.word_in_sim_dic(word)
         sim_list = self.processor.filter_candidates_by_pos(

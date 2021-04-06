@@ -21,7 +21,8 @@ class RndConcat(Transformation):
     Attributes:
         processor: TextFlint.common.preprocess.TextProcessor.
 
-    Example:
+    Example::
+
         ori: {
             'sentences': [
                 ['I', 'came'], ['I', 'saw'], ['I', 'conquered'], 
@@ -52,7 +53,7 @@ class RndConcat(Transformation):
 
     def _transform(self, sample, n=5, **kwargs):
         r"""
-        :param ~TextFlint.input_layer.component.sample.CorefSample sample: a CorefSample
+        :param ~TextFlint.CorefSample sample: a CorefSample
         :param str|list fields: Not used
         :param int n: optional; number of generated samples
         :param list samples_other: optional, list of dict

@@ -78,6 +78,7 @@ class Ocr(WordSubstitute):
             augmented.
         :param list stop_words: List of words which will be skipped from augment
             operation.
+
         """
         super().__init__(
             min_char=min_char,
@@ -112,8 +113,8 @@ class Ocr(WordSubstitute):
         :param int n: number of transformed tokens to generate.
         :param kwargs:
         :return list replaced_tokens: replaced tokens list
-        """
 
+        """
         replaced_tokens = []
         chars = self.token2chars(word)
         valid_chars_idxes = [

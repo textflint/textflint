@@ -17,16 +17,22 @@ class SwapSpecialEnt(Transformation):
     Transforms an input by adding summaries of person and movies provided
     by csv.
 
-    Example:
+    Example::
         ori: Titanic is my favorite movie
         trans: The Boys Club is my favorite movie
+
     """
 
-    def __init__(self, entity_type='person', **kwargs):
+    def __init__(
+        self,
+        entity_type='person',
+        **kwargs
+    ):
         r"""
 
         :param str entity_type: entity for which entity type
         :param kwargs: other params
+
         """
 
         super().__init__()

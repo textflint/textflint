@@ -23,7 +23,11 @@ class SentenceTokenizeWarning(Warning):
 
 
 class SentenceTokenize(object):
-    """Text to sentence tokenizer using heuristic algorithm by Philipp Koehn and Josh Schroeder.."""
+    """
+    Text to sentence tokenizer using heuristic algorithm
+    by Philipp Koehn and Josh Schroeder..
+
+    """
 
     class PrefixType(Enum):
         DEFAULT = 1
@@ -44,8 +48,8 @@ class SentenceTokenize(object):
         path = download_if_needed(non_breaking_prefix_file)
         if not os.path.isfile(path):
             raise SentenceTokenizeException(
-                "Non-breaking prefix file for English was not found at path '{}'".format(
-                    non_breaking_prefix_file, ))
+                "Non-breaking prefix file for English "
+                "was not found at path '{}'".format(non_breaking_prefix_file))
 
         self.__non_breaking_prefixes = dict()
         with open(path,
@@ -90,32 +94,38 @@ class SentenceTokenize(object):
 
         # Non-period end of sentence markers (?!) followed by sentence starters
         text = regex.sub(
-            pattern=r'([?!]) +([\'"([\u00bf\u00A1\p{Initial_Punctuation}]*[\p{Uppercase_Letter}\p{Other_Letter}])',
+            pattern=r'([?!]) +([\'"([\u00bf\u00A1\p{Initial_Punctuation}]*'
+                    r'[\p{Uppercase_Letter}\p{Other_Letter}])',
             repl='\\1\n\\2',
             string=text,
             flags=regex.UNICODE)
 
         # Multi-dots followed by sentence starters
         text = regex.sub(
-            pattern=r'(\.[\.]+) +([\'"([\u00bf\u00A1\p{Initial_Punctuation}]*[\p{Uppercase_Letter}\p{Other_Letter}])',
+            pattern=r'(\.[\.]+) +([\'"([\u00bf\u00A1\p{Initial_Punctuation}]*'
+                    r'[\p{Uppercase_Letter}\p{Other_Letter}])',
             repl='\\1\n\\2',
             string=text,
             flags=regex.UNICODE)
 
-        # Add breaks for sentences that end with some sort of punctuation inside a quote or parenthetical and are
+        # Add breaks for sentences that end with some sort of punctuation
+        # inside a quote or parenthetical and are
         # followed by a possible sentence starter punctuation and upper case
         text = regex.sub(
             pattern=(
-                r'([?!\.][\ ]*[\'")\]\p{Final_Punctuation}]+) +([\'"([\u00bf\u00A1\p{Initial_Punctuation}]*[\ ]*'
+                r'([?!\.][\ ]*[\'")\]\p{Final_Punctuation}]+) '
+                r'+([\'"([\u00bf\u00A1\p{Initial_Punctuation}]*[\ ]*'
                 r'[\p{Uppercase_Letter}\p{Other_Letter}])'),
             repl='\\1\n\\2',
             string=text,
             flags=regex.UNICODE)
-        # Add breaks for sentences that end with some sort of punctuation are followed by a sentence starter punctuation
+        # Add breaks for sentences that end with some sort of punctuation
+        # are followed by a sentence starter punctuation
         # and upper case
         text = regex.sub(
             pattern=(
-                r'([?!\.]) +([\'"[\u00bf\u00A1\p{Initial_Punctuation}]+[\ ]*[\p{Uppercase_Letter}\p{Other_Letter}])'
+                r'([?!\.]) +([\'"[\u00bf\u00A1\p{Initial_Punctuation}]+'
+                r'[\ ]*[\p{Uppercase_Letter}\p{Other_Letter}])'
             ),
             repl='\\1\n\\2',
             string=text,
@@ -128,7 +138,8 @@ class SentenceTokenize(object):
         for i in range(0, len(words) - 1):
 
             match = regex.search(
-                pattern=r'([\w\.\-]*)([\'\"\)\]\%\p{Final_Punctuation}]*)(\.+)$',
+                pattern=r'([\w\.\-]*)([\'\"\)\]\%\p{Final_Punctuation}]'
+                        r'*)(\.+)$',
                 string=words[i],
                 flags=regex.UNICODE)
             if match:
@@ -141,7 +152,8 @@ class SentenceTokenize(object):
                     """Check if \\1 is a known honorific and \\2 is empty."""
                     if prefix_:
                         if prefix_ in self.__non_breaking_prefixes:
-                            if self.__non_breaking_prefixes[prefix_] == SentenceTokenize.PrefixType.DEFAULT:
+                            if self.__non_breaking_prefixes[prefix_] \
+                                    == SentenceTokenize.PrefixType.DEFAULT:
                                 if not starting_punct_:
                                     return True
                     return False
@@ -152,7 +164,8 @@ class SentenceTokenize(object):
                     # Not breaking
                     pass
 
-                elif regex.search(pattern=r'(\.)[\p{Uppercase_Letter}\p{Other_Letter}\-]+(\.+)$',
+                elif regex.search(pattern=r'(\.)[\p{Uppercase_Letter}\p'
+                                          r'{Other_Letter}\-]+(\.+)$',
                                   string=words[i],
                                   flags=regex.UNICODE):
                     # Not breaking - upper case acronym
@@ -160,7 +173,8 @@ class SentenceTokenize(object):
 
                 elif regex.search(
                         pattern=(
-                            r'^([ ]*[\'"([\u00bf\u00A1\p{Initial_Punctuation}]*[ ]*[\p{Uppercase_Letter}'
+                            r'^([ ]*[\'"([\u00bf\u00A1\p{Initial_Punctuation}]*'
+                            r'[ ]*[\p{Uppercase_Letter}'
                             r'\p{Other_Letter}0-9])'
                         ),
                         string=words[i + 1],
@@ -171,14 +185,19 @@ class SentenceTokenize(object):
                             prefix_: str,
                             starting_punct_: str,
                             next_word: str):
-                        """The next word has a bunch of initial quotes, maybe a space, then either upper case or a
-                        number."""
+                        """The next word has a bunch of initial quotes,
+                        maybe a space, then either upper case or a number."""
                         if prefix_:
                             if prefix_ in self.__non_breaking_prefixes:
-                                if self.__non_breaking_prefixes[prefix_] == SentenceTokenize.PrefixType.NUMERIC_ONLY:
+                                if self.__non_breaking_prefixes[prefix_] == \
+                                        SentenceTokenize.\
+                                        PrefixType.NUMERIC_ONLY:
                                     if not starting_punct_:
                                         if regex.search(
-                                                pattern='^[0-9]+', string=next_word, flags=regex.UNICODE):
+                                                pattern='^[0-9]+',
+                                                string=next_word,
+                                                flags=regex.UNICODE
+                                        ):
                                             return True
                         return False
 

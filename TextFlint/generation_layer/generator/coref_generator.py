@@ -1,7 +1,9 @@
+from ...input_layer.component.sample import CorefSample
 from .generator import Generator
 from ...common.utils.logger import logger
 from ...common.settings import TASK_TRANSFORMATION_PATH, \
     ALLOWED_TRANSFORMATIONS, TASK_SUBPOPULATION_PATH, ALLOWED_SUBPOPULATIONS
+from tqdm import trange
 
 
 Flint = {
@@ -44,7 +46,8 @@ class CorefGenerator(Generator):
         )
 
     def generate_by_transformations(self, dataset, **kwargs):
-        r"""Returns a list of all possible transformed samples for ``dataset``.
+        r"""
+        Returns a list of all possible transformed samples for ``dataset``.
 
         :param ~dataset dataset: dataset
         :return: yield transformed samples
@@ -64,9 +67,13 @@ class CorefGenerator(Generator):
             # initialize current index of dataset
             dataset.init_iter()
 
-            for i in range(len(dataset_ls)):
+            for i in trange(len(dataset_ls)):
                 sample = dataset_ls[i]
+                if isinstance(sample, dict):
+                    sample = CorefSample(sample)
                 samples_other = dataset_ls[:i] + dataset_ls[i + 1:]
+                if len(samples_other) > 0 and isinstance(samples_other[0], dict):
+                    samples_other = [CorefSample(s) for s in samples_other]
                 trans_rst = trans_obj.transform(
                     sample, n=self.max_trans, field=self.fields,
                     samples_other=samples_other)

@@ -438,7 +438,7 @@ class ReportGenerator:
     Plotting robustness report,
     return radar figure, sunbrust figure, and bar chart figure.
 
-    Evaluate json example:
+    Example:
         {
             "model_name": "BERT",
             "dataset_name": "medical data",
