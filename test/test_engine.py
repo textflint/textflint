@@ -36,35 +36,35 @@ class TestEngine(unittest.TestCase):
     def test_absa_engine(self):
         get_test('ABSA')
 
-    def test_sa_engine(self):
-        get_test('SA')
-
-    def test_cws_engin(self):
-        get_test('CWS')
-
-    def test_mrc_engine(self):
-        get_test('MRC')
-
-    def test_nli_engine(self):
-        get_test('NLI')
-
-    def test_sm_engine(self):
-        get_test('SM')
-
-    def test_pos_engine(self):
-        get_test('POS')
-
-    def test_re_engine(self):
-        get_test('RE')
-
-    def test_ner_engine(self):
-        get_test('NER')
-
-    def test_dp_engine(self):
-        get_test('DP')
-
-    def test_coref_engine(self):
-        get_test('COREF')
+#     def test_sa_engine(self):
+#         get_test('SA')
+# 
+#     def test_cws_engin(self):
+#         get_test('CWS')
+# 
+#     def test_mrc_engine(self):
+#         get_test('MRC')
+# 
+#     def test_nli_engine(self):
+#         get_test('NLI')
+# 
+#     def test_sm_engine(self):
+#         get_test('SM')
+# 
+#     def test_pos_engine(self):
+#         get_test('POS')
+# 
+#     def test_re_engine(self):
+#         get_test('RE')
+# 
+#     def test_ner_engine(self):
+#         get_test('NER')
+# 
+#     def test_dp_engine(self):
+#         get_test('DP')
+# 
+#     def test_coref_engine(self):
+#         get_test('COREF')
 
 
 if __name__ == "__main__":
