@@ -13,9 +13,9 @@ class EditDistance(Validator):
     A constraint on edit distance (Levenshtein Distance).
     We use the Levenshtein Distance div the long of the sentence as score.
 
-    :param ~TextFlint.input_layer.dataset origin_dataset:
+    :param ~textflint.input_layer.dataset origin_dataset:
             the dataset of origin sample
-    :param ~TextFlint.input_layer.dataset trans_dataset:
+    :param ~textflint.input_layer.dataset trans_dataset:
         the dataset of translate sample
     :param str|list fields: the name of the origin field need compare.
 

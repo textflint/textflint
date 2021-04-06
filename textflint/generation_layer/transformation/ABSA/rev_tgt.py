@@ -39,7 +39,7 @@ class RevTgt(ABSATransformation):
         r"""
         Transform data sample to a list of Sample.
 
-        :param ~TextFlint.ABSAsample sample: input ABSAsample
+        :param ~textflint.ABSAsample sample: input ABSAsample
         :param int n: the number of transformation,
             in ABSA-specific transformations n=1
         :param str field:field name

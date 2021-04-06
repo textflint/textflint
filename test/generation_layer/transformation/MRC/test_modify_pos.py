@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.mrc_sample import MRCSample
-from TextFlint.generation_layer.transformation.MRC.modify_pos \
+from textflint.input_layer.component.sample.mrc_sample import MRCSample
+from textflint.generation_layer.transformation.MRC.modify_pos \
     import ModifyPos
 
 context = 'Super Bowl 50 was an American football game to determine the ' \

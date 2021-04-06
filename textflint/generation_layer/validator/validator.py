@@ -14,9 +14,9 @@ class Validator(ABC):
     An abstract class that computes the semantic similarity score between
         original text and adversarial texts
 
-    :param ~TextFlint.input_layer.dataset origin_dataset:
+    :param ~textflint.input_layer.dataset origin_dataset:
             the dataset of origin sample
-    :param ~TextFlint.input_layer.dataset trans_dataset:
+    :param ~textflint.input_layer.dataset trans_dataset:
         the dataset of translate sample
     :param str|list fields: the name of the origin field need compare.
     :param bool need_tokens: if we need tokenize the sentence

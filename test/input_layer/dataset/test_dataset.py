@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.dataset import *
+from textflint.input_layer.dataset import *
 from test.settings import *
 
 

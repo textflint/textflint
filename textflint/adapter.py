@@ -1,5 +1,5 @@
 """
-TextFlint Adapter Class
+textflint Adapter Class
 ============================================
 
 """
@@ -27,9 +27,9 @@ class Adapter:
         Check config input or create config automatically.
 
         :param str task: task name
-        :param str|dict|TextFlint.config.Config config: config to control
+        :param str|dict|textflint.config.Config config: config to control
             generation procedure.
-        :return: TextFlint.config.Config instance.
+        :return: textflint.config.Config instance.
 
         """
 
@@ -53,8 +53,8 @@ class Adapter:
         Automatic create task generator to apply transformations, subpopulations
         and adversarial attacks.
 
-        :param TextFlint.Config config_obj: Config instance.
-        :return: TextFlint.Generator
+        :param textflint.Config config_obj: Config instance.
+        :return: textflint.Generator
 
         """
         # get references of different nlp task Configs
@@ -80,7 +80,7 @@ class Adapter:
 
         :param dict|list|string data_input: json object or json/csv file.
         :param str task: task name.
-        :return: TextFlint.Dataset instance.
+        :return: textflint.Dataset instance.
 
         """
         def split_huggingface_data_str(data_str):

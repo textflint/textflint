@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample import SASample
-from TextFlint.generation_layer.transformation.UT.contraction import Contraction
+from textflint.input_layer.component.sample import SASample
+from textflint.generation_layer.transformation.UT.contraction import Contraction
 
 sent1 = "we're playing ping pang ball, you are so lazy. She's so beautiful!"
 data_sample = SASample({'x': sent1, 'y': "negative"})

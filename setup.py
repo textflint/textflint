@@ -11,11 +11,11 @@ with open('LICENSE', encoding='utf-8') as f:
 with open('requirements.txt', encoding='utf-8') as f:
     reqs = f.read()
 
-pkgs = [p for p in find_packages() if p.startswith('TextFlint')]
+pkgs = [p for p in find_packages() if p.startswith('textflint')]
 print(pkgs)
 
 setup(
-    name='TextFlint',
+    name='textflint',
     version='0.0.1',
     url='',
     description='Unified Multilingual Robustness Evaluation Toolkit '

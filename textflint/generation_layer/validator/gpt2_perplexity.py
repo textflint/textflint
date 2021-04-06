@@ -20,9 +20,9 @@ class GPT2Perplexity(Validator):
         r"""
         Constraint using OpenAI GPT2 language model perplexity of x_adv.
 
-        :param ~TextFlint.input_layer.dataset origin_dataset:
+        :param ~textflint.input_layer.dataset origin_dataset:
                 the dataset of origin sample
-        :param ~TextFlint.input_layer.dataset trans_dataset:
+        :param ~textflint.input_layer.dataset trans_dataset:
             the dataset of translate sample
         :param str|list fields: the name of the origin field need compare.
 
@@ -33,9 +33,9 @@ class GPT2Perplexity(Validator):
             fields
         )
         r"""
-        :param ~TextFlint.input_layer.dataset origin_dataset:
+        :param ~textflint.input_layer.dataset origin_dataset:
                 the dataset of origin sample
-        :param ~TextFlint.input_layer.dataset trans_dataset:
+        :param ~textflint.input_layer.dataset trans_dataset:
             the dataset of translate sample
         :param str|list fields: the name of the origin field need compare.
         

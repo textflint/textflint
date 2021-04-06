@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.re_sample import RESample
-from TextFlint.generation_layer.transformation.RE.swap_age import SwapAge
+from textflint.input_layer.component.sample.re_sample import RESample
+from textflint.generation_layer.transformation.RE.swap_age import SwapAge
 
 data = {'x': ['Allen', 'waits', ',', '46', ',', 'was', 'also', 'convicted',
               'of', 'illegal', 'drug', 'activity', ',', 'and', 'bribing',

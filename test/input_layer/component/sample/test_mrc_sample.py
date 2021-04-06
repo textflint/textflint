@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.mrc_sample import MRCSample
+from textflint.input_layer.component.sample.mrc_sample import MRCSample
 
 context = 'Super Bowl 50 was an American football game to determine the champion ' \
           'of the National Football League ' \
@@ -76,10 +76,10 @@ class TestMRCSample(unittest.TestCase):
     def test_insert_field_after_index(self):
         # test insert after index and mask
         ins_aft = mrc_sample.insert_field_after_index(
-            'context', 2, 'TextFlint')
+            'context', 2, 'textflint')
         self.assertTrue(ins_aft.is_legal())
         self.assertEqual(
-            'Super Bowl 50 TextFlint was an American football game to '
+            'Super Bowl 50 textflint was an American football game to '
             'determine the champion '
             'of the National Football League (NFL) for the 2015 season.',
             ins_aft.get_sentences('context')[0])
@@ -87,10 +87,10 @@ class TestMRCSample(unittest.TestCase):
     def test_insert_field_before_index(self):
         # test insert before index and mask
         ins_bef = mrc_sample.insert_field_before_index(
-            'context', 2, 'TextFlint')
+            'context', 2, 'textflint')
         self.assertTrue(ins_bef.is_legal())
         self.assertEqual(
-            'Super Bowl TextFlint 50 was an American football game to '
+            'Super Bowl textflint 50 was an American football game to '
             'determine the champion '
             'of the National Football League (NFL) for the 2015 season.',
             ins_bef.get_sentences('context')[0])
@@ -108,10 +108,10 @@ class TestMRCSample(unittest.TestCase):
     def test_unequal_replace_field_at_indices(self):
         # test unequal replacement
         replace = mrc_sample.unequal_replace_field_at_indices(
-            'context', [2], [['TextFlint', 'software']])
+            'context', [2], [['textflint', 'software']])
         self.assertTrue(replace.is_legal())
         self.assertEqual(
-            'Super Bowl TextFlint software was an American football '
+            'Super Bowl textflint software was an American football '
             'game to determine the champion '
             'of the National Football League (NFL) for the 2015 season.',
             replace.get_sentences('context')[0])

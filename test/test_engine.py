@@ -2,10 +2,10 @@ import unittest
 import shutil
 import os
 
-from TextFlint.engine import Engine
-from TextFlint.common.utils.install import download_if_needed
-from TextFlint.input_layer.config.config import Config
-from TextFlint.common.settings import UNMATCH_UT_TRANSFORMATIONS, \
+from textflint.engine import Engine
+from textflint.common.utils.install import download_if_needed
+from textflint.input_layer.config.config import Config
+from textflint.common.settings import UNMATCH_UT_TRANSFORMATIONS, \
     TASK_TRANSFORMATIONS
 tasks = ['ABSA', 'COREF', 'CWS', 'DP',
                  'MRC', 'NER', 'NLI', 'POS', 'RE', 'SA', 'SM']

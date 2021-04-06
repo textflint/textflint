@@ -38,7 +38,7 @@ class Reduplication(Transformation):
         In this function, because there is only one deformation mode,
             only one set of outputs is output.
 
-        :param ~TextFlint.CWSSample: the data which need be changed
+        :param ~textflint.CWSSample: the data which need be changed
         :param **kwargs:
         :return: In this function, because there is only one deformation mode,
             only one set of outputs is output

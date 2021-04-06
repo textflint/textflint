@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.sm_sample import *
+from textflint.input_layer.component.sample.sm_sample import *
 
 data = {'sentence1': 'MR zhang has 10 students',
         'sentence2': 'Mr zhang has 20 students',

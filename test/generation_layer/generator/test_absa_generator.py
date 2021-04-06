@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.generation_layer.generator.absa_generator import ABSAGenerator
+from textflint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.absa_generator import ABSAGenerator
 
 sample1 = {"sentence": "BEST spicy tuna roll, great asian salad.", "term_list":
     {"35390182#756337#4_0": {"id": "35390182#756337#4_0",

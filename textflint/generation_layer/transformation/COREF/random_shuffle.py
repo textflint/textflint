@@ -17,7 +17,7 @@ class RndShuffle(Transformation):
 
     Attributes:
         trans_p: proportion of deleted sentences; default 0.2
-        processor: TextFlint.common.preprocess.TextProcessor.
+        processor: textflint.common.preprocess.TextProcessor.
 
     Example::
 
@@ -48,7 +48,7 @@ class RndShuffle(Transformation):
 
     def _transform(self, sample, n=5, **kwargs):
         r"""
-        :param ~TextFlint.CorefSample sample: a CorefSample
+        :param ~textflint.CorefSample sample: a CorefSample
         :param str|list fields: Not used
         :param int n: optional; number of generated samples
         :param list samples_other: optional, list of dict

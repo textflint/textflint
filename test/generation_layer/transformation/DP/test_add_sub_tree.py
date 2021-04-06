@@ -1,8 +1,8 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.dp_sample import DPSample
-from TextFlint.generation_layer.transformation.DP.add_sub_tree import AddSubTree
-from TextFlint.common.utils.error import FlintError
+from textflint.input_layer.component.sample.dp_sample import DPSample
+from textflint.generation_layer.transformation.DP.add_sub_tree import AddSubTree
+from textflint.common.utils.error import FlintError
 
 word = ['Influential', 'members', 'of', 'the', 'House', 'Ways', 'and',
         'Means', 'Committee', 'introduced', 'legislation', 'that',

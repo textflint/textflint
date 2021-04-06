@@ -1,5 +1,5 @@
 """
-TextFlint Config Class
+textflint Config Class
 ============================================
 
 """

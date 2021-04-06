@@ -52,7 +52,7 @@ class SwapContraction(Transformation):
         r"""
         Transform the sample.
 
-        :param ~TextFlint.CWSSample sample: the data which need be changed
+        :param ~textflint.CWSSample sample: the data which need be changed
         :param **kwargs:
         :return: In this function, because there is only one deformation mode,
             only one set of outputs is output

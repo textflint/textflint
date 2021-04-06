@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.absa_sample import *
+from textflint.input_layer.component.sample.absa_sample import *
 
 data = {"sentence": "The bread is top notch as well.",
         "term_list": {

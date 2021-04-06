@@ -22,9 +22,9 @@ class SentenceEncoding(Validator):
         Constraint using similarity between sentence encodings of origin and
         translate where the text embeddings are created using the DeCLUTR.
 
-        :param ~TextFlint.input_layer.dataset origin_dataset:
+        :param ~textflint.input_layer.dataset origin_dataset:
             the dataset of origin sample
-        :param ~TextFlint.input_layer.dataset trans_dataset:
+        :param ~textflint.input_layer.dataset trans_dataset:
             the dataset of translate sample
         :param str|list fields: the name of the origin field need compare.
 
@@ -35,9 +35,9 @@ class SentenceEncoding(Validator):
             fields
         )
         r"""
-        :param ~TextFlint.input_layer.dataset origin_dataset: 
+        :param ~textflint.input_layer.dataset origin_dataset: 
             the dataset of origin sample
-        :param ~TextFlint.input_layer.dataset trans_dataset: 
+        :param ~textflint.input_layer.dataset trans_dataset: 
             the dataset of translate sample
         :param str|list fields: the name of the origin field need compare.
         """

@@ -310,7 +310,7 @@ class ABSASample(Sample):
         :param str field: transformed field
         :param list indices: indices of insert positions
         :param list items: insert items
-        :return ~TextFlint.ABSAsample: modified sample
+        :return ~textflint.ABSAsample: modified sample
 
         """
         new_items = items
@@ -355,7 +355,7 @@ class ABSASample(Sample):
         :param str field: transformed field
         :param int|list ins_index: index of insert position
         :param str|list new_item: insert item
-        :return ~TextFlint.ABSAsample: modified sample
+        :return ~textflint.ABSAsample: modified sample
 
         """
         return self.insert_field_before_indices(field, [ins_index], [new_item])
@@ -410,7 +410,7 @@ class ABSASample(Sample):
         :param str field: transformed field
         :param int|list ins_index: index of insert position
         :param str|list new_item: insert item
-        :return ~TextFlint.ABSAsample: modified sample
+        :return ~textflint.ABSAsample: modified sample
 
         """
         return self.insert_field_after_indices(field, [ins_index], [new_item])
@@ -463,7 +463,7 @@ class ABSASample(Sample):
 
         :param str field: transformed field
         :param list del_index: index of delete position
-        :return ~TextFlint.ABSAsample: modified sample
+        :return ~textflint.ABSAsample: modified sample
 
         """
         return self.delete_field_at_indices(field, [del_index])

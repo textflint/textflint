@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.common.utils.list_op import *
+from textflint.common.utils.list_op import *
 
 
 class TestClass:

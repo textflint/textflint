@@ -9,8 +9,8 @@ from fastNLP.io import Conll2003NERPipe
 from fastNLP.models import BiLSTMCRF
 from torch import nn as nn, optim
 
-from TextFlint.common.utils.load import load_cached_state_dict
-from TextFlint.common import device
+from textflint.common.utils.load import load_cached_state_dict
+from textflint.common import device
 
 
 def load_data(train_path, dev_path, test_path):

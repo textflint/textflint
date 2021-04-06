@@ -34,7 +34,7 @@ class CnMLM(Transformation):
         In this function, because there is only one deformation mode, only one
         set of outputs is output.
 
-        :param ~TextFlint.CWSSample sample: the data which need be changed
+        :param ~textflint.CWSSample sample: the data which need be changed
         :param **kwargs:
         :return: trans_sample a list of sample
 

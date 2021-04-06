@@ -35,7 +35,7 @@ class WordSubstitute(Transformation):
         :param float trans_p: Percentage of word will be augmented.
         :param list stop_words: List of words which will be skipped from
             augment operation.
-        :param ~TextFlint.common.preprocess.EnProcessor processor:
+        :param ~textflint.common.preprocess.EnProcessor processor:
         :param bool get_pos: whether pass pos tag to _get_substitute_words API.
 
         """

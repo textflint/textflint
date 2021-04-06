@@ -22,8 +22,8 @@ def module_loader(dir_path, filter_str=''):
             continue
         module_path = os.path.join(dir_path, module.name)
         module_name = os.path.relpath(module_path).replace(os.path.sep, '.')
-        assert('TextFlint' in module_name)
-        module_name = module_name[module_name.find('TextFlint'):]
+        assert('textflint' in module_name)
+        module_name = module_name[module_name.find('textflint'):]
         yield importlib.import_module(module_name)
         # yield module.module_finder.find_loader(module.name)[0].load_module()
 

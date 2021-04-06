@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample import SASample
-from TextFlint.generation_layer.transformation.UT.twitter_type \
+from textflint.input_layer.component.sample import SASample
+from textflint.generation_layer.transformation.UT.twitter_type \
     import TwitterType
 
 

@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.dp_sample import *
+from textflint.input_layer.component.sample.dp_sample import *
 
 word = ['Influential', 'members', 'of', 'the', 'House', 'Ways', 'and',
         'Means', 'Committee', 'introduced', 'legislation', 'that',

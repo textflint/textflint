@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.component.field.field import *
+from textflint.input_layer.component.field.field import *
 
 
 class TestField(unittest.TestCase):

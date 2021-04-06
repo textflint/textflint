@@ -7,11 +7,11 @@ import copy
 current_path = Path(__file__).resolve().parent
 if platform.system() == 'Windows':
     CACHE_DIR = os.environ.get(
-        "TR_CACHE_DIR", os.path.join(os.environ.get('APPDATA'), 'TextFlint')
+        "TR_CACHE_DIR", os.path.join(os.environ.get('APPDATA'), 'textflint')
     )
 else:
     CACHE_DIR = os.environ.get(
-        "TR_CACHE_DIR", os.path.expanduser("~/.cache/TextFlint")
+        "TR_CACHE_DIR", os.path.expanduser("~/.cache/textflint")
     )
 os.environ["TR_CACHE_DIR"] = CACHE_DIR
 DATA_PATH = os.path.join(current_path, './res/')

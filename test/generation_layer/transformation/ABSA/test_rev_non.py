@@ -1,6 +1,6 @@
 import unittest
-from TextFlint.generation_layer.transformation.ABSA.rev_non import RevNon
-from TextFlint.input_layer.component.sample.absa_sample import ABSASample
+from textflint.generation_layer.transformation.ABSA.rev_non import RevNon
+from textflint.input_layer.component.sample.absa_sample import ABSASample
 
 data = {"sentence": "The food is great, I love their dumplings, "
                     "cold sesame noodles, chicken and shrimp dishs.",

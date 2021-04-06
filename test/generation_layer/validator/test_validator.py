@@ -1,15 +1,15 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.sa_sample import *
-from TextFlint.generation_layer.validator.sentence_encoding \
+from textflint.input_layer.component.sample.sa_sample import *
+from textflint.generation_layer.validator.sentence_encoding \
     import SentenceEncoding
-from TextFlint.generation_layer.validator.max_words_perturbed \
+from textflint.generation_layer.validator.max_words_perturbed \
     import MaxWordsPerturbed
-from TextFlint.generation_layer.validator.edit_distance \
+from textflint.generation_layer.validator.edit_distance \
     import EditDistance
-from TextFlint.generation_layer.validator.translate_score import TranslateScore
-from TextFlint.generation_layer.validator.gpt2_perplexity import GPT2Perplexity
-from TextFlint.input_layer.dataset.dataset import Dataset
+from textflint.generation_layer.validator.translate_score import TranslateScore
+from textflint.generation_layer.validator.gpt2_perplexity import GPT2Perplexity
+from textflint.input_layer.dataset.dataset import Dataset
 
 
 class TestValidator(unittest.TestCase):

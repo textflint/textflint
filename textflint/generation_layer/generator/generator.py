@@ -93,7 +93,7 @@ class Generator(ABC):
         r"""
         Check dataset
 
-        :param TextFlint.Dataset dataset: the input dataset
+        :param textflint.Dataset dataset: the input dataset
 
         """
         assert isinstance(dataset, Dataset)
@@ -104,8 +104,8 @@ class Generator(ABC):
         r"""
         Returns a list of possible generated samples for ``dataset``.
 
-        :param TextFlint.Dataset dataset: the input dataset
-        :param TextFlint.FlintModel model: the model to attack if given.
+        :param textflint.Dataset dataset: the input dataset
+        :param textflint.FlintModel model: the model to attack if given.
         :return: yield (original samples, new samples,
             generated function string).
 
@@ -322,7 +322,7 @@ class Generator(ABC):
         """
         Check given dataset whether compatible with task and fields.
 
-        :param TextFlint.dataset.Dataset dataset: the input dataset.
+        :param textflint.dataset.Dataset dataset: the input dataset.
         """
         # check whether empty
         if not dataset or len(dataset) == 0:

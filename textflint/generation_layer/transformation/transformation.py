@@ -33,7 +33,7 @@ class Transformation(ABC):
         r"""
         Transform data sample to a list of Sample.
 
-        :param ~TextFlint.input_layer.component.sample.Sample sample: Data
+        :param ~textflint.input_layer.component.sample.Sample sample: Data
             sample for augmentation.
         :param int n: Max number of unique augmented output, default is 5.
         :param str|list field: Indicate which fields to apply transformations.
@@ -56,7 +56,7 @@ class Transformation(ABC):
             " list,not {0}".format(type(field))
         fields = list(set(fields))
 
-        try:  # Deal with TextFlint Exception
+        try:  # Deal with textflint Exception
             if len(fields) == 1:
                 transform_results = self._transform(sample, n=n,
                                                     field=fields[0], **kwargs)
@@ -96,7 +96,7 @@ class Transformation(ABC):
         r"""
         Returns a list of all possible transformations for ``component``.
 
-        :param ~TextFlint.input_layer.component.sample.Sample sample:
+        :param ~textflint.input_layer.component.sample.Sample sample:
             Data sample for augmentation.
         :param int n: Default is 5. MAx number of unique augmented output.
         :param str field: Indicate which field to apply transformations.

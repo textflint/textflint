@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.re_sample import RESample
-from TextFlint.generation_layer.transformation.RE.insert_clause \
+from textflint.input_layer.component.sample.re_sample import RESample
+from textflint.generation_layer.transformation.RE.insert_clause \
     import InsertClause
 
 data = {'x': ['But', 'both', 'Renault', 'and', 'Peugeot', 'said', 'July', '19',

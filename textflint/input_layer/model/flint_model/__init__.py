@@ -1,7 +1,7 @@
 """
 Model Wrappers
 --------------------------
-TextFlint can attack any model that takes a list of strings as input and outputs a list of predictions.
+textflint can attack any model that takes a list of strings as input and outputs a list of predictions.
 This is the idea behind *model flint_model*: to help your model conform to this API, we've provided the
 ``textflint.models.flint_model.ModelWrapper`` abstract class.
 

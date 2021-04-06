@@ -28,7 +28,7 @@ class Sample(ABC):
     ):
         r"""
         :param dict data: The dict obj that contains data info.
-        :param ~TextFlint.sample origin: original sample obj.
+        :param ~textflint.sample origin: original sample obj.
         :param int sample_id: sampleindex
 
         """

@@ -1,6 +1,6 @@
 import unittest
-from TextFlint.generation_layer.transformation.ABSA.rev_tgt import RevTgt
-from TextFlint.input_layer.component.sample.absa_sample import ABSASample
+from textflint.generation_layer.transformation.ABSA.rev_tgt import RevTgt
+from textflint.input_layer.component.sample.absa_sample import ABSASample
 
 data = {"sentence": "The bread is top notch as well.",
        "term_list": {

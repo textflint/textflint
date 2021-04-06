@@ -18,7 +18,7 @@ __all__ = ['']
 
 class BarChart:
     r"""
-    Class for TextFlint bar chart Report.
+    Class for textflint bar chart Report.
     Code from https://github.com/robustness-gym/robustness-gym
 
     """

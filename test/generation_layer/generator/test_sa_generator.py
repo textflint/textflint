@@ -1,6 +1,6 @@
 import unittest
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.generation_layer.generator.sa_generator import SAGenerator
+from textflint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.sa_generator import SAGenerator
 
 sample1 = {'x': 'Titanic is my favorite movie.',
            'y': 'pos'}

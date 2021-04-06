@@ -2,8 +2,8 @@ import unittest
 import random
 import editdistance
 
-from TextFlint.input_layer.component.sample import SASample
-from TextFlint.generation_layer.transformation.UT.typos import Typos
+from textflint.input_layer.component.sample import SASample
+from textflint.generation_layer.transformation.UT.typos import Typos
 
 
 sample = {'x': 'Pride and Prejudice is a famous fiction', 'y': 'positive'}

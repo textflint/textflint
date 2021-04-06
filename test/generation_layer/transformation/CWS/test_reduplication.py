@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.cws_sample import CWSSample
-from TextFlint.generation_layer.transformation.CWS.reduplication \
+from textflint.input_layer.component.sample.cws_sample import CWSSample
+from textflint.generation_layer.transformation.CWS.reduplication \
     import Reduplication
 
 sent1 = '朦胧的月色'

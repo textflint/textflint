@@ -37,7 +37,7 @@ class Pipeline(Transformation, list):
         r"""
         Returns samples of combination number of contained transformations..
 
-        :param ~TextFlint.input_layer.component.sample.Sample sample:
+        :param ~textflint.input_layer.component.sample.Sample sample:
             Data sample for augmentation.
         :param int n: Default is 5. Max number of unique augmented output.
         :param str|list: Correspond with transform_objs,

@@ -1,6 +1,6 @@
 import unittest
-from TextFlint.generation_layer.transformation.ABSA.add_diff import AddDiff
-from TextFlint.input_layer.component.sample.absa_sample import ABSASample
+from textflint.generation_layer.transformation.ABSA.add_diff import AddDiff
+from textflint.input_layer.component.sample.absa_sample import ABSASample
 
 data = {"sentence": "The food is great, I love their dumplings, cold sesame "
                     "noodles, chicken and shrimp dishs.",

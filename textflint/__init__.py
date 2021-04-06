@@ -2,10 +2,9 @@
 
 """
 
-from .input_layer.config import Config
-# from .data_manager import DataManager
+from .input_layer import *
 from .generation_layer.generator import Generator
 from .generation_layer.validator import Validator
-# from .engine import TREEngine as TextFlint
+from .engine import Engine
 
-name = "TextFlint"
+name = "textflint"

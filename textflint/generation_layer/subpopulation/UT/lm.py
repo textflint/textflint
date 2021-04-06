@@ -15,7 +15,7 @@ class LMSubPopulation(SubPopulation):
 
     Example::
 
-        sample 1: "I love TextFlint", score: 6.7
+        sample 1: "I love textflint", score: 6.7
         sample 2: "I love TextFlinet", score: 6.34
     """
     def __init__(

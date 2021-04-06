@@ -13,8 +13,8 @@ class LengthSubPopulation(SubPopulation):
 
     Example::
 
-        sample 1: "I love TextFlint", score: 3
-        sample 2: "I love TextFlint very much", score: 5
+        sample 1: "I love textflint", score: 3
+        sample 2: "I love textflint very much", score: 5
     """
     def __init__(
             self,

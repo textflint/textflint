@@ -1,2 +1,2 @@
-from .sample.sample import Sample
+from .sample import *
 from .field.field import Field

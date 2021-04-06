@@ -1,6 +1,6 @@
 import unittest
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.generation_layer.generator.pos_generator import POSGenerator
+from textflint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.pos_generator import POSGenerator
 
 sample1 = {'x': ['That', 'is', 'a', 'pretty', 'prefixed', 'survey'],
            'y': ['DT', 'VBZ', 'DT', 'RB', 'JJ', 'NN']}

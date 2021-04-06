@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.nli_sample import *
+from textflint.input_layer.component.sample.nli_sample import *
 
 data = {'hypothesis': 'MR zhang has 10 students',
         'premise': 'Mr zhang has 20 students',

@@ -314,7 +314,7 @@ class CorefSample(Sample):
         :param str field: transformed field
         :param list indices: indices of insert positions
         :param list items: insert items
-        :return ~TextFlint.CorefSample: modified sample
+        :return ~textflint.CorefSample: modified sample
 
         """
         # arg type check
@@ -372,7 +372,7 @@ class CorefSample(Sample):
         :param str field: transformed field
         :param list indices: indices of insert positions
         :param list items: insert items
-        :return ~TextFlint.CorefSample: modified sample
+        :return ~textflint.CorefSample: modified sample
 
         """
         # arg type check
@@ -428,7 +428,7 @@ class CorefSample(Sample):
 
         :param str field: transformed field
         :param list indices: indices of delete positions
-        :return ~TextFlint.CorefSample: modified sample
+        :return ~textflint.CorefSample: modified sample
 
         """
         # arg type check
@@ -506,7 +506,7 @@ class CorefSample(Sample):
         :param str field: transformed field
         :param list indices: indices of delete positions
         :param list items: insert items
-        :return ~TextFlint.CorefSample: modified sample
+        :return ~textflint.CorefSample: modified sample
 
         """
         # arg type check
@@ -560,7 +560,7 @@ class CorefSample(Sample):
         Given several CorefSamples, concat the values key by key.
 
         :param: Some CorefSamples
-        :return ~TextFlint.input_layer.component.sample.CorefSample:
+        :return ~textflint.input_layer.component.sample.CorefSample:
             A CorefSample, as the docs are concanated to form one x
 
         """
@@ -607,7 +607,7 @@ class CorefSample(Sample):
 
         :param list sen_idxs: a list of ints. the indexes in a shuffled order
                 we expect `sen_idxs` is like [1, 3, 0, 4, 2, 5] when sen_num = 6
-        :return ~TextFlint.input_layer.component.sample.CorefSample:
+        :return ~textflint.input_layer.component.sample.CorefSample:
             a CorefSample with respect to the shuffled index
 
         """
@@ -659,7 +659,7 @@ class CorefSample(Sample):
         :param list pres_idxs: a list of ints. the indexes to be preserved
             we expect `pres_idxs` is from [0..num_sen], and is in ascending
             order, like [0, 1, 3, 5] when num_sen = 6
-        :return ~TextFlint.input_layer.component.sample.CorefSample:
+        :return ~textflint.input_layer.component.sample.CorefSample:
             a CorefPartSample of a conll-part
         """
         # arg check
@@ -716,7 +716,7 @@ class CorefSample(Sample):
         `clusters` are kept for convenience of concat.
 
         :param int sen_idx: sentences with idx < sen_idx will be preserved
-        :return ~TextFlint.input_layer.component.sample.CorefSample:
+        :return ~textflint.input_layer.component.sample.CorefSample:
             a CorefPartSample of a conll-part
         """
         doc_key = self.doc_key
@@ -759,7 +759,7 @@ class CorefSample(Sample):
         `clusters` are kept for convenience of concat.
 
         :param int sen_idx: sentences with idx < sen_idx will be preserved
-        :return ~TextFlint.input_layer.component.sample.CorefSample:
+        :return ~textflint.input_layer.component.sample.CorefSample:
             a CorefPartSample of a conll-part
 
         """
@@ -900,7 +900,7 @@ class CorefPartSample(CorefSample):
 
         This function remove these invalid clusters from self.clusters.
 
-        :return ~TextFlint.input_layer.component.sample.CorefSample:
+        :return ~textflint.input_layer.component.sample.CorefSample:
             a CorefSample that passes check_data
 
         """
@@ -922,7 +922,7 @@ class CorefPartSample(CorefSample):
             Merge result is still treated as a conll part, which should be
             postprocessed by `remove_invalid_corefs_from_part` to form a
             valid CorefSample.
-        :return ~TextFlint.input_layer.component.sample.CorefPartSample:
+        :return ~textflint.input_layer.component.sample.CorefPartSample:
             a CorefPartSample of a conll-part
 
         """

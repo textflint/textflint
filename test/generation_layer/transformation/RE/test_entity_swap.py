@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.re_sample import RESample
-from TextFlint.generation_layer.transformation.RE.swap_ent import SwapEnt
+from textflint.input_layer.component.sample.re_sample import RESample
+from textflint.generation_layer.transformation.RE.swap_ent import SwapEnt
 
 data = {'x': ["``", "The", "situation", "is", "very", "serious", ",", "''",
               "Mattis", ",", "30", ",", "told", "reporters", "after", "meeting",

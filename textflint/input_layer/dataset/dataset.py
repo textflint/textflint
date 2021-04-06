@@ -1,6 +1,6 @@
 r"""
 
-dataset: TextFlint dataset
+dataset: textflint dataset
 =============================
 """
 

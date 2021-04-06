@@ -1,8 +1,8 @@
 import unittest
 
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.input_layer.component.sample import DPSample
-from TextFlint.generation_layer.generator.dp_generator import DPGenerator
+from textflint.input_layer.dataset import Dataset
+from textflint.input_layer.component.sample import DPSample
+from textflint.generation_layer.generator.dp_generator import DPGenerator
 
 
 word = ['Influential', 'members', 'of', 'the', 'House', 'Ways', 'and',

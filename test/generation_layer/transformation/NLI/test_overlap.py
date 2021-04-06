@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.nli_sample import NLISample
-from TextFlint.generation_layer.transformation.NLI import Overlap
+from textflint.input_layer.component.sample.nli_sample import NLISample
+from textflint.generation_layer.transformation.NLI import Overlap
 
 sample1 = NLISample({'hypothesis': 'MR zhang has 10 students',
         'premise': 'Mr zhang has 10 students',

@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.sa_sample import SASample
-from TextFlint.generation_layer.transformation.SA.add_sum import AddSum
+from textflint.input_layer.component.sample.sa_sample import SASample
+from textflint.generation_layer.transformation.SA.add_sum import AddSum
 
 data = {'x': "Brilliant and moving performances by Tom Courtenay "
              "and Peter Finch",

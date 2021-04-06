@@ -1,6 +1,6 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.pos_sample import *
+from textflint.input_layer.component.sample.pos_sample import *
 
 data = {'x': ['That', 'is', 'a', 'good', 'survey'],
         'y': ['DT', 'VBZ', 'DT', 'JJ', 'NN']}

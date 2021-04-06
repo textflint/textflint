@@ -8,8 +8,8 @@ from torch import nn as nn
 from torch.nn import functional as F
 
 from .glove_embedding import GloveEmbedding
-from TextFlint.common.utils.load import load_cached_state_dict
-from TextFlint.common import device
+from textflint.common.utils.load import load_cached_state_dict
+from textflint.common import device
 
 
 class TextCNNTorchModel(nn.Module):

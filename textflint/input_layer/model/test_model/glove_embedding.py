@@ -8,7 +8,7 @@ import os
 import numpy as np
 import textattack
 
-from TextFlint.common.utils import logger, download_if_needed
+from ....common.utils import logger, download_if_needed
 
 
 class Embedding:
@@ -82,8 +82,7 @@ class GloveEmbedding(Embedding):
     EMBEDDING_PATH = "EMBEDDING/glove200.zip"
 
     def __init__(self):
-        # TODO
-        glove_path = textattack.shared.utils.download_if_needed(
+        glove_path = download_if_needed(
             GloveEmbedding.EMBEDDING_PATH
         )
         # glove_path = download_if_needed(GloveEmbedding.EMBEDDING_PATH)

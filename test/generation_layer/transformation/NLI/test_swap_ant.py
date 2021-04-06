@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.nli_sample import NLISample
-from TextFlint.generation_layer.transformation.NLI import SwapAnt
+from textflint.input_layer.component.sample.nli_sample import NLISample
+from textflint.generation_layer.transformation.NLI import SwapAnt
 
 sample1 = NLISample({'hypothesis': 'There are two little boys smiling.',
         'premise': 'Two little boys are smiling and laughing while one is '

@@ -56,7 +56,7 @@ class SwapSyn(Transformation):
         r"""
         In this function, there are several deformation modes.
 
-        :param ~TextFlint.CWSSample sample: the data which need be changed
+        :param ~textflint.CWSSample sample: the data which need be changed
         :param **kwargs:
         :return: In this function, there may be multiple outputs
 

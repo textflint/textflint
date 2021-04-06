@@ -1,5 +1,5 @@
 """
-TextFlint Engine Class
+textflint Engine Class
 ============================================
 
 """
@@ -40,8 +40,8 @@ class Engine:
 
         :param dict|list|string data_input: json object or json/csv file
         :param string out_dir: out dir for saving generated samples
-        :param string|TextFlint.Config config: json file or Config object
-        :param TextFlint.FlintModel model: model wrapper which implements
+        :param string|textflint.Config config: json file or Config object
+        :param textflint.FlintModel model: model wrapper which implements
             FlintModel abstract methods, not a necessary input.
         :return: save generated data to out dir
             and provide report in html format.
@@ -59,10 +59,10 @@ class Engine:
         Load data input, config file and FlintModel.
 
         :param dict|list|string data_input: json object or json/csv file
-        :param string|TextFlint.Config config: json file or Config object
-        :param TextFlint.FlintModel model: model wrapper which implements
+        :param string|textflint.Config config: json file or Config object
+        :param textflint.FlintModel model: model wrapper which implements
             FlintModel abstract methods, not a necessary input.
-        :return: TextFlint.Dataset, TextFlint.Config, TextFlint.FlintModel
+        :return: textflint.Dataset, textflint.Config, textflint.FlintModel
 
         """
         dataset = Adapter.get_dataset(
@@ -88,10 +88,10 @@ class Engine:
         save result as json file to out path, and evaluate
         model performance automatically if provide model.
 
-        :param TextFlint.Dataset dataset: container of original samples.
-        :param TextFlint.Config config: config instance to control procedure.
+        :param textflint.Dataset dataset: container of original samples.
+        :param textflint.Config config: config instance to control procedure.
         :param str out_dir: out dir for saving generated samples
-        :param TextFlint.FlintModel model: model wrapper which implements
+        :param textflint.FlintModel model: model wrapper which implements
             FlintModel abstract methods, not a necessary input.
         :return: save generated samples to json file.
 

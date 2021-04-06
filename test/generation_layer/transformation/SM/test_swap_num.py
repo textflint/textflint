@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.sm_sample import SMSample
-from TextFlint.generation_layer.transformation.SM import SwapNum
+from textflint.input_layer.component.sample.sm_sample import SMSample
+from textflint.generation_layer.transformation.SM import SwapNum
 
 sample1 = SMSample({'sentence1': 'MR zhang has 10 students',
         'sentence2': 'Mr zhang has 10 students',

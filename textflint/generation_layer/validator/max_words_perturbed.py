@@ -13,9 +13,9 @@ class MaxWordsPerturbed(Validator):
     A constraint representing a maximum allowed perturbed words.
         We use the lcs div the long of the sentence as the score.
 
-    :param ~TextFlint.input_layer.dataset origin_dataset:
+    :param ~textflint.input_layer.dataset origin_dataset:
             the dataset of origin sample
-    :param ~TextFlint.input_layer.dataset trans_dataset:
+    :param ~textflint.input_layer.dataset trans_dataset:
         the dataset of translate sample
     :param str|list fields: the name of the origin field need compare.
     :param bool need_tokens: if we need tokenize the sentence

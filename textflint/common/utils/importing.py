@@ -25,7 +25,7 @@ class LazyLoader(types.ModuleType):
             raise ModuleNotFoundError(
                 f"Lazy module loader cannot find module "
                 f"named `{self.__name__}`. "
-                f"This might be because TextFlint does not automatically "
+                f"This might be because textflint does not automatically "
                 f"install some optional dependencies. "
                 f"Please run `pip install {self.__name__}` "
                 f"to install the package.") from e

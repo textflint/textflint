@@ -1,9 +1,9 @@
 import unittest
 import editdistance
 
-from TextFlint.input_layer.component.sample.ner_sample import NERSample
-from TextFlint.generation_layer.transformation.NER.ent_typos import EntTypos
-from TextFlint.common.utils.word_op import *
+from textflint.input_layer.component.sample.ner_sample import NERSample
+from textflint.generation_layer.transformation.NER.ent_typos import EntTypos
+from textflint.common.utils.word_op import *
 
 sent1 = 'EU rejects German call to boycott British lamb .'
 data_sample = NERSample(

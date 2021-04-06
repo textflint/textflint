@@ -3,7 +3,7 @@
 <p align="center">Unified Multilingual Robustness Evaluation Toolkit 
     for Natural Language Processing</p>
 <p align="center">
-  <a href="https://textflint.readthedocs.io/">[TextFlint Documentation on ReadTheDocs]</a> 
+  <a href="https://textflint.readthedocs.io/">[TextFlint Documentation on ReadTheDocs]</a>
   <br> <br>
   <a href="#about">About</a> •
   <a href="#setup">Setup</a> •
@@ -28,7 +28,7 @@ TextFlint is a multilingual robustness evaluation platform for natural language 
 
 There are lots of reasons to use TextFlint:
 
-- **Full coverage of transformation types**, including 20 general transformations, 8 subpopulations and 60 task-specific transformations, as well as thousands of their combinations, which basically covers all aspects of text transformations to comprehensively evaluate the robustness of your model. TextFlint also supports adversarial attack to generate model specific transformed datas.
+- **Full coverage of transformation types**, including 20 general transformations, 8 subpopulations and 60 task-specific transformations, as well as thousands of their combinations, which basically covers all aspects of text transformations to comprehensively evaluate the robustness of your model. textflint also supports adversarial attack to generate model specific transformed datas.
 - **Generate targeted augmented data**, and you can use the additional data to train or fine-tune your model to improve your model's robustness.
 - **Provide a complete analytical report automatically** to accurately explain where your model's shortcomings are, such as the problems in syntactic rules or syntactic rules. 
 
@@ -41,14 +41,14 @@ You can either use `pip` or clone this repo to install TextFlint.
 1. **Using `pip` (recommended)**
 
 ```shell
-pip install TextFlint
+pip install textflint
 ```
 
 2. **Cloning this repo**
 
 ```shell
 git clone https://github.com/textflint/textflint.git
-cd TextFlint
+cd textflint
 python setup.py install
 ```
 
@@ -61,7 +61,7 @@ python setup.py install
 
 The general workflow of TextFlint is displayed above. Evaluation of target models could be devided into three steps:
 
-1. For input preparation, the original dataset for testing, which is to be loaded by `Dataset`, should be firstly formatted as a series of `JSON` objects. TextFlint configuration is specified by `Config`. Target model is also loaded as `FlintModel`. 
+1. For input preparation, the original dataset for testing, which is to be loaded by `Dataset`, should be firstly formatted as a series of `JSON` objects. textflint configuration is specified by `Config`. Target model is also loaded as `FlintModel`.
 2. In adversarial sample generation, multi-perspective transformations (i.e., `Transformation`,`Subpopulation` and `AttackRecipe`), are performed on `Dataset` to generate transformed samples. Besides, to ensure semantic and grammatical correctness of transformed samples, `Validator` calculates confidence of each sample to filter out unacceptable samples. 
 3. Lastly, `Analyzer` collects evaluation results and `ReportGenerator` automatically generates a comprehensive report of model robustness. 
 
@@ -70,7 +70,7 @@ The general workflow of TextFlint is displayed above. Evaluation of target model
 The following code snippet shows how to generate transformed data on the Sentiment Analysis task.
 
 ```python
-from TextFlint.engine import Engine
+from textflint import Engine
 
 # load the data samples
 sample1 = {'x': 'Titanic is my favorite movie.', 'y': 'pos'}
@@ -85,7 +85,7 @@ engine = Engine('SA')
 engine.run(data_samples, out_dir_path, config)
 ```
 
-You can also feed data to `TextFlintEngine` in other ways (e.g., `json` or `csv`) where one line represents for a sample. We have defined some transformations and subpopulations in `SA.json`, and you can also pass your own  configuration file as you need.
+You can also feed data to `Engine` in other ways (e.g., `json` or `csv`) where one line represents for a sample. We have defined some transformations and subpopulations in `SA.json`, and you can also pass your own  configuration file as you need.
 
 ####  Transformed Datasets
 
@@ -560,7 +560,7 @@ In order to verify the robustness comprehensively, TextFlint offers 20 universal
 
 ### AttackRecipe
 
-`AttackRecipe` aims to find a perturbation of an input text satisfies the attack's goal to fool the given `FlintModel`. In contrast to `Transformation`, `AttackRecipe` requires the prediction scores of the target model.  TextFlint provides an interface to integrate the easy-to-use adversarial attack recipes implemented based on `textattack`. Users can refer to [textattack](https://github.com/QData/TextAttack) for more information about the supported `AttackRecipe`.
+`AttackRecipe` aims to find a perturbation of an input text satisfies the attack's goal to fool the given `FlintModel`. In contrast to `Transformation`, `AttackRecipe` requires the prediction scores of the target model.  textflint provides an interface to integrate the easy-to-use adversarial attack recipes implemented based on `textattack`. Users can refer to [textattack](https://github.com/QData/TextAttack) for more information about the supported `AttackRecipe`.
 
 ### Validator
 
@@ -605,7 +605,7 @@ It is crucial to verify the quality of samples generated by `Transformation` and
 
 ### Report
 
-In Generation Layer, TextFlint can generate three types of adversarial samples and verify the robustness of the target model. Based on the results from Generation Layer, Report Layer aims to provide users with a standard analysis report from lexics, syntax, and semantic levels. For example, on the Sentiment Analysis (SA) task, this is a statistical chart of the performance of`XLNET`  with different types of `Transformation`/`Subpopulation`/`AttackRecipe` on the `IMDB` dataset. We can find that the model performance is lower than the original results in all the transformed dataset. 
+In Generation Layer, TextFlint can generate three types of adversarial samples and verify the robustness of the target model. Based on the results from Generation Layer, Report Layer aims to provide users with a standard analysis report from lexics, syntax, and semantic levels. For example, on the Sentiment Analysis (SA) task, this is a statistical chart of the performance of`XLNET`  with different types of `Transformation`/`Subpopulation`/`AttackRecipe` on the `IMDB` dataset. We can find that the model performance is lower than the original results in all the transformed dataset.
 
 <img src="images/report.png" alt="" style="zoom:100%" />
 

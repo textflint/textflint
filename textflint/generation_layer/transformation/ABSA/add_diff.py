@@ -49,7 +49,7 @@ class AddDiff(ABSATransformation):
         r"""
         Transform data sample to a list of Sample.
 
-        :param ~TextFlint.input_layer.component.sample.ABSAsample sample: input ABSAsample
+        :param ~textflint.input_layer.component.sample.ABSAsample sample: input ABSAsample
         :param int n: the number of transformation, in ABSA-specific transformations n=1
         :param str field:field name
         :param dict extra_text: extra text will be added to the original sentence

@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.generation_layer.subpopulation.UT import LMSubPopulation
-from TextFlint.input_layer.component.sample import NLISample
+from textflint.generation_layer.subpopulation.UT import LMSubPopulation
+from textflint.input_layer.component.sample import NLISample
 sent1 = 'The man was carrying a red box.'
 sent2 = 'Man with a blue box on wheels smiling at the boys playing around him.'
 sample1 = NLISample({

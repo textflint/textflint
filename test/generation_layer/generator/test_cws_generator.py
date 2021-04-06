@@ -1,7 +1,7 @@
 import unittest
-from TextFlint.input_layer.component.sample.cws_sample import CWSSample
-from TextFlint.input_layer.dataset import Dataset
-from TextFlint.generation_layer.generator.cws_generator import CWSGenerator
+from textflint.input_layer.component.sample.cws_sample import CWSSample
+from textflint.input_layer.dataset import Dataset
+from textflint.generation_layer.generator.cws_generator import CWSGenerator
 
 
 class TestSpecialEntityTyposSwap(unittest.TestCase):

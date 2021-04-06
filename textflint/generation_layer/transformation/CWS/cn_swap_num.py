@@ -37,7 +37,7 @@ class CnSwapNum(Transformation):
         r"""
         We randomly generated five sets of data.
 
-        :param ~TextFlint.CWSSample sample: the data which need be changed
+        :param ~textflint.CWSSample sample: the data which need be changed
         :param int n: number of generated data
         :param **kwargs:
         :return: trans_sample a list of sample

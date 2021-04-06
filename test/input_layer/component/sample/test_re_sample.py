@@ -1,7 +1,7 @@
 import unittest
 
-from TextFlint.input_layer.component.sample.re_sample import RESample
-from TextFlint.common.preprocess.tokenizer import untokenize
+from textflint.input_layer.component.sample.re_sample import RESample
+from textflint.common.preprocess.tokenizer import untokenize
 
 data = {'x': ["``", "The", "situation", "is", "very", "serious", ",", "''",
               "Mattis", ",", "30", ",", "told", "reporters", "after",
