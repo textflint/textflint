@@ -71,15 +71,11 @@ The following code snippet shows how to generate transformed data on the Sentime
 
 ```python
 from TextFlint.engine import Engine
-from TextFlint.input_layer.config import Config
 
 # load the data samples
 sample1 = {'x': 'Titanic is my favorite movie.', 'y': 'pos'}
 sample2 = {'x': 'I don\'t like the actor Tim Hill', 'y': 'neg'}
 data_samples = [sample1, sample2]
-
-# define the transformation/subpopulation/attack types in the json config file
-config = Config.from_json_file("TextFlint/common/config_files/SA/SA.json")
 
 # define the output directory
 out_dir_path = './test_result/'
