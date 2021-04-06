@@ -57,7 +57,7 @@ python setup.py install
 
 
 
-<img src="images/workflow.pdf" style="zoom:50%;" />
+<img src="images/workflow.png" style="zoom:50%;" />
 
 The general workflow of TextFlint is displayed above. Evaluation of target models could be devided into three steps:
 
@@ -116,7 +116,7 @@ M.S. Titanic .) is my favorite movie.", "y": "pos", "sample_id": 0}
 
 ## Design
 
-<img src="images/architecture.pdf" style="zoom:50%;" />
+<img src="images/architecture.png" style="zoom:50%;" />
 
 ### Architecture
 
