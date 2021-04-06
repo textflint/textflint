@@ -2,7 +2,7 @@ language: python
 jobs:
   include:
     - name: "Python 3.7 on Xenial Linux"
-      python: 3.8
+      python: 3.7
     - name: "Python 3.7.4 on macOS"
       os: osx
       osx_image: xcode11.2
@@ -16,8 +16,8 @@ jobs:
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 install: 
   - pip3 install --upgrade pip
-  - pip3 install .
-  - pip3 install pytest
+  - pip3 install --user -r requirements.txt
+  - pip3 install --user pytest
 script:
   - pytest
   
