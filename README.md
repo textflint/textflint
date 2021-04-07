@@ -82,7 +82,7 @@ out_dir_path = './test_result/'
 
 # run transformation/subpopulation/attack and save the transformed data to out_dir_path in json format
 engine = Engine('SA')
-engine.run(data_samples, out_dir_path, config)
+engine.run(data_samples, out_dir_path)
 ```
 
 You can also feed data to `Engine` in other ways (e.g., `json` or `csv`) where one line represents for a sample. We have defined some transformations and subpopulations in `SA.json`, and you can also pass your own  configuration file as you need.
