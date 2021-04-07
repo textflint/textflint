@@ -3,7 +3,8 @@ from .generator import Generator
 from ...common.utils.logger import logger
 from ...common.settings import TASK_TRANSFORMATION_PATH, \
     ALLOWED_TRANSFORMATIONS, TASK_SUBPOPULATION_PATH, ALLOWED_SUBPOPULATIONS
-from tqdm import trange
+from tqdm import tqdm
+import random
 
 
 Flint = {
@@ -30,7 +31,8 @@ class CorefGenerator(Generator):
         subpopulation_methods=None,
         subpopulation_config=None,
         attack_methods=None,
-        validate_methods=None
+        validate_methods=None,
+        num_other_samples=2
     ):
         super().__init__(
             task=task,
@@ -44,6 +46,7 @@ class CorefGenerator(Generator):
             attack_methods=attack_methods,
             validate_methods=validate_methods,
         )
+        self.num_other_samples = num_other_samples # default 2
 
     def generate_by_transformations(self, dataset, **kwargs):
         r"""
@@ -67,11 +70,17 @@ class CorefGenerator(Generator):
             # initialize current index of dataset
             dataset.init_iter()
 
-            for i in trange(len(dataset_ls)):
-                sample = dataset_ls[i]
+            for i, sample in enumerate(tqdm(dataset_ls)):
                 if isinstance(sample, dict):
                     sample = CorefSample(sample)
-                samples_other = dataset_ls[:i] + dataset_ls[i + 1:]
+                if len(dataset_ls) <= self.num_other_samples:
+                    samples_other = dataset_ls[:i] + dataset_ls[i + 1:]
+                else:
+                    samples_other = []
+                    while len(samples_other) < self.num_other_samples:
+                        rand_idx = random.randint(0, len(dataset_ls)-1)
+                        if rand_idx != i:
+                            samples_other.append(dataset_ls[rand_idx])
                 if len(samples_other) > 0 and isinstance(samples_other[0], dict):
                     samples_other = [CorefSample(s) for s in samples_other]
                 trans_rst = trans_obj.transform(
