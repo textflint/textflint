@@ -86,7 +86,7 @@ class TwitterType(Transformation):
         indices = []
 
         for twitter_phrase in self.twitter_dic:
-            twitter_words = self.processor.word_tokenize(twitter_phrase)
+            twitter_words = self.processor.tokenize(twitter_phrase)
 
             for i in range(len(tokens) - len(twitter_words)):
                 if tokens[i: len(twitter_words)] == twitter_words:

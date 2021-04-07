@@ -12,7 +12,6 @@ from ..field import Field, TextField
 from ....common.utils.list_op import normalize_scope
 from ....common.preprocess.nltk_res_load import ModelManager
 from ....common.settings import *
-from ....common.preprocess.tokenizer import untokenize
 
 from nltk.stem.lancaster import LancasterStemmer
 from copy import deepcopy
@@ -183,7 +182,7 @@ class MRCSample(Sample):
 
         """
         for answer in self.answers:
-            if untokenize(self.context.words[
+            if self.text_processor.inverse_tokenize(self.context.words[
                     answer['start']:answer['end'] + 1]) != answer['text']:
                 return False
         return True
@@ -349,7 +348,7 @@ class MRCSample(Sample):
             if isinstance(items[i], list):
                 offset = len(items[i])
             else:
-                items[i] = MRCSample.text_processor.word_tokenize(items[i])
+                items[i] = MRCSample.text_processor.tokenize(items[i])
                 offset = len(items[i])
 
             for answer in answers:
@@ -402,7 +401,7 @@ class MRCSample(Sample):
             if isinstance(items[i], list):
                 offset = len(items[i])
             else:
-                items[i] = MRCSample.text_processor.word_tokenize(items[i])
+                items[i] = MRCSample.text_processor.tokenize(items[i])
                 offset = len(items[i])
 
             for answer in answers:

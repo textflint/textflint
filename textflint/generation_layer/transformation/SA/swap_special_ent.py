@@ -77,7 +77,7 @@ class SwapSpecialEnt(Transformation):
             # Randomly select a name for each candidate position
             sub_entity = random.sample(
                 self.entity_dict.keys(), len(replace_indices))
-            sub_entity_token = [self.processor.word_tokenize(entity)
+            sub_entity_token = [self.processor.tokenize(entity)
                                 for entity in sub_entity]
             trans_samples.append(sample.unequal_replace_field_at_indices(
                 'x', replace_indices, sub_entity_token))

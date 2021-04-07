@@ -27,7 +27,7 @@ class CnProcessor:
         return CnProcessor._instance
 
     @staticmethod
-    def word_tokenize(sent):
+    def tokenize(sent):
         r"""
         tokenize fiction
 

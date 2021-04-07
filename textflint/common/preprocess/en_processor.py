@@ -4,14 +4,15 @@ EnProcessor Class
 
 """
 
+import re
 import nltk
 import spacy
 import threading
+from functools import reduce
 from spacy.tokens import Doc
 
 from .nltk_res_load import *
 from ..settings import *
-from .tokenizer import tokenize, untokenize, sentence_tokenize
 
 
 class EnProcessor:
@@ -45,46 +46,105 @@ class EnProcessor:
                     EnProcessor._instance = object.__new__(cls)
         return EnProcessor._instance
 
-    @staticmethod
-    def word_tokenize(sent, is_one_sent=False, split_by_space=False):
+    def sentence_tokenize(self, text):
         r"""
-        Split sentences and tokenize.
+        Split text to sentences.
 
-        :param str sent: target string
-        :param bool is_one_sent: whether split sentence
-        :param bool split_by_space: whether split bu space or tokenizer
+        :param str text: text string
         :return: list[str]
 
         """
-        assert isinstance(sent, str)
-        return tokenize(sent, is_one_sent=is_one_sent,
-                        split_by_space=split_by_space)
+        assert isinstance(text, str)
+        text = self.nlp.tokenizer(text)
+
+        if not self.__sent_tokenizer:
+            if 'sentencizer' not in [
+                pipeline[0] for pipeline in self.nlp.pipeline
+            ]:
+                self.nlp.add_pipe('sentencizer')
+            self.__sent_tokenizer = self.nlp.pipeline[-1][1]
+
+        return [sent.text for sent in self.__sent_tokenizer(text).sents]
+
+    def tokenize_one_sent(self, text, split_by_space=False):
+        r"""
+        Tokenize one sentence.
+
+        :param str text:
+        :param bool split_by_space: whether tokenize sentence by split space
+        :return: tokens
+
+        """
+        assert isinstance(text, str)
+        if split_by_space:
+            return text.split(" ")
+        else:
+            return [
+                word.text.replace("''", '"')
+                    .replace("``", '"') for word in self.nlp.tokenizer(text)
+                if word.text != ' ' * len(word)
+            ]
+
+    def tokenize(self, text, is_one_sent=False, split_by_space=False):
+        """
+        Split a text into tokens (words, morphemes we can separate such as
+        "n't", and punctuation).
+
+        :param str text:
+        :param bool is_one_sent:
+        :param bool split_by_space:
+        :return: list of tokens
+
+        """
+        assert isinstance(text, str)
+
+        def _tokenize_gen(text):
+            if is_one_sent:
+                yield self.tokenize_one_sent(
+                    text,
+                    split_by_space=split_by_space
+                )
+            else:
+                for sent in self.sentence_tokenize(text):
+                    yield self.tokenize_one_sent(
+                        sent,
+                        split_by_space=split_by_space
+                    )
+
+        return reduce(lambda x, y: x + y, list(_tokenize_gen(text)), [])
 
     @staticmethod
     def inverse_tokenize(tokens):
         r"""
         Convert tokens to sentence.
 
-        :param list[str]r tokens: target string
+        Untokenizing a text undoes the tokenizing operation, restoring
+        punctuation and spaces to the places that people expect them to be.
+        Ideally, `untokenize(tokenize(text))` should be identical to `text`,
+        except for line breaks.
+
+        Watch out!
+        Default punctuation add to the word before its index,
+        it may raise inconsistency bug.
+
+        :param list[str]r tokens: target token list
         :return: str
 
         """
         assert isinstance(tokens, list)
-        return untokenize(tokens)
-
-    def sentence_tokenize(self, paras):
-        r"""
-        Split paragraph to sentences.
-
-        :param str paras: paragraph string
-        :return: list[str]
-
-        """
-        assert isinstance(paras, str)
-        if self.__sent_tokenizer is None:
-            self.__sent_tokenizer = sentence_tokenize
-
-        return self.__sent_tokenizer(paras)
+        text = ' '.join(tokens)
+        step1 = text.replace("`` ", '"') \
+            .replace(" ''", '"') \
+            .replace('. . .', '...')
+        step2 = step1.replace(" ( ", " (").replace(" ) ", ") ")
+        step3 = re.sub(r' ([.,:;?!%]+)([ \'"`])', r"\1\2", step2)
+        step4 = re.sub(r' ([.,:;?!%]+)$', r"\1", step3)
+        step5 = step4.replace(" '", "'").replace(" n't", "n't").replace(
+            "can not", "cannot")
+        step6 = step5.replace(" ` ", " '")
+        step7 = step6.replace('do nt', 'dont').replace('Do nt', 'Dont')
+        step8 = step7.replace(' - ', '-')
+        return step8.strip()
 
     def get_pos(self, sentence):
         r"""
@@ -112,7 +172,7 @@ class EnProcessor:
 
         """
         assert isinstance(sentence, (str, list))
-        tokens = tokenize(sentence) if isinstance(
+        tokens = self.tokenize(sentence) if isinstance(
             sentence, str) else sentence  # concatenate tokens
 
         if self.__word2vec is None:
@@ -171,7 +231,7 @@ class EnProcessor:
         if isinstance(sentence, list):
             tokens = sentence
         elif isinstance(sentence, str):
-            tokens = self.word_tokenize(sentence)  # list of tokens
+            tokens = self.tokenize(sentence)  # list of tokens
         else:
             raise ValueError(
                 'Support string or token list input, '
@@ -213,7 +273,7 @@ class EnProcessor:
         elif sentence in ['', []]:
             return ''
 
-        sentence = untokenize(sentence) \
+        sentence = self.inverse_tokenize(sentence) \
             if isinstance(sentence, list) else sentence  # concatenate tokens
 
         return str(list(self.__parser(sentence))[0])
@@ -258,7 +318,7 @@ class EnProcessor:
             tokens = sentence
         elif isinstance(sentence, str):
             # list of tokens
-            tokens = self.word_tokenize(sentence, is_one_sent, split_by_space)
+            tokens = self.tokenize(sentence, is_one_sent, split_by_space)
         else:
             raise ValueError(
                 'Support string or token list input, '
@@ -433,13 +493,12 @@ class EnProcessor:
             ret.append(lesk(sentoken, word, pos))
         return ret
 
-    def filter_candidates_by_pos(self, token_and_pos, candidates, lang="eng"):
+    def filter_candidates_by_pos(self, token_and_pos, candidates):
         r"""
         Filter synonyms not contain the same pos tag with given token.
 
         :param list|tuple token_and_pos: *(token, pos)*
         :param list candidates: strings to verify
-        :param str lang: language name
         :return: filtered candidates list.
 
         """

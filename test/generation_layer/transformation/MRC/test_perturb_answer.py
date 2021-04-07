@@ -54,7 +54,7 @@ class TestModifyPosition(unittest.TestCase):
                        '24–10 to earn their 3rd Champ Bowl rubric.'
 
         for i, sent in enumerate(trans_sents):
-            sent_len = len(PerturbAnswer.processor.word_tokenize(sent))
+            sent_len = len(PerturbAnswer.processor.tokenize(sent))
             if sent_start + sent_len <= answer_token_start:
                 sent_start += sent_len
                 continue

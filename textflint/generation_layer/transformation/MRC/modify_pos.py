@@ -33,7 +33,7 @@ class ModifyPos(Transformation):
         trivial_sent = None
         for idx, sent in enumerate(sents):
             trivial = True
-            sent_len = len(self.processor.word_tokenize(sent))
+            sent_len = len(self.processor.tokenize(sent))
             for answer in answers:
                 if answer['start'] >= sent_start and answer['end'] \
                         <= sent_start + sent_len:

@@ -2,13 +2,72 @@ import unittest
 
 from textflint.common.preprocess.en_processor import EnProcessor
 
+sents = [
+        "we're playing ping pang ball, you are so lazy. She's so beautiful!",
+        'I dont know this issue.',
+        "2020-year-plan is to write 3 papers"
+    ]
+
 
 class TestEnProcessor(unittest.TestCase):
     test_processor = EnProcessor()
 
-    def test_word_tokenize(self):
-        self.assertRaises(AssertionError, self.test_processor.word_tokenize, [])
-        self.assertEqual([], self.test_processor.word_tokenize(''))
+    def test_sentence_tokenize(self):
+        self.assertRaises(
+            AssertionError,
+            self.test_processor.sentence_tokenize,
+            sents
+        )
+        self.assertEqual(
+            2,
+            len(self.test_processor.sentence_tokenize(sents[0]))
+        )
+        self.assertEqual(["we're playing ping pang ball, you "
+                          "are so lazy.", "She's so beautiful!"],
+                         self.test_processor.sentence_tokenize(sents[0]))
+
+    def test_tokenize_one_sent(self):
+        self.assertRaises(
+            AssertionError,
+            self.test_processor.tokenize_one_sent,
+            sents
+        )
+        self.assertEqual(
+            sents[0].split(' '),
+            self.test_processor.tokenize_one_sent(sents[0], split_by_space=True)
+        )
+        self.assertEqual(['we', "'re", 'playing', 'ping', 'pang', 'ball', ',',
+                          'you', 'are', 'so', 'lazy', '.', 'She', "'s", 'so',
+                          'beautiful', '!'],
+                         self.test_processor.tokenize_one_sent(sents[0])
+                         )
+
+    def test_tokenize_and_untokenize(self):
+        self.assertRaises(AssertionError, self.test_processor.tokenize, sents)
+        self.assertRaises(
+            AssertionError,
+            self.test_processor.inverse_tokenize,
+            sents[0]
+        )
+
+        for sent in sents:
+            self.assertEqual(
+                sent,
+                self.test_processor.inverse_tokenize(
+                    self.test_processor.tokenize(sent)
+                )
+            )
+
+        self.assertEqual("I don't know this 'issue,.",
+                         self.test_processor.inverse_tokenize(
+                             self.test_processor.tokenize(
+                                 "I don't know this `issue,."
+                             ))
+                         )
+
+    def test_tokenize(self):
+        self.assertRaises(AssertionError, self.test_processor.tokenize, [])
+        self.assertEqual([], self.test_processor.tokenize(''))
         sents = [
             "we're playing ping pang ball, you are so lazy. She's so beautiful!",
             'I dont know this issue.',
@@ -17,12 +76,12 @@ class TestEnProcessor(unittest.TestCase):
             'this is ., token ? ! @# . Ok!'
         ]
         for sent in sents:
-            self.assertEqual(self.test_processor.word_tokenize(
-                sent, is_one_sent=1), self.test_processor.word_tokenize(
+            self.assertEqual(self.test_processor.tokenize(
+                sent, is_one_sent=1), self.test_processor.tokenize(
                 sent, is_one_sent=0))
-            self.assertEqual(self.test_processor.word_tokenize(
+            self.assertEqual(self.test_processor.tokenize(
                 sent, is_one_sent=1, split_by_space=1), sent.split(' '))
-            self.assertEqual(self.test_processor.word_tokenize(
+            self.assertEqual(self.test_processor.tokenize(
                 sent, is_one_sent=0, split_by_space=1), sent.split(' '))
 
     def test_get_pos(self):

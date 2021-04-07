@@ -102,9 +102,9 @@ class AddSentDiverse(Transformation):
         # Insert
         for i, sent in enumerate(sentences):
 
-            if length + len(self.processor.word_tokenize(sent)) \
+            if length + len(self.processor.tokenize(sent)) \
                     < answer_token_start:
-                length = length + len(self.processor.word_tokenize(sent))
+                length = length + len(self.processor.tokenize(sent))
                 continue
             sent_tokens = self.processor.feature_extract(sent)
             new_ans = sample.convert_answer(
@@ -114,7 +114,7 @@ class AddSentDiverse(Transformation):
             if distractor and new_ans:
                 # Insert the distract sentence before the answer
                 new_sample = sample.insert_field_before_index(
-                    'context', length, self.processor.word_tokenize(distractor))
+                    'context', length, self.processor.tokenize(distractor))
                 return [new_sample]
             else:
                 return []
