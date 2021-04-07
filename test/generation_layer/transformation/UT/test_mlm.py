@@ -1,16 +1,18 @@
 import unittest
 
 from textflint.input_layer.component.sample import SASample
-from textflint.generation_layer.transformation.UT.mlm_suggestion import MLMSuggestion
+from textflint.generation_layer.transformation.UT.mlm_suggestion \
+    import MLMSuggestion
 
 
 class TestMLM(unittest.TestCase):
+    @unittest.skip("Manual test")
     def test_transformation(self):
         sent2 = 'The quick brown fox jumps over the lazy dog. '
         data_sample = SASample({'x': sent2, 'y': "negative"})
         import random
         random.seed(100)
-        swap_ins = MLM(device='cpu')
+        swap_ins = MLMSuggestion(device='cpu')
 
         x = swap_ins.transform(data_sample, n=5)
         self.assertEqual(5, len(x))

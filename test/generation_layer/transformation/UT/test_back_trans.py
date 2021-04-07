@@ -5,6 +5,7 @@ from textflint.generation_layer.transformation.UT.back_trans import BackTrans
 
 
 class TestBackTrans(unittest.TestCase):
+    @unittest.skip("Manual test")
     def test_transformation(self):
         sent1 = 'To whom did the Virgin Mary allegedly appear in ' \
                 '1858 in Lourdes France?'
