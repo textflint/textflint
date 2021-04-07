@@ -36,7 +36,7 @@ There are lots of reasons to use TextFlint:
 
 ### Installation
 
-**Using `pip` (recommended)**
+**Require python version >= 3.7, recommend install with `pip` (recommended)**
 
 ```shell
 pip install textflint
