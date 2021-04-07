@@ -36,21 +36,12 @@ There are lots of reasons to use TextFlint:
 
 ### Installation
 
-You can either use `pip` or clone this repo to install TextFlint.
-
-1. **Using `pip` (recommended)**
+**Using `pip` (recommended)**
 
 ```shell
 pip install textflint
 ```
 
-2. **Cloning this repo**
-
-```shell
-git clone https://github.com/textflint/textflint.git
-cd textflint
-python setup.py install
-```
 
 ## Usage
 ### Workflow
