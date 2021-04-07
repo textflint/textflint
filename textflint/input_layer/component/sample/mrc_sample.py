@@ -361,6 +361,42 @@ class MRCSample(Sample):
         sample.answers = answers
         return sample
 
+    def get_answer_rules(self):
+        answer_rules = [
+            ('ner_person', self.ans_entity_full('PERSON', 'Jeff Dean')),
+            ('ner_location', self.ans_entity_full('LOCATION', 'Chicago')),
+            ('ner_organization', self.ans_entity_full(
+                'ORGANIZATION', 'Stark Industries')),
+            ('ner_misc', self.ans_entity_full('MISC', 'Jupiter')),
+            ('abbrev', self.ans_abbrev('LSTM')),
+            ('wh_who', self.ans_match_wh('who', 'Jeff Dean')),
+            ('wh_when', self.ans_match_wh('when', '1956')),
+            ('wh_where', self.ans_match_wh('where', 'Chicago')),
+            ('wh_where', self.ans_match_wh('how many', '42')),
+            # Starts with verb
+            ('pos_begin_vb', self.ans_pos('VB', 'learn')),
+            ('pos_end_vbd', self.ans_pos('VBD', 'learned')),
+            ('pos_end_vbg', self.ans_pos('VBG', 'learning')),
+            ('pos_end_vbp', self.ans_pos('VBP', 'learns')),
+            ('pos_end_vbz', self.ans_pos('VBZ', 'learns')),
+            # Ends with some POS tag
+            ('pos_end_nn',
+             self.ans_pos('NN', 'hamster', end=True, add_dt=True)),
+            ('pos_end_nnp', self.ans_pos('NNP', 'Central Park',
+                                              end=True, add_dt=True)),
+            ('pos_end_nns', self.ans_pos('NNS', 'hamsters',
+                                              end=True, add_dt=True)),
+            ('pos_end_nnps', self.ans_pos('NNPS', 'Kew Gardens',
+                                               end=True, add_dt=True)),
+            ('pos_end_jj', self.ans_pos('JJ', 'deep', end=True)),
+            ('pos_end_jjr', self.ans_pos('JJR', 'deeper', end=True)),
+            ('pos_end_jjs', self.ans_pos('JJS', 'deepest', end=True)),
+            ('pos_end_rb', self.ans_pos('RB', 'silently', end=True)),
+            ('pos_end_vbg', self.ans_pos('VBG', 'learning', end=True)),
+            ('catch_all', self.ans_catch_all('aliens')),
+        ]
+        return answer_rules
+
     def insert_field_before_index(self, field, index, items):
         r"""
         Insert item before index of field value.
@@ -481,8 +517,7 @@ class MRCSample(Sample):
                 return sent
         return None
 
-    @staticmethod
-    def convert_answer(answer, sent_tokens, question):
+    def convert_answer(self, answer, sent_tokens, question):
         """
         Replace the ground truth with fake answer based on specific rules
 
@@ -495,7 +530,7 @@ class MRCSample(Sample):
         """
         tokens = MRCSample.get_answer_tokens(sent_tokens, answer)
         determiner = MRCSample.get_determiner_for_answers(answer)
-        for rule_name, func in ANSWER_RULES:
+        for rule_name, func in self.get_answer_rules():
             new_ans = func(answer, tokens, question, determiner=determiner)
             if new_ans:
                 return new_ans
@@ -1220,71 +1255,6 @@ BAD_ALTERATIONS = ['mx2004', 'planet', 'u.s.', 'Http://Www.Co.Mo.Md.Us']
 
 MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july',
           'august', 'september', 'october', 'november', 'december']
-ANSWER_RULES = [
-    ('ner_person', MRCSample.ans_entity_full('PERSON', 'Jeff Dean')),
-    ('ner_location', MRCSample.ans_entity_full('LOCATION', 'Chicago')),
-    ('ner_organization', MRCSample.ans_entity_full(
-        'ORGANIZATION', 'Stark Industries')),
-    ('ner_misc', MRCSample.ans_entity_full('MISC', 'Jupiter')),
-    ('abbrev', MRCSample.ans_abbrev('LSTM')),
-    ('wh_who', MRCSample.ans_match_wh('who', 'Jeff Dean')),
-    ('wh_when', MRCSample.ans_match_wh('when', '1956')),
-    ('wh_where', MRCSample.ans_match_wh('where', 'Chicago')),
-    ('wh_where', MRCSample.ans_match_wh('how many', '42')),
-    # Starts with verb
-    ('pos_begin_vb', MRCSample.ans_pos('VB', 'learn')),
-    ('pos_end_vbd', MRCSample.ans_pos('VBD', 'learned')),
-    ('pos_end_vbg', MRCSample.ans_pos('VBG', 'learning')),
-    ('pos_end_vbp', MRCSample.ans_pos('VBP', 'learns')),
-    ('pos_end_vbz', MRCSample.ans_pos('VBZ', 'learns')),
-    # Ends with some POS tag
-    ('pos_end_nn', MRCSample.ans_pos('NN', 'hamster', end=True, add_dt=True)),
-    ('pos_end_nnp', MRCSample.ans_pos('NNP', 'Central Park',
-                                      end=True, add_dt=True)),
-    ('pos_end_nns', MRCSample.ans_pos('NNS', 'hamsters',
-                                      end=True, add_dt=True)),
-    ('pos_end_nnps', MRCSample.ans_pos('NNPS', 'Kew Gardens',
-                                       end=True, add_dt=True)),
-    ('pos_end_jj', MRCSample.ans_pos('JJ', 'deep', end=True)),
-    ('pos_end_jjr', MRCSample.ans_pos('JJR', 'deeper', end=True)),
-    ('pos_end_jjs', MRCSample.ans_pos('JJS', 'deepest', end=True)),
-    ('pos_end_rb', MRCSample.ans_pos('RB', 'silently', end=True)),
-    ('pos_end_vbg', MRCSample.ans_pos('VBG', 'learning', end=True)),
-    ('catch_all', MRCSample.ans_catch_all('aliens')),
-]
-
-MOD_ANSWER_RULES = [
-    ('ner_person', MRCSample.ans_entity_full('PERSON', 'Charles Babbage')),
-    ('ner_location', MRCSample.ans_entity_full('LOCATION', 'Stockholm')),
-    ('ner_organization', MRCSample.ans_entity_full(
-        'ORGANIZATION', 'Acme Corporation')),
-    ('ner_misc', MRCSample.ans_entity_full('MISC', 'Soylent')),
-    ('abbrev', MRCSample.ans_abbrev('PCFG')),
-    ('wh_who', MRCSample.ans_match_wh('who', 'Charles Babbage')),
-    ('wh_when', MRCSample.ans_match_wh('when', '2004')),
-    ('wh_where', MRCSample.ans_match_wh('where', 'Stockholm')),
-    ('wh_where', MRCSample.ans_match_wh('how many', '200')),
-    # Starts with verb
-    ('pos_begin_vb', MRCSample.ans_pos('VB', 'run')),
-    ('pos_end_vbd', MRCSample.ans_pos('VBD', 'ran')),
-    ('pos_end_vbg', MRCSample.ans_pos('VBG', 'running')),
-    ('pos_end_vbp', MRCSample.ans_pos('VBP', 'runs')),
-    ('pos_end_vbz', MRCSample.ans_pos('VBZ', 'runs')),
-    # Ends with some POS tag
-    ('pos_end_nn', MRCSample.ans_pos('NN', 'apple', end=True, add_dt=True)),
-    ('pos_end_nnp', MRCSample.ans_pos('NNP', 'Sears Tower',
-                                      end=True, add_dt=True)),
-    ('pos_end_nns', MRCSample.ans_pos('NNS', 'apples', end=True, add_dt=True)),
-    ('pos_end_nnps', MRCSample.ans_pos('NNPS', 'Hobbits',
-                                       end=True, add_dt=True)),
-    ('pos_end_jj', MRCSample.ans_pos('JJ', 'blue', end=True)),
-    ('pos_end_jjr', MRCSample.ans_pos('JJR', 'bluer', end=True)),
-    ('pos_end_jjs', MRCSample.ans_pos('JJS', 'bluest', end=True)),
-    ('pos_end_rb', MRCSample.ans_pos('RB', 'quickly', end=True)),
-    ('pos_end_vbg', MRCSample.ans_pos('VBG', 'running', end=True)),
-    ('catch_all', MRCSample.ans_catch_all('cosmic rays')),
-]
-
 
 CONVERSION_RULES = [
     # Special rules
