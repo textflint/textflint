@@ -74,9 +74,9 @@ class PerturbAnswer(Transformation):
         indices = None
         # Pick up the sentence that contains the answer
         for i, sent in enumerate(sentences):
-            if sent_start + len(self.processor.word_tokenize(sent)) \
+            if sent_start + len(self.processor.tokenize(sent)) \
                     <= answer_token_start:
-                sent_start += len(self.processor.word_tokenize(sent))
+                sent_start += len(self.processor.tokenize(sent))
                 continue
             # deal with sentence tokenize error
             if sent.find(answer_text) < 0:
@@ -93,7 +93,7 @@ class PerturbAnswer(Transformation):
         transform_samples = []
         results = []
         replace_items = []
-        words = self.processor.word_tokenize(alter_sent)
+        words = self.processor.tokenize(alter_sent)
         context_mask = sample.get_mask('context')
 
         for index in indices:

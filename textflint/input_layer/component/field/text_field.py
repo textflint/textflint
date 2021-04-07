@@ -319,7 +319,7 @@ class TextField(Field):
         if self._words or self._words == []:
             return self._words
         else:
-            self._words = self.text_processor.word_tokenize(
+            self._words = self.text_processor.tokenize(
                 self.text,
                 is_one_sent=self.is_one_sent,
                 split_by_space=self.split_by_space

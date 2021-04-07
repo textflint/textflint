@@ -13,8 +13,8 @@
   <a target="_blank">
     <img src="https://github.com/QData/TextAttack/workflows/Github%20PyTest/badge.svg" alt="Github Runner Covergae Status">
   </a>
-  <a href="https://badge.fury.io/py/textattack">
-    <img src="https://badge.fury.io/py/textattack.svg" alt="PyPI version" height="18">
+  <a href="https://badge.fury.io/py/textflint">
+    <img src="https://badge.fury.io/py/textflint.svg" alt="PyPI version" height="18">
   </a>
 </p>
 
@@ -36,21 +36,12 @@ There are lots of reasons to use TextFlint:
 
 ### Installation
 
-You can either use `pip` or clone this repo to install TextFlint.
-
-1. **Using `pip` (recommended)**
+**Require python version >= 3.7, recommend install with `pip` (recommended)**
 
 ```shell
 pip install textflint
 ```
 
-2. **Cloning this repo**
-
-```shell
-git clone https://github.com/textflint/textflint.git
-cd textflint
-python setup.py install
-```
 
 ## Usage
 ### Workflow
@@ -82,7 +73,7 @@ out_dir_path = './test_result/'
 
 # run transformation/subpopulation/attack and save the transformed data to out_dir_path in json format
 engine = Engine('SA')
-engine.run(data_samples, out_dir_path, config)
+engine.run(data_samples, out_dir_path)
 ```
 
 You can also feed data to `Engine` in other ways (e.g., `json` or `csv`) where one line represents for a sample. We have defined some transformations and subpopulations in `SA.json`, and you can also pass your own  configuration file as you need.
@@ -92,22 +83,23 @@ You can also feed data to `Engine` in other ways (e.g., `json` or `csv`) where o
 After transformation, here are the contents in `./test_result/`:
 
 ```
-ori_AddEntitySummary-movie_1.json
-ori_AddEntitySummary-person_1.json
-trans_AddEntitySummary-movie_1.json
-trans_AddEntitySummary-person_1.json
+ori_Keyboard_2.json
+ori_SwapNamedEnt_1.json
+trans_Keyboard_2.json
+trans_SwapNamedEnt_1.json
 ...
 ```
 
-where the `trans_AddEntitySummary-movie_1.json`  contains `1` successfully transformed sample by transformation `AddEntitySummary` and `ori_AddEntitySummary-movie_1.json` contains the corresponding original sample. The content in `ori_AddEntitySummary-movie_1.json`: 
+where the `trans_Keyboard_2.json`  contains `2` successfully transformed sample by transformation `Keyboard` and `ori_Keyboard_2.json` contains the corresponding original sample. The content in `ori_Keyboard_2.json`: 
 
 ```
-{'x': 'Titanic is my favorite movie.', 'y': 'pos', "sample_id": 0}
+{"x": "Titanic is my favorite movie.", "y": "pos", "sample_id": 0}
+{"x": "I don't like the actor Tim Hill", "y": "neg", "sample_id": 1}
 ```
-The content in `trans_AddEntitySummary-movie_1.json`:
+The content in `trans_Keyboard_2.json`:
 ```
-{"x": "Titanic (A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.
-M.S. Titanic .) is my favorite movie.", "y": "pos", "sample_id": 0}
+{"x": "Titanic is my favorite m0vie.", "y": "pos", "sample_id": 0}
+{"x": "I don't likR the actor Tim Hill", "y": "neg", "sample_id": 1}
 ```
 
 ## Design

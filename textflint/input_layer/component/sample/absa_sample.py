@@ -105,7 +105,7 @@ class ABSASample(Sample):
         :param dict data: data name
 
         """
-        self.tokenize = self.text_processor.word_tokenize
+        self.tokenize = self.text_processor.tokenize
         self.untokenize = self.text_processor.inverse_tokenize
         self.data = data
         self.sentence = TextField(data['sentence'])

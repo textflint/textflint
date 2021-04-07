@@ -51,7 +51,7 @@ class TestModifyPosition(unittest.TestCase):
         distract_sent = 'The UNICEF team of Kew Gardens represented ' \
                         'the UNICEF at Champ Bowl 40.'
         for i, sent in enumerate(trans_sents):
-            sent_len = len(AddSentDiverse.word_tokenize(sent))
+            sent_len = len(AddSentDiverse.tokenize(sent))
             if sent_start + sent_len <= answer_token_start:
                 sent_start += sent_len
                 continue

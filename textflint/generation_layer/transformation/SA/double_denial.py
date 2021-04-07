@@ -46,7 +46,7 @@ class DoubleDenial(Transformation):
         if not sub_indices:
             return []
 
-        sub_tokens = [self.processor.word_tokenize(sub_word)
+        sub_tokens = [self.processor.tokenize(sub_word)
                       for sub_word in sub_words]
         sample = sample.unequal_replace_field_at_indices(
             'x', sub_indices, sub_tokens)

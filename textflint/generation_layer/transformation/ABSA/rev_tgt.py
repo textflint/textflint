@@ -30,7 +30,7 @@ class RevTgt(ABSATransformation):
         if language != "eng":
             raise ValueError(f"Language {language} is not available.")
         self.language = language
-        self.tokenize = self.processor.word_tokenize
+        self.tokenize = self.processor.tokenize
 
     def __repr__(self):
         return "RevTgt"

@@ -72,7 +72,7 @@ class AddSum(Transformation):
             return []
 
         for insert_index, summary in zip(insert_indices, insert_summaries):
-            summary_tokens = self.processor.word_tokenize(summary)
+            summary_tokens = self.processor.tokenize(summary)
             sample = sample.insert_field_after_index(
                 'x', insert_index, summary_tokens)
         trans_samples = [sample]

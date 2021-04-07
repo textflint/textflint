@@ -18,7 +18,7 @@ class ABSATransformation(Transformation, ABC):
 
         self.negative_words_list = sorted(NEGATIVE_WORDS_LIST,
                                           key=lambda s: len(s), reverse=True)
-        self.tokenize = self.processor.word_tokenize
+        self.tokenize = self.processor.tokenize
         self.untokenize = self.processor.inverse_tokenize
         self.get_antonyms = self.processor.get_antonyms
 

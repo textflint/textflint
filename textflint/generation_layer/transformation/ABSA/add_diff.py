@@ -39,7 +39,7 @@ class AddDiff(ABSATransformation):
             raise ValueError(f"Language {language} is not available.")
         self.language = language
         # self.nlp = spacy.load(download_if_needed(MODEL_PATH_WEB) + MODEL_PATH)
-        self.tokenize = self.processor.word_tokenize
+        self.tokenize = self.processor.tokenize
 
     def __repr__(self):
         return "AddDiff"
