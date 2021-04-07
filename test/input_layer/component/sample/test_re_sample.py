@@ -1,7 +1,7 @@
 import unittest
 
 from textflint.input_layer.component.sample.re_sample import RESample
-from textflint.common.preprocess.tokenizer import untokenize
+from textflint.common.preprocess.en_processor import EnProcessor
 
 data = {'x': ["``", "The", "situation", "is", "very", "serious", ",", "''",
               "Mattis", ",", "30", ",", "told", "reporters", "after",
@@ -35,7 +35,6 @@ class TestRESample(unittest.TestCase):
             AssertionError, RESample,
             {'x': ['The', 'situation'], 'subj': [0, 0], 'obj': [1, 1], 'y': []})
 
-
     def test_get_words(self):
         # test get words
         self.assertEqual(data['x'], re_sample.get_words('x'))
@@ -43,9 +42,9 @@ class TestRESample(unittest.TestCase):
 
     def test_get_text(self):
         # test get text
-        self.assertEqual(untokenize(data['x']), re_sample.get_text('x'))
+        self.assertEqual(EnProcessor.inverse_tokenize(data['x']),
+                         re_sample.get_text('x'))
         self.assertRaises(AssertionError, re_sample.get_text, 'y')
-
 
     def test_get_value(self):
         # test get value

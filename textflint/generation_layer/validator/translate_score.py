@@ -7,7 +7,7 @@ import nltk
 import nltk.translate.chrf_score
 
 from .validator import Validator
-from textflint.common.preprocess.tokenizer import tokenize
+from textflint.common.preprocess.en_processor import EnProcessor
 __all__ = ['TranslateScore']
 
 
@@ -39,6 +39,7 @@ class TranslateScore(Validator):
             raise ValueError('Please choose type from '
                              'bleu, chrf, meteor,not {0}'.format(type))
         self.type = type
+        self.processor = EnProcessor()
 
     def __repr__(self):
         return "TranslateScore" + '-' + self.type
@@ -54,9 +55,13 @@ class TranslateScore(Validator):
         """
         if self.type == 'bleu':
             return nltk.translate.bleu_score.sentence_bleu(
-                [tokenize(reference_text)], tokenize(transformed_text))
+                [self.processor.tokenize(reference_text)],
+                self.processor.tokenize(transformed_text)
+            )
         elif self.type == 'chrf':
             return nltk.translate.chrf_score.sentence_chrf(
-                tokenize(reference_text), tokenize(transformed_text))
+                self.processor.tokenize(reference_text),
+                self.processor.tokenize(transformed_text)
+            )
         elif self.type == 'meteor':
             return nltk.translate.meteor([reference_text], transformed_text)
