@@ -154,29 +154,38 @@ class SwapEmployee(Transformation):
                  list: the position of object entity
 
         """
-
         assert (isinstance(left_words, list)), \
-            f"the type of 'left_words' " \
-            f"should be list, got {type(left_words)} instead"
+            f"the type of 'left_words' should be list, " \
+            f"got {type(left_words)} instead"
         assert (isinstance(right_words, list)), \
-            f"the type of 'right_words' should be list, got " \
-            f"{type(right_words)} instead"
+            f"the type of 'right_words' should be list, " \
+            f"got {type(right_words)} instead"
+        assert (isinstance(left, list)), \
+            f"the type of 'left_words' should be list, " \
+            f"got {type(left)} instead"
+        assert (isinstance(right, list)), \
+            f"the type of 'right_words' should be list, " \
+            f"got {type(right)} instead"
+        assert (isinstance(middle_words, list)), \
+            f"the type of 'right_words' should be list, " \
+            f"got {type(middle_words)} instead"
         assert (isinstance(title_pos, list)), \
-            f"the type of 'title_pos' should be list, got " \
-            f"{type(title_pos)} instead"
+            f"the type of 'title_pos' should be list, " \
+            f"got {type(title_pos)} instead"
         assert (isinstance(reverse, bool)), \
-            f"the type of 'reverse' should be bool, got {type(reverse)} instead"
+            f"the type of 'reverse' should be bool, " \
+            f"got {type(reverse)} instead"
         assert (title_pos[1] <= len(middle_words)), \
-            f"the end of 'title_pos' should be lesser than the length of " \
-            f"'middle_words', got {title_pos[1]}>{len(middle_words)} instead"
+            f"the end of 'title_pos' should not be larger than " \
+            f"the length of 'middle_words', " \
+            f"got {title_pos[1]}>{len(middle_words)} instead"
 
         new_middle_words = list(middle_words[title_pos[1]:])
-
         new_words = left_words + left + new_middle_words + right + right_words
         left_pos = [len(left_words), len(left_words) + len(left) - 1]
         right_pos = [len(left_words) + len(left) + len(new_middle_words),
-                     len(left_words) + len(left) +
-                     len(new_middle_words) + len(right) - 1]
+                     len(left_words) + len(left) + len(new_middle_words)
+                     + len(right) - 1]
 
         if not reverse:
             sh, st = left_pos
