@@ -5,10 +5,7 @@ Add the difference part of target in ABSA task
 
 import random
 import string
-import spacy
 from .absa_transformation import ABSATransformation
-from ....common.utils.install import download_if_needed
-from ....common.settings import MODEL_PATH_WEB, MODEL_PATH
 
 __all__ = ['AddDiff']
 
@@ -38,8 +35,8 @@ class AddDiff(ABSATransformation):
         if language != "eng":
             raise ValueError(f"Language {language} is not available.")
         self.language = language
-        # self.nlp = spacy.load(download_if_needed(MODEL_PATH_WEB) + MODEL_PATH)
         self.tokenize = self.processor.tokenize
+        self.untokenize = self.processor.inverse_tokenize
 
     def __repr__(self):
         return "AddDiff"
