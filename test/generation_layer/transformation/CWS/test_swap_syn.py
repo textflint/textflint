@@ -8,7 +8,7 @@ data_sample = CWSSample({'x': sent1, 'y': ['B', 'E', 'B', 'E', 'S']})
 swap_ins = SwapSyn()
 
 
-class TestSynonym(unittest.TestCase):
+class TestSwapSyn(unittest.TestCase):
     def test_transformation(self):
         trans_samples = swap_ins.transform(data_sample, n=5)
         self.assertEqual(5, len(trans_samples))

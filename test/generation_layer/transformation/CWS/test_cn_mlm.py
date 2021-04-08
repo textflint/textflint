@@ -8,7 +8,7 @@ data_sample = CWSSample({'x': sent1, 'y': []})
 swap_ins = CnMLM()
 
 
-class TestAbbreviation(unittest.TestCase):
+class TestCnMLM(unittest.TestCase):
     def test_check(self):
         self.assertTrue(swap_ins.check(0, 1, [0, 0, 1]))
         self.assertTrue(not swap_ins.check(0, 1, [0, 1, 1]))
