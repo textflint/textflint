@@ -346,7 +346,7 @@ class TestBarChart(unittest.TestCase):
 
 
 class TestReportGenerator(unittest.TestCase):
-    # @unittest.skip("Manual test")
+    @unittest.skip("Manual test")
     def test_plot(self):
         reporter = ReportGenerator()
         reporter.plot(evaluate_result)
