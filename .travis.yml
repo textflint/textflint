@@ -6,6 +6,7 @@ install:
   - pip3 install -r requirements.txt
   - pip3 install pytest
   - pip3 install travis-wait-improved
+  - python -c "import nltk; nltk.download('wordnet'); nltk.download('averaged_perceptron_tagger')"
 script:
   - travis-wait-improved --timeout 30m pytest
   
