@@ -8,5 +8,5 @@ install:
   - pip3 install travis-wait-improved
   - python -c "import nltk; nltk.download('wordnet'); nltk.download('averaged_perceptron_tagger')"
 script:
-  - travis-wait-improved --timeout 30m pytest
+  - travis-wait-improved --timeout 40m pytest
   
