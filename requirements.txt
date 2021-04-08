@@ -1,11 +1,9 @@
 editdistance
-datasets
 nltk
-numpy
 pandas>=1.0.1
-scipy==1.4.1
 torch
 transformers
+datasets
 tokenizers
 tqdm
 ltp

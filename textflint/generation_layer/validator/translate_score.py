@@ -7,7 +7,8 @@ import nltk
 import nltk.translate.chrf_score
 
 from .validator import Validator
-from textflint.common.preprocess.en_processor import EnProcessor
+from ...common.preprocess.en_processor import EnProcessor
+
 __all__ = ['TranslateScore']
 
 
@@ -63,5 +64,6 @@ class TranslateScore(Validator):
                 self.processor.tokenize(reference_text),
                 self.processor.tokenize(transformed_text)
             )
+
         elif self.type == 'meteor':
             return nltk.translate.meteor([reference_text], transformed_text)

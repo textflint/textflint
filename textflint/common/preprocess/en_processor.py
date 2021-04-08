@@ -376,13 +376,13 @@ class EnProcessor:
         :return: A list of lemmas that have the given pos tag.
 
         """
-        if self.__lemmatize is None:
-            self.__lemmatize = self.model_manager.load(NLTK_WORDNET).all_lemma
+        if self.__wordnet is None:
+            self.__wordnet = self.model_manager.load(NLTK_WORDNET)
 
         if not isinstance(pos, list):
-            return self.__lemmatize(pos)
+            return self.__wordnet.all_lemma(pos)
         else:
-            return [self.__lemmatize(_pos) for _pos in pos]
+            return [self.__wordnet.all_lemma(_pos) for _pos in pos]
 
     def get_delemmas(self, lemma_and_pos):
         r"""

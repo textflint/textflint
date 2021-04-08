@@ -13,6 +13,7 @@ samples = [sample1, sample2, sample3, sample4, sample5, sample6]
 dataset = Dataset("COREF")
 dataset.load(samples)
 
+
 class TestRndInsert(unittest.TestCase):
 
     def test_transform(self):

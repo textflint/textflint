@@ -73,8 +73,12 @@ class RndReplace(Transformation):
                 # randomly choose the irrelevant sentence
                 k = int(random.random() * len(samples_other))
                 sample_other = samples_other[k]
-                k_sen_idx = int(random.random() * sample_other.num_sentences())
-                k_sen = sample_other.get_kth_sen(k_sen_idx)
+                if sample_other.num_sentences() > 0:
+                    k_sen_idx = int(random.random() *
+                                    sample_other.num_sentences())
+                    k_sen = sample_other.get_kth_sen(k_sen_idx)
+                else:
+                    k_sen = ['UNK']
 
                 # randomly choose tfed_sen_idx
                 # k_sen will replace position tfed_sen_idx sentence

@@ -5,16 +5,16 @@ Generator for ABSA Task
 """
 __all__ = ['ABSAGenerator']
 
-import spacy
 from tqdm import tqdm
 from .generator import Generator
 from ...common.utils.logger import logger
 from ...input_layer.component.sample import ABSASample
+from ..transformation.transformation import Transformation
 from ...common.utils.load import absa_dict_loader
 from ...common.utils.install import download_if_needed
 from ...common.settings import TASK_TRANSFORMATION_PATH, \
-    ALLOWED_TRANSFORMATIONS, TASK_SUBPOPULATION_PATH, ALLOWED_SUBPOPULATIONS, \
-    MODEL_PATH_WEB, MODEL_PATH, ABSA_TRAIN_RESTAURANT_PATH, \
+    ALLOWED_TRANSFORMATIONS, TASK_SUBPOPULATION_PATH, \
+    ALLOWED_SUBPOPULATIONS, ABSA_TRAIN_RESTAURANT_PATH, \
     ABSA_TRAIN_LAPTOP_PATH
 
 Flint = {
@@ -51,7 +51,7 @@ class ABSAGenerator(Generator):
         dataset_config='restaurant',
     ):
         self.dataset_config = dataset_config
-        self.nlp = spacy.load(download_if_needed(MODEL_PATH_WEB) + MODEL_PATH)
+        self.nlp = Transformation.processor.nlp
         self.extra_text = []
         super().__init__(
             task=task,

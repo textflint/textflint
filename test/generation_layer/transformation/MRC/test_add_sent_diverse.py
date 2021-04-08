@@ -38,10 +38,10 @@ data_sample = MRCSample(
 transformation = AddSentDiverse()
 
 
-class TestModifyPosition(unittest.TestCase):
-
-    def test_AddSentenceDiverse(self):
-
+class TestAddSentDiverse(unittest.TestCase):
+    @unittest.skip("Manual test")
+    def test_AddSentDiverse(self):
+        # this unit test need jdk environment
         change = transformation.transform(data_sample, n=1,
                                           nearby_word_dict=nearby_word_dict,
                                           pos_tag_dict=pos_tag_dict)
@@ -51,7 +51,7 @@ class TestModifyPosition(unittest.TestCase):
         distract_sent = 'The UNICEF team of Kew Gardens represented ' \
                         'the UNICEF at Champ Bowl 40.'
         for i, sent in enumerate(trans_sents):
-            sent_len = len(AddSentDiverse.tokenize(sent))
+            sent_len = len(AddSentDiverse.processor.tokenize(sent))
             if sent_start + sent_len <= answer_token_start:
                 sent_start += sent_len
                 continue
