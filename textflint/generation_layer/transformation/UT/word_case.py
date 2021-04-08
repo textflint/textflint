@@ -18,7 +18,7 @@ class WordCase(Transformation):
     """
     def __init__(
         self,
-        case_type='random',
+        case_type='upper',
         **kwargs
     ):
         r"""

@@ -94,7 +94,7 @@ class TestDPGenerator(unittest.TestCase):
                 for trans_word, ori_word in \
                         zip(trans_rst[index].get_words('x'),
                             original_samples[index].get_words('x')):
-                    self.assertEqual(trans_word, ori_word.lower())
+                    self.assertEqual(trans_word, ori_word.upper())
         gene = DPGenerator(transformation_methods=['SwapNum'],
                            subpopulation_methods=[])
         for original_samples, trans_rst, trans_type \
