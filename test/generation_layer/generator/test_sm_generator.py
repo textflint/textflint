@@ -53,7 +53,7 @@ class TestSMGenerator(unittest.TestCase):
                 for trans_word, ori_word in zip(
                         trans_rst[index].get_words('sentence1'),
                         original_samples[index].get_words('sentence1')):
-                    self.assertEqual(trans_word, ori_word.lower())
+                    self.assertEqual(trans_word, ori_word.upper())
                 for trans_word, ori_word in zip(
                         trans_rst[index].get_words('sentence2'),
                         original_samples[index].get_words('sentence2')):

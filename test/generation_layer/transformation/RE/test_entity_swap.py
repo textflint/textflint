@@ -23,7 +23,6 @@ class TestEntitySwap(unittest.TestCase):
         self.assertTrue(token != data['x'])
         self.assertTrue(isinstance(length, int))
 
-
     def test_subj_and_obj_transform(self):
         self.assertRaises(AssertionError, sample.subj_and_obj_transform,
                           re_data, [], [1, 2, 3, 4, 'PERSON', 'PERSON'])

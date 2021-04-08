@@ -65,7 +65,7 @@ class TestNLIGenerator(unittest.TestCase):
                 for trans_word, ori_word in \
                         zip(trans_rst[index].get_words('hypothesis'),
                         original_samples[index].get_words('hypothesis')):
-                    self.assertEqual(trans_word, ori_word.lower())
+                    self.assertEqual(trans_word, ori_word.upper())
                 for trans_word, ori_word in \
                         zip(trans_rst[index].get_words('premise'),
                             original_samples[index].get_words('premise')):
