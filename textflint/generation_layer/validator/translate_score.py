@@ -7,7 +7,7 @@ import nltk
 import nltk.translate.chrf_score
 
 from .validator import Validator
-from textflint.common.preprocess.tokenizer import tokenize
+from ...common.preprocess.en_processor import EnProcessor
 __all__ = ['TranslateScore']
 
 
@@ -52,11 +52,12 @@ class TranslateScore(Validator):
         :return float: the score of two sentence
 
         """
+        Processor = EnProcessor()
         if self.type == 'bleu':
             return nltk.translate.bleu_score.sentence_bleu(
-                [tokenize(reference_text)], tokenize(transformed_text))
+                [Processor.tokenize(reference_text)], Processor.tokenize(transformed_text))
         elif self.type == 'chrf':
             return nltk.translate.chrf_score.sentence_chrf(
-                tokenize(reference_text), tokenize(transformed_text))
+                Processor.tokenize(reference_text), Processor.tokenize(transformed_text))
         elif self.type == 'meteor':
             return nltk.translate.meteor([reference_text], transformed_text)

@@ -7,7 +7,7 @@ sample1 = {'x': 'Amy lives in a city , which is called NYK .',
 sample2 = {'x': 'Jotion lives in Xian 105 kilometers away .',
            'y': ['B-PER', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O']}
 sample3 = {'x': 'China rejects Syrians call to boycott Chinese lamb .',
-           'y': ['B-ORG', 'O', 'B-MISC', 'O', 'O', 'O', 'B-MISC', 'O', 'O']}
+           'y': ['B-ORG', 'O', 'B-ORG', 'O', 'O', 'O', 'B-LOC', 'O', 'O']}
 single_data_sample = [sample1]
 data_samples = [sample1, sample2, sample3]
 dataset = Dataset('NER')

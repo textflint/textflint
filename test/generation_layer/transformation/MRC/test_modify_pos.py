@@ -30,9 +30,9 @@ data_sample = MRCSample(
 transformation = ModifyPos()
 
 
-class TestModifyPosition(unittest.TestCase):
+class TestModifyPos(unittest.TestCase):
 
-    def test_ModifyPosition(self):
+    def test_ModifyPos(self):
         
         change = transformation.transform(data_sample, n=1)
         self.assertEqual(len(change), 1)

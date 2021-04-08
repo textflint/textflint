@@ -38,7 +38,7 @@ data_sample = MRCSample(
 transformation = PerturbAnswer()
 
 
-class TestModifyPosition(unittest.TestCase):
+class TestPerturbAnswer(unittest.TestCase):
 
     def test_PerturbAnswer(self):
 

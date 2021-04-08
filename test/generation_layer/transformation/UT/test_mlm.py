@@ -10,7 +10,7 @@ class TestMLM(unittest.TestCase):
         data_sample = SASample({'x': sent2, 'y': "negative"})
         import random
         random.seed(100)
-        swap_ins = MLM(device='cpu')
+        swap_ins = MLMSuggestion(device='cpu')
 
         x = swap_ins.transform(data_sample, n=5)
         self.assertEqual(5, len(x))
