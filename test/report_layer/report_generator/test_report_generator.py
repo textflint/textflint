@@ -73,9 +73,9 @@ test_evaluate_result = {
 evaluate_result = {
     "transformation": {
         "Case": {
+            "size": 25000,
             "ori_accuracy": 0.9617,
             "trans_accuracy": 0.8596,
-            "size": 25000
         },
         "InsertAdv": {
             "ori_accuracy": 0.9618,
@@ -110,9 +110,9 @@ evaluate_result = {
     },
     "attack": {
         "Bert-Attack": {
+            "size": 500,
             "ori_accuracy": 0.9617,
             "trans_accuracy": 0.5413,
-            "size": 500
         }
     },
     "model_name": "XLNET",

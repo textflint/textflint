@@ -189,15 +189,21 @@ class Analyzer:
                         "generate_type": generate_type,
                         "generate_method": method,
                     })
-                    bar_json.update(generate_methods[method])
+                    metrics = {
+                        (k, v) for k, v in generate_methods[method].items()
+                        if k != "size"
+                    }
+                    bar_json.update(metrics)
+
+                    bar_json["size"] = generate_methods[method].get("size", 0)
                     bar_json_list.append(bar_json)
 
         df = pd.DataFrame.from_dict(bar_json_list, orient='columns')
 
         cols = [ScoreColumn(col, 0, 1, is_0_to_1=True)
                 for col in df if col not in
-                ["generate_method", "generate_type", "size"]] + \
-                [NumericColumn("Size")]
+                ["generate_method", "generate_type", "size"]
+                ] + [NumericColumn("Size")]
         df.columns = range(len(df.columns))
 
         return df, cols

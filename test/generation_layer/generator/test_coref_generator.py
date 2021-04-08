@@ -20,7 +20,7 @@ class TestCorefGenerator(unittest.TestCase):
     def test_generate(self):
         gene = CorefGenerator(transformation_methods=["RndConcat"],
                               subpopulation_methods=[])
-        print(gene.transformation_methods)
+        print(gene.transform_methods)
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(len(original_samples), len(trans_rst))  
         gene = CorefGenerator(transformation_methods=["wrong_transform_method"],
