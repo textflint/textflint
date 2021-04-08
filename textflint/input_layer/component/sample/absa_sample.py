@@ -5,6 +5,7 @@ ABSASample Class
 """
 from .sample import Sample
 from ..field import TextField
+from ....common.utils.error import FlintError
 
 __all__ = ['ABSASample']
 
@@ -105,8 +106,6 @@ class ABSASample(Sample):
         :param dict data: data name
 
         """
-        self.tokenize = self.text_processor.tokenize
-        self.untokenize = self.text_processor.inverse_tokenize
         self.data = data
         self.sentence = TextField(data['sentence'])
         self.term_list = data['term_list']
@@ -210,16 +209,19 @@ class ABSASample(Sample):
                 position = opinions_spans[i]
                 opinion_from = position[0]
                 opinion_to = position[1]
-                left = self.tokenize(copy_sent[:opinion_from].strip())
-                opinion = self.tokenize(
+                left = ABSASample.text_processor.tokenize(
+                    copy_sent[:opinion_from].strip())
+                opinion = ABSASample.text_processor.tokenize(
                     copy_sent[opinion_from:opinion_to].strip())
                 opinion_words.append([' '.join(opinion)])
                 opinion_position.append([len(left), len(left) + len(opinion)])
 
             term_from = term_list[term_id]['from']
             term_to = term_list[term_id]['to']
-            left = self.tokenize(copy_sent[:term_from].strip())
-            aspect = self.tokenize(copy_sent[term_from:term_to].strip())
+            left = ABSASample.text_processor.tokenize(
+                copy_sent[:term_from].strip())
+            aspect = ABSASample.text_processor.tokenize(
+                copy_sent[term_from:term_to].strip())
             terms[term_id]['term'] = term_list[term_id]['term']
             terms[term_id]['from'] = len(left)
             terms[term_id]['to'] = len(left) + len(aspect)
@@ -263,14 +265,15 @@ class ABSASample(Sample):
 
         """
         if not sample.is_legal():
-            raise ValueError("Term list {0} is not legal, "
+            raise FlintError("Term list {0} is not legal, "
                              "aspect words or opinion words are "
                              "in the wrong position."
                              .format(sample.terms))
         terms = sample.terms
 
         term_list = sample.term_list
-        copy_sent = self.tokenize(sample.sentence.text)
+        copy_sent = ABSASample.text_processor.tokenize(
+            sample.sentence.text)
         trans_term_list = term_list
 
         for term_id in term_list:
@@ -280,10 +283,12 @@ class ABSASample(Sample):
                 position = opinions_spans[i]
                 opinion_from = position[0]
                 opinion_to = position[1]
-                left = self.untokenize(copy_sent[:opinion_from])
+                left = ABSASample.text_processor.inverse_tokenize(
+                    copy_sent[:opinion_from])
                 if left != '':
                     left += ' '
-                opinion = self.untokenize(copy_sent[opinion_from:opinion_to])
+                opinion = ABSASample.text_processor.inverse_tokenize(
+                    copy_sent[opinion_from:opinion_to])
                 terms[term_id]['opinion_words'][i] = opinion
                 trans_term_list[term_id]['opinion_words'][i] = opinion
                 trans_term_list[term_id]['opinion_position'][i] = \
@@ -291,10 +296,12 @@ class ABSASample(Sample):
 
             term_from = terms[term_id]['from']
             term_to = terms[term_id]['to']
-            left = self.untokenize(copy_sent[:term_from])
+            left = ABSASample.text_processor.inverse_tokenize(
+                copy_sent[:term_from])
             if left != '':
                 left += ' '
-            aspect = self.untokenize(copy_sent[term_from:term_to])
+            aspect = ABSASample.text_processor.inverse_tokenize(
+                copy_sent[term_from:term_to])
             terms[term_id]['term'] = aspect
             trans_term_list[term_id]['term'] = aspect
             trans_term_list[term_id]['id'] = term_id
@@ -320,7 +327,8 @@ class ABSASample(Sample):
             if isinstance(items[i], list):
                 offset = len(items[i])
             else:
-                offset = len(self.tokenize(items[i]))
+                offset = len(ABSASample.text_processor.tokenize(
+                    items[i]))
 
             for term_id in sample.terms:
                 if index == sample.terms[term_id]['from'] == \
@@ -377,7 +385,8 @@ class ABSASample(Sample):
             if isinstance(items[i], list):
                 offset = len(items[i])
             else:
-                offset = len(self.tokenize(items[i]))
+                offset = len(ABSASample.text_processor.tokenize(
+                    items[i]))
 
             for term_id in sample.terms:
                 if index == sample.terms[term_id]['from'] - \
