@@ -72,7 +72,7 @@ class TestSpecialEntityTyposSwap(unittest.TestCase):
                 for trans_word, ori_word in \
                         zip(trans_rst[index].get_words('text'),
                             original_samples[index].get_words('text')):
-                    self.assertEqual(trans_word, ori_word.lower())
+                    self.assertEqual(trans_word, ori_word.upper())
 
         gene = NERGenerator(transformation_methods=['SwapNum'],
                             subpopulation_methods=[])
