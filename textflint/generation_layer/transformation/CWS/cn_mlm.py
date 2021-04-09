@@ -7,6 +7,7 @@ import torch
 from transformers import BertTokenizer, BertForMaskedLM
 from ..transformation import Transformation
 from ....input_layer.component.field.cn_text_field import CnTextField
+from ....common.preprocess.cn_processor import CnProcessor
 from ....common.settings import ORIGIN, MODIFIED_MASK
 
 
@@ -84,9 +85,8 @@ class CnMLM(Transformation):
         predicted_token = tokenizer.convert_ids_to_tokens([predicted_index])[0]
         predicted_token1 = tokenizer.convert_ids_to_tokens([predicted_index1])[
             0]
-
         # Determine whether the generated words meet the requirements
-        if len(predicted_token) != 1 or len(predicted_token) != 1 or \
+        if len(predicted_token) != 1 or len(predicted_token1) != 1 or \
                 self.is_word(predicted_token + predicted_token1):
             return ''
         # Change the generated sentence
@@ -113,8 +113,8 @@ class CnMLM(Transformation):
             # we generate double n replace single n
             if label[start] == 'B' and label[start + 1] == 'E' and \
                     i < len(pos_tags) - 1 and pos_tags[i][0] == 'v' \
-                    and pos_tags[i + 1][0] == 'n' and \
-                    pos_tags[i + 1][2] + cnt == start + 1:
+                    and end == start + 1 and \
+                    self.check_part_pos(sentence[start + 1]):
                 token = ''
                 for j in range(len(sentence)):
                     if j != start + 1:
@@ -185,3 +185,19 @@ class CnMLM(Transformation):
             if mask[i] != ORIGIN:
                 return False
         return True
+
+    @staticmethod
+    def check_part_pos(sentence):
+        """
+        get the pos of sentence if we need
+
+        :param str sentence: origin word
+        :return: bool
+        """
+        if sentence == "":
+            return False
+        Processor = CnProcessor()
+        pos = Processor.get_pos_tag(sentence)
+        if len(pos) == 1 and pos[0][0] == 'n':
+            return True
+        return False

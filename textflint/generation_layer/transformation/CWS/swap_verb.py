@@ -7,6 +7,7 @@ from ..transformation import Transformation
 from ....common.settings import DETACHABLE_WORD_PATH, AONEA_PATH
 from ....common.utils.load import plain_lines_loader
 from ....common.utils.install import download_if_needed
+from ....common.preprocess.cn_processor import CnProcessor
 import random
 
 
@@ -98,7 +99,7 @@ class SwapVerb(Transformation):
             flag1 = False
             flag2 = False
             if start + 1 < len(labels) and pos_tags[start] == 'v' \
-                    and pos_tags[start + 1] != 'v' \
+                    and self.check_part_pos(word[1:]) \
                     and word[0] in self.AoneA_list:
                 flag1 = True
             if word in self.detachable_word_list:
@@ -127,3 +128,19 @@ class SwapVerb(Transformation):
             start += len(word)
 
         return change_pos, change_sentence, change_label
+
+    @staticmethod
+    def check_part_pos(sentence):
+        """
+        get the pos of sentence if we need
+
+        :param str sentence: origin word
+        :return: bool
+        """
+        if sentence == "":
+            return False
+        Processor = CnProcessor()
+        pos = Processor.get_pos_tag(sentence)
+        if len(pos) == 1 and pos[0][0] == 'n':
+            return True
+        return False

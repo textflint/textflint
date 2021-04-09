@@ -31,6 +31,10 @@ class TestCnMLM(unittest.TestCase):
         self.assertEqual(['B', 'E', 'B', 'E', 'S', 'B', 'E', 'S'],
                          trans_data[0].get_value('y'))
         self.assertTrue([0, 0, 0, 0, 0, 2, 2, 0] == trans_data[0].mask)
+        trans_data = swap_ins.transform(
+            CWSSample({'x': '玩具厂 大量 生产 玩具 。', 'y': []}))
+        self.assertEqual(1, len(trans_data))
+
 
 
 if __name__ == "__main__":
