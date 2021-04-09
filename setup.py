@@ -16,15 +16,16 @@ print(pkgs)
 
 setup(
     name='textflint',
-    version='0.0.1',
-    url='',
+    version='0.0.2',
+    url='https://github.com/textflint/textflint',
     description='Unified Multilingual Robustness Evaluation Toolkit '
                 'for Natural Language Processing',
     long_description=readme,
     long_description_content_type='text/markdown',
     license='GNU GENERAL PUBLIC LICENSE',
     author='Fudan NLP Team',
-    python_requires='>=3.6',
+    author_email='xiao_wang20@fudan.edu.cn',
+    python_requires='>=3.7',
     packages=pkgs,
     install_requires=reqs.strip().split('\n'),
 )
