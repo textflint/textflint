@@ -44,7 +44,7 @@ class ModifyPos(Transformation):
                 trivial_sent = sent
                 original_idx = idx
                 break
-        if trivial_sent is " ":
+        if trivial_sent == " ":
             return []
         if trivial_sent is None:
             return []
