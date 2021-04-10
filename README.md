@@ -1,4 +1,4 @@
-<p align="center"><img src="images/logo.png" alt="Github Runner Covergae Status" height="100"></p>
+<p align="center"><img src="images/logo.png" alt="Textflint Logo" height="100"></p>
 
 <p align="center">Unified Multilingual Robustness Evaluation Toolkit 
     for Natural Language Processing</p>
@@ -11,7 +11,7 @@
   <a href="#design">Design</a> 
   <br> <br>
   <a target="_blank">
-    <img src="https://github.com/QData/TextAttack/workflows/Github%20PyTest/badge.svg" alt="Github Runner Covergae Status">
+    <img src="https://github.com/textflint/textflint/actions/workflows/python-package.yml/badge.svg" alt="Github Runner Covergae Status">
   </a>
   <a href="https://badge.fury.io/py/textflint">
     <img src="https://badge.fury.io/py/textflint.svg" alt="PyPI version" height="18">
