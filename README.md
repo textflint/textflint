@@ -10,7 +10,7 @@
   <a href="#usage">Usage</a> •
   <a href="#design">Design</a> 
   <br> <br>
-  <a target="_blank">
+  <a href="https://github.com/textflint/textflint/actions/workflows/python-package.yml">
     <img src="https://github.com/textflint/textflint/actions/workflows/python-package.yml/badge.svg" alt="Github Runner Covergae Status">
   </a>
   <a href="https://badge.fury.io/py/textflint">
