@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.NLI.constituency\_overlap module
+textflint.generation\_layer.subpopulation.NLI.constituency\_overlap
 ==========================================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.NLI.constituency_overlap

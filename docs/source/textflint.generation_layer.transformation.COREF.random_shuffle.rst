@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.COREF.random\_shuffle module
+textflint.generation\_layer.transformation.COREF.random\_shuffle
 =======================================================================
 
 .. automodule:: textflint.generation_layer.transformation.COREF.random_shuffle

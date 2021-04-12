@@ -1,4 +1,4 @@
-textflint.generation\_layer.validator.gpt2\_perplexity module
+textflint.generation\_layer.validator.gpt2\_perplexity
 =============================================================
 
 .. automodule:: textflint.generation_layer.validator.gpt2_perplexity

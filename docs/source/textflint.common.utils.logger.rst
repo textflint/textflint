@@ -1,4 +1,4 @@
-textflint.common.utils.logger module
+textflint.common.utils.logger
 ====================================
 
 .. automodule:: textflint.common.utils.logger

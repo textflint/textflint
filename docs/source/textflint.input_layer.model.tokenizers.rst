@@ -1,4 +1,4 @@
-textflint.input\_layer.model.tokenizers package
+textflint.input\_layer.model.tokenizers
 ===============================================
 
 .. automodule:: textflint.input_layer.model.tokenizers

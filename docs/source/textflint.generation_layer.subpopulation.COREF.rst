@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.COREF package
+textflint.generation\_layer.subpopulation.COREF
 =======================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.COREF

@@ -1,4 +1,4 @@
-textflint.generation\_layer.generator.pos\_generator module
+textflint.generation\_layer.generator.pos\_generator
 ===========================================================
 
 .. automodule:: textflint.generation_layer.generator.pos_generator

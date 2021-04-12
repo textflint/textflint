@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.MRC package
+textflint.generation\_layer.subpopulation.MRC
 =====================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.MRC

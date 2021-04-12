@@ -1,4 +1,4 @@
-textflint.common package
+textflint.common
 ========================
 
 .. automodule:: textflint.common

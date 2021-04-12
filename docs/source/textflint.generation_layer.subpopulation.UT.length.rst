@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.UT.length module
+textflint.generation\_layer.subpopulation.UT.length
 ==========================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.UT.length

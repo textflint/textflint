@@ -1,4 +1,4 @@
-textflint.input\_layer.model.metrics.metrics module
+textflint.input\_layer.model.metrics.metrics
 ===================================================
 
 .. automodule:: textflint.input_layer.model.metrics.metrics

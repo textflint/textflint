@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.COREF package
+textflint.generation\_layer.transformation.COREF
 ========================================================
 
 .. automodule:: textflint.generation_layer.transformation.COREF

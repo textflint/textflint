@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT.twitter\_type module
+textflint.generation\_layer.transformation.UT.twitter\_type
 ==================================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT.twitter_type

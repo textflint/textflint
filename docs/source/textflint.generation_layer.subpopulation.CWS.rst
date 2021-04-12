@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.CWS package
+textflint.generation\_layer.subpopulation.CWS
 =====================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.CWS

@@ -1,4 +1,4 @@
-textflint.input\_layer.component.sample.re\_sample module
+textflint.input\_layer.component.sample.re\_sample
 =========================================================
 
 .. automodule:: textflint.input_layer.component.sample.re_sample

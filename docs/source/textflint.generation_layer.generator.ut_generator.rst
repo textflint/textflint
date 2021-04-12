@@ -1,4 +1,4 @@
-textflint.generation\_layer.generator.ut\_generator module
+textflint.generation\_layer.generator.ut\_generator
 ==========================================================
 
 .. automodule:: textflint.generation_layer.generator.ut_generator

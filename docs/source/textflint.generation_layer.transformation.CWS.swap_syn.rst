@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.CWS.swap\_syn module
+textflint.generation\_layer.transformation.CWS.swap\_syn
 ===============================================================
 
 .. automodule:: textflint.generation_layer.transformation.CWS.swap_syn

@@ -1,4 +1,4 @@
-textflint.common.utils package
+textflint.common.utils
 ==============================
 
 .. automodule:: textflint.common.utils

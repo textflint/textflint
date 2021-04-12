@@ -1,4 +1,4 @@
-textflint.common.utils.shift\_utils module
+textflint.common.utils.shift\_utils
 ==========================================
 
 .. automodule:: textflint.common.utils.shift_utils

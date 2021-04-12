@@ -1,4 +1,4 @@
-textflint package
+textflint
 =================
 
 .. automodule:: textflint

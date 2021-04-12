@@ -1,4 +1,4 @@
-textflint.report\_layer package
+textflint.report\_layer
 ===============================
 
 .. automodule:: textflint.report_layer

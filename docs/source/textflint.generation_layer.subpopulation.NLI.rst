@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.NLI package
+textflint.generation\_layer.subpopulation.NLI
 =====================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.NLI

@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT.typos module
+textflint.generation\_layer.transformation.UT.typos
 ==========================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT.typos

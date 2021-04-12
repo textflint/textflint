@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.pipeline module
+textflint.generation\_layer.transformation.pipeline
 ==========================================================
 
 .. automodule:: textflint.generation_layer.transformation.pipeline

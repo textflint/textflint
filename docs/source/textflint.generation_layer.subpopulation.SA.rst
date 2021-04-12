@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.SA package
+textflint.generation\_layer.subpopulation.SA
 ====================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.SA

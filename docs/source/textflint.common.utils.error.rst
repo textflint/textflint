@@ -1,4 +1,4 @@
-textflint.common.utils.error module
+textflint.common.utils.error
 ===================================
 
 .. automodule:: textflint.common.utils.error

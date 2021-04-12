@@ -1,4 +1,4 @@
-textflint.common.utils.format\_change module
+textflint.common.utils.format\_change
 ============================================
 
 .. automodule:: textflint.common.utils.format_change

@@ -1,4 +1,4 @@
-textflint.common.preprocess.nltk\_res\_load module
+textflint.common.preprocess.nltk\_res\_load
 ==================================================
 
 .. automodule:: textflint.common.preprocess.nltk_res_load

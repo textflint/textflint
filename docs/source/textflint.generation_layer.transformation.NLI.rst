@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.NLI package
+textflint.generation\_layer.transformation.NLI
 ======================================================
 
 .. automodule:: textflint.generation_layer.transformation.NLI

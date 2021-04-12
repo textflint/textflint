@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.NLI.swap\_ant module
+textflint.generation\_layer.transformation.NLI.swap\_ant
 ===============================================================
 
 .. automodule:: textflint.generation_layer.transformation.NLI.swap_ant

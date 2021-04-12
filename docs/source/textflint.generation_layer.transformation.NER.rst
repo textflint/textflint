@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.NER package
+textflint.generation\_layer.transformation.NER
 ======================================================
 
 .. automodule:: textflint.generation_layer.transformation.NER

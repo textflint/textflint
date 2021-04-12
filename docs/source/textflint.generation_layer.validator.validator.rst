@@ -1,4 +1,4 @@
-textflint.generation\_layer.validator.validator module
+textflint.generation\_layer.validator.validator
 ======================================================
 
 .. automodule:: textflint.generation_layer.validator.validator

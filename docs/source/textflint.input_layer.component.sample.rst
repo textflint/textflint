@@ -1,4 +1,4 @@
-textflint.input\_layer.component.sample package
+textflint.input\_layer.component.sample
 ===============================================
 
 .. automodule:: textflint.input_layer.component.sample

@@ -1,4 +1,4 @@
-textflint.generation\_layer.attack.attack module
+textflint.generation\_layer.attack.attack
 ================================================
 
 .. automodule:: textflint.generation_layer.attack.attack

@@ -1,4 +1,4 @@
-textflint.engine module
+textflint.engine
 =======================
 
 .. automodule:: textflint.engine

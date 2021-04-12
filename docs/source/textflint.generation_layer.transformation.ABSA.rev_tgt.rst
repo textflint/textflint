@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.ABSA.rev\_tgt module
+textflint.generation\_layer.transformation.ABSA.rev\_tgt
 ===============================================================
 
 .. automodule:: textflint.generation_layer.transformation.ABSA.rev_tgt

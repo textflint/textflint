@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.MRC package
+textflint.generation\_layer.transformation.MRC
 ======================================================
 
 .. automodule:: textflint.generation_layer.transformation.MRC

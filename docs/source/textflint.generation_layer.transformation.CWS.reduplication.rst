@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.CWS.reduplication module
+textflint.generation\_layer.transformation.CWS.reduplication
 ===================================================================
 
 .. automodule:: textflint.generation_layer.transformation.CWS.reduplication

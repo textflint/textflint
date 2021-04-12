@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT package
+textflint.generation\_layer.transformation.UT
 =====================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT

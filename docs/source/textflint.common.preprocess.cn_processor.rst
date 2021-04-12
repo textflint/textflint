@@ -1,4 +1,4 @@
-textflint.common.preprocess.cn\_processor module
+textflint.common.preprocess.cn\_processor
 ================================================
 
 .. automodule:: textflint.common.preprocess.cn_processor

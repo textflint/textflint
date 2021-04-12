@@ -1,4 +1,4 @@
-textflint.generation\_layer.generator.absa\_generator module
+textflint.generation\_layer.generator.absa\_generator
 ============================================================
 
 .. automodule:: textflint.generation_layer.generator.absa_generator

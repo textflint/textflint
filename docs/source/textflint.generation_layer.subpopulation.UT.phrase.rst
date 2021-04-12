@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.UT.phrase module
+textflint.generation\_layer.subpopulation.UT.phrase
 ==========================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.UT.phrase

@@ -1,4 +1,4 @@
-textflint.common.preprocess package
+textflint.common.preprocess
 ===================================
 
 .. automodule:: textflint.common.preprocess

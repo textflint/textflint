@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.MRC.modify\_pos module
+textflint.generation\_layer.transformation.MRC.modify\_pos
 =================================================================
 
 .. automodule:: textflint.generation_layer.transformation.MRC.modify_pos

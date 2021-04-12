@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT.word\_case module
+textflint.generation\_layer.transformation.UT.word\_case
 ===============================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT.word_case

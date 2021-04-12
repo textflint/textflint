@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT.spelling\_error module
+textflint.generation\_layer.transformation.UT.spelling\_error
 ====================================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT.spelling_error

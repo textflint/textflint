@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.POS package
+textflint.generation\_layer.subpopulation.POS
 =====================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.POS

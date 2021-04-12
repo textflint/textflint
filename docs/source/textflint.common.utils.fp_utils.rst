@@ -1,4 +1,4 @@
-textflint.common.utils.fp\_utils module
+textflint.common.utils.fp\_utils
 =======================================
 
 .. automodule:: textflint.common.utils.fp_utils

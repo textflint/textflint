@@ -1,4 +1,4 @@
-textflint.adapter module
+textflint.adapter
 ========================
 
 .. automodule:: textflint.adapter

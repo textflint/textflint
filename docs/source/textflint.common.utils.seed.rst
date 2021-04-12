@@ -1,4 +1,4 @@
-textflint.common.utils.seed module
+textflint.common.utils.seed
 ==================================
 
 .. automodule:: textflint.common.utils.seed

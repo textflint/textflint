@@ -1,4 +1,4 @@
-textflint.input\_layer.dataset package
+textflint.input\_layer.dataset
 ======================================
 
 .. automodule:: textflint.input_layer.dataset

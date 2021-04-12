@@ -1,4 +1,4 @@
-textflint.generation\_layer.generator package
+textflint.generation\_layer.generator
 =============================================
 
 .. automodule:: textflint.generation_layer.generator

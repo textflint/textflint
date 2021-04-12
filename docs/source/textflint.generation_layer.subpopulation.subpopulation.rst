@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.subpopulation module
+textflint.generation\_layer.subpopulation.subpopulation
 ==============================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.subpopulation

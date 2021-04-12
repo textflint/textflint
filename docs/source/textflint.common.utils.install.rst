@@ -1,4 +1,4 @@
-textflint.common.utils.install module
+textflint.common.utils.install
 =====================================
 
 .. automodule:: textflint.common.utils.install

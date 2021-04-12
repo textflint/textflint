@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.transformation module
+textflint.generation\_layer.transformation.transformation
 ================================================================
 
 .. automodule:: textflint.generation_layer.transformation.transformation

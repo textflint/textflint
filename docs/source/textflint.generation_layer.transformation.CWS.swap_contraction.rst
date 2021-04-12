@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.CWS.swap\_contraction module
+textflint.generation\_layer.transformation.CWS.swap\_contraction
 =======================================================================
 
 .. automodule:: textflint.generation_layer.transformation.CWS.swap_contraction

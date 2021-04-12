@@ -1,4 +1,4 @@
-textflint.generation\_layer.subpopulation.NLI.subtree\_overlap module
+textflint.generation\_layer.subpopulation.NLI.subtree\_overlap
 =====================================================================
 
 .. automodule:: textflint.generation_layer.subpopulation.NLI.subtree_overlap

@@ -1,4 +1,4 @@
-textflint.common.utils.load module
+textflint.common.utils.load
 ==================================
 
 .. automodule:: textflint.common.utils.load

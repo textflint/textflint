@@ -1,4 +1,4 @@
-textflint.generation\_layer.generator.coref\_generator module
+textflint.generation\_layer.generator.coref\_generator
 =============================================================
 
 .. automodule:: textflint.generation_layer.generator.coref_generator

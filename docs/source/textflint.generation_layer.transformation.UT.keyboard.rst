@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT.keyboard module
+textflint.generation\_layer.transformation.UT.keyboard
 =============================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT.keyboard

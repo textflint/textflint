@@ -1,4 +1,4 @@
-textflint.report\_layer.report\_generator.report\_generator module
+textflint.report\_layer.report\_generator.report\_generator
 ==================================================================
 
 .. automodule:: textflint.report_layer.report_generator.report_generator

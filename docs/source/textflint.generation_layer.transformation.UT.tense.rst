@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT.tense module
+textflint.generation\_layer.transformation.UT.tense
 ==========================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT.tense

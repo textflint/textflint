@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.SA package
+textflint.generation\_layer.transformation.SA
 =====================================================
 
 .. automodule:: textflint.generation_layer.transformation.SA

@@ -1,4 +1,4 @@
-textflint.input\_layer.model.flint\_model.torch\_model module
+textflint.input\_layer.model.flint\_model.torch\_model
 =============================================================
 
 .. automodule:: textflint.input_layer.model.flint_model.torch_model

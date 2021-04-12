@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.RE.swap\_ent module
+textflint.generation\_layer.transformation.RE.swap\_ent
 ==============================================================
 
 .. automodule:: textflint.generation_layer.transformation.RE.swap_ent

@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.SM package
+textflint.generation\_layer.transformation.SM
 =====================================================
 
 .. automodule:: textflint.generation_layer.transformation.SM

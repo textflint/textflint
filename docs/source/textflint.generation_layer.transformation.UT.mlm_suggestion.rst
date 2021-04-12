@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT.mlm\_suggestion module
+textflint.generation\_layer.transformation.UT.mlm\_suggestion
 ====================================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT.mlm_suggestion

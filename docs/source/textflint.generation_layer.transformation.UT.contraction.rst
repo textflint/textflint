@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT.contraction module
+textflint.generation\_layer.transformation.UT.contraction
 ================================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT.contraction

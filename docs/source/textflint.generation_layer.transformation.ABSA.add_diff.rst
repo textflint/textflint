@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.ABSA.add\_diff module
+textflint.generation\_layer.transformation.ABSA.add\_diff
 ================================================================
 
 .. automodule:: textflint.generation_layer.transformation.ABSA.add_diff

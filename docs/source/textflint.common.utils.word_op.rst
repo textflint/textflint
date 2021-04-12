@@ -1,4 +1,4 @@
-textflint.common.utils.word\_op module
+textflint.common.utils.word\_op
 ======================================
 
 .. automodule:: textflint.common.utils.word_op

@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.RE.swap\_age module
+textflint.generation\_layer.transformation.RE.swap\_age
 ==============================================================
 
 .. automodule:: textflint.generation_layer.transformation.RE.swap_age

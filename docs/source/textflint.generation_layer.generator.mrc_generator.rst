@@ -1,4 +1,4 @@
-textflint.generation\_layer.generator.mrc\_generator module
+textflint.generation\_layer.generator.mrc\_generator
 ===========================================================
 
 .. automodule:: textflint.generation_layer.generator.mrc_generator

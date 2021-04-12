@@ -1,4 +1,4 @@
-textflint.common.utils.list\_op module
+textflint.common.utils.list\_op
 ======================================
 
 .. automodule:: textflint.common.utils.list_op

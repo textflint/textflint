@@ -1,4 +1,4 @@
-textflint.common.settings module
+textflint.common.settings
 ================================
 
 .. automodule:: textflint.common.settings

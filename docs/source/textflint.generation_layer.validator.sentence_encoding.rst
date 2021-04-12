@@ -1,4 +1,4 @@
-textflint.generation\_layer.validator.sentence\_encoding module
+textflint.generation\_layer.validator.sentence\_encoding
 ===============================================================
 
 .. automodule:: textflint.generation_layer.validator.sentence_encoding

@@ -1,4 +1,4 @@
-textflint.common.utils.importing module
+textflint.common.utils.importing
 =======================================
 
 .. automodule:: textflint.common.utils.importing

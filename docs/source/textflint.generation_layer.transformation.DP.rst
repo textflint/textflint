@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.DP package
+textflint.generation\_layer.transformation.DP
 =====================================================
 
 .. automodule:: textflint.generation_layer.transformation.DP

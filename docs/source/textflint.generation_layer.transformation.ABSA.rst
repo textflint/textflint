@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.ABSA package
+textflint.generation\_layer.transformation.ABSA
 =======================================================
 
 .. automodule:: textflint.generation_layer.transformation.ABSA

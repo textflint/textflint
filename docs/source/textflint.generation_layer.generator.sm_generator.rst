@@ -1,4 +1,4 @@
-textflint.generation\_layer.generator.sm\_generator module
+textflint.generation\_layer.generator.sm\_generator
 ==========================================================
 
 .. automodule:: textflint.generation_layer.generator.sm_generator

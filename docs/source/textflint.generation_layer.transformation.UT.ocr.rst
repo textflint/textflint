@@ -1,4 +1,4 @@
-textflint.generation\_layer.transformation.UT.ocr module
+textflint.generation\_layer.transformation.UT.ocr
 ========================================================
 
 .. automodule:: textflint.generation_layer.transformation.UT.ocr

@@ -1,4 +1,4 @@
-textflint.generation\_layer.generator.cws\_generator module
+textflint.generation\_layer.generator.cws\_generator
 ===========================================================
 
 .. automodule:: textflint.generation_layer.generator.cws_generator

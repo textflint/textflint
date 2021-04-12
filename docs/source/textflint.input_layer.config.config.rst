@@ -1,4 +1,4 @@
-textflint.input\_layer.config.config module
+textflint.input\_layer.config.config
 ===========================================
 
 .. automodule:: textflint.input_layer.config.config
