@@ -182,7 +182,7 @@ class Generator(ABC):
         """
         self.prepare(dataset)
 
-        for obj_id, attack_obj in self._get_attack_objs(
+        for attack_obj in self._get_attack_objs(
             self.attack_methods, model
         ):
             logger.info('******Start Attack!******')
