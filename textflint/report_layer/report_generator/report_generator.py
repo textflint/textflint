@@ -488,14 +488,17 @@ class ReportGenerator:
         dataset_name = evaluate_json.get("dataset_name", None)
 
         radar_pd = Analyzer.json_to_linguistic_radar(evaluate_json)
-        self.get_radar_fig(radar_pd).show()
+        if radar_pd is not None:
+            self.get_radar_fig(radar_pd).show()
 
         df, settings = Analyzer.json_to_sunburst(evaluate_json)
-        self.get_sunburst_fig(df, settings).show()
+        if df is not None:
+            self.get_sunburst_fig(df, settings).show()
 
         pd, cols = Analyzer.json_to_bar_chart(evaluate_json)
-        self.get_bar_chart(pd, cols, model_name=model_name,
-                           dataset_name=dataset_name).show()
+        if pd is not None:
+            self.get_bar_chart(pd, cols, model_name=model_name,
+                               dataset_name=dataset_name).show()
 
     @staticmethod
     def get_radar_fig(radar_pd):
