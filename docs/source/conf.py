@@ -14,7 +14,6 @@
 #
 import os
 import sys
-import sphinx_rtd_theme
 
 sys.path.insert(0, os.path.abspath('../../'))
 
@@ -44,7 +43,6 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.mathjax',
     'sphinx.ext.todo'
-    'sphinx_rtd_theme',
 ]
 
 autodoc_default_options = {
