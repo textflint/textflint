@@ -30,7 +30,7 @@ There are lots of reasons to use TextFlint:
 
 - **Full coverage of transformation types**, including 20 general transformations, 8 subpopulations and 60 task-specific transformations, as well as thousands of their combinations, which basically covers all aspects of text transformations to comprehensively evaluate the robustness of your model. textflint also supports adversarial attack to generate model specific transformed datas.
 - **Generate targeted augmented data**, and you can use the additional data to train or fine-tune your model to improve your model's robustness.
-- **Provide a complete analytical report automatically** to accurately explain where your model's shortcomings are, such as the problems in syntactic rules or syntactic rules. 
+- **Provide a complete analytical report automatically** to accurately explain where your model's shortcomings are, such as the problems in lexical rules or syntactic rules. 
 
 ## Setup
 
