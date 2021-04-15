@@ -25,12 +25,12 @@ class TextField(Field):
     text_processor = EnProcessor()
 
     def __init__(
-            self,
-            field_value,
-            mask=None,
-            is_one_sent=False,
-            split_by_space=False,
-            **kwargs
+        self,
+        field_value,
+        mask=None,
+        is_one_sent=False,
+        split_by_space=False,
+        **kwargs
     ):
         r"""
 

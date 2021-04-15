@@ -10,17 +10,18 @@ from .generator import Generator
 
 class NLIGenerator(Generator):
     def __init__(
-            self,
-            task='NLI',
-            max_trans=1,
-            fields=['premise', 'hypothesis'],
-            transformation_methods=None,
-            transformation_config=None,
-            return_unk=True,
-            subpopulation_methods=None,
-            subpopulation_config=None,
-            attack_methods=None,
-            validate_methods=None
+        self,
+        task='NLI',
+        max_trans=1,
+        fields=['premise', 'hypothesis'],
+        transformation_methods=None,
+        transformation_config=None,
+        return_unk=True,
+        subpopulation_methods=None,
+        subpopulation_config=None,
+        attack_methods=None,
+        validate_methods=None,
+        **kwargs
     ):
         super().__init__(
             task=task,
@@ -32,7 +33,8 @@ class NLIGenerator(Generator):
             subpopulation_methods=subpopulation_methods,
             subpopulation_config=subpopulation_config,
             attack_methods=attack_methods,
-            validate_methods=validate_methods
+            validate_methods=validate_methods,
+            **kwargs
         )
 
     def _check_fields(self):

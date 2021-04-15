@@ -7,7 +7,8 @@ textflint Engine Class
 import os
 
 from .common import logger
-from .adapter import Adapter
+from .adapter import *
+
 
 __all__ = ["Engine"]
 
@@ -24,22 +25,12 @@ class Engine:
 
     """
 
-    def __init__(
-        self,
-        task='UT'
-    ):
-        r"""
-        :param string task: supported task name
-        """
-        self.task = task
-
-    def run(self, data_input, out_dir, config=None, model=None):
+    def run(self, data_input, config=None, model=None):
         r"""
         Engine start entrance, load data and apply transformations,
         finally generate robustness report if needed.
 
         :param dict|list|string data_input: json object or json/csv file
-        :param string out_dir: out dir for saving generated samples
         :param string|textflint.Config config: json file or Config object
         :param textflint.FlintModel model: model wrapper which implements
             FlintModel abstract methods, not a necessary input.
@@ -49,7 +40,7 @@ class Engine:
         """
         dataset, config, model = self.load(data_input, config, model)
 
-        evaluate_result = self.generate(dataset, config, out_dir, model)
+        evaluate_result = self.generate(dataset, config, model)
 
         if evaluate_result:
             self.report(evaluate_result)
@@ -65,24 +56,16 @@ class Engine:
         :return: textflint.Dataset, textflint.Config, textflint.FlintModel
 
         """
-        dataset = Adapter.get_dataset(
-            data_input=data_input,
-            task=self.task
-        )
+        config = get_config(config=config)
 
-        config = Adapter.get_config(
-            task=self.task,
-            config=config
-        )
-        if model:
-            model = Adapter.get_flintmodel(
-                model=model,
-                task=self.task
-            )
+        dataset = get_dataset(data_input=data_input, task=config.task)
+        # Prefer to use the model passed from parameter
+        model = model if model else config.flint_model
+        model = get_flintmodel(model=model, task=config.task)
 
         return dataset, config, model
 
-    def generate(self, dataset, config, out_dir, model=None):
+    def generate(self, dataset, config, model=None):
         r"""
         Generate new samples according to given config,
         save result as json file to out path, and evaluate
@@ -90,15 +73,16 @@ class Engine:
 
         :param textflint.Dataset dataset: container of original samples.
         :param textflint.Config config: config instance to control procedure.
-        :param str out_dir: out dir for saving generated samples
         :param textflint.FlintModel model: model wrapper which implements
             FlintModel abstract methods, not a necessary input.
         :return: save generated samples to json file.
 
         """
-        generator = Adapter.get_generator(config)
+        generator = get_generator(config)
+        out_dir = config.out_dir
+
         if model:
-            model = Adapter.get_flintmodel(model, generator.task)
+            model = get_flintmodel(model, generator.task)
         evaluate_result = {}
         generate_map = {
             "transformation": generator.generate_by_transformations,
@@ -155,5 +139,5 @@ class Engine:
 
         """
         if evaluate_result:
-            report_generator = Adapter.get_report_generator()
+            report_generator = get_report_generator()
             report_generator.plot(evaluate_result)

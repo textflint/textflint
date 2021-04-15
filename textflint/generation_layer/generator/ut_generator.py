@@ -19,7 +19,8 @@ class UTGenerator(Generator):
         subpopulation_methods=None,
         subpopulation_config=None,
         attack_methods=None,
-        validate_methods=None
+        validate_methods=None,
+        **kwargs
     ):
         super().__init__(
             task=task,
@@ -31,5 +32,6 @@ class UTGenerator(Generator):
             subpopulation_methods=subpopulation_methods,
             subpopulation_config=subpopulation_config,
             attack_methods=attack_methods,
-            validate_methods=validate_methods
+            validate_methods=validate_methods,
+            **kwargs
         )

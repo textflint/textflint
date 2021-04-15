@@ -24,11 +24,12 @@ def get_test(task):
     #     if ut not in UNMATCH_UT_TRANSFORMATIONS['SA']:
     #         test_config['transformation_methods'].append(ut)
     test_config['task'] = task
+    test_config['out_dir'] = './test_result_test/' + task + '/'
     config = Config.from_dict(test_config)
-    out_dir_path = os.path.normcase('./test_result_test/' + task + '/')
-    engine = Engine(task)
+    out_dir_path = os.path.normcase(test_config['out_dir'])
+    engine = Engine()
     engine.run(os.path.normcase(download_if_needed('TEST/' + task + '.json')),
-               out_dir_path, config)
+               config)
     shutil.rmtree(out_dir_path)
 
 
@@ -68,5 +69,6 @@ class TestEngine(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
-    os.remove(os.path.normcase('./test_result_test'))
+    download_if_needed('TEST/ABSA.json')
+    # unittest.main()
+    # os.remove(os.path.normcase('./test_result_test'))
