@@ -29,11 +29,11 @@ class Config:
         random_seed=1,
         fields=None,
         flint_model=None,
-        transformation_methods=None,
-        transformation_config=None,
+        trans_methods=None,
+        trans_config=None,
         return_unk=True,
-        subpopulation_methods=None,
-        subpopulation_config=None,
+        sub_methods=None,
+        sub_config=None,
         attack_methods=None,
         validate_methods=None,
         **kwargs
@@ -48,15 +48,15 @@ class Config:
         :param str|list[str] fields: fields on which new samples are generated.
         ::param str model_file: path to the python file containing
          the FlintModel instance which named 'model'.
-        :param list transformation_methods: indicate what transformations
+        :param list trans_methods: indicate what transformations
             to apply to dataset.
-        :param dict transformation_config: parameters for the initialization
+        :param dict trans_config: parameters for the initialization
             of the transformation instances.
         :param bool return_unk: whether apply transformations which may
             influence label of sample.
-        :param list subpopulation_methods: indicate what subpopulations
+        :param list sub_methods: indicate what subpopulations
             to apply to dataset.
-        :param dict subpopulation_config: parameters for the initialization
+        :param dict sub_config: parameters for the initialization
             of the subpopulation instances.
         :param str attack_methods: path to the python file containing
          the Attack instances which named "attacks".
@@ -72,23 +72,23 @@ class Config:
         self.random_seed = random_seed
 
         self.transformation_methods = \
-            self.get_generate_methods(transformation_methods,
+            self.get_generate_methods(trans_methods,
                                       ALLOWED_TRANSFORMATIONS,
                                       allow_pipeline=True)
-        self.transformation_config = transformation_config \
-            if transformation_config else {}
+        self.transformation_config = trans_config \
+            if trans_config else {}
         # TODO, support the function. default not return origin and return unk
         self.return_unk = return_unk
 
         self.subpopulation_methods = \
-            self.get_generate_methods(subpopulation_methods,
+            self.get_generate_methods(sub_methods,
                                       ALLOWED_SUBPOPULATIONS)
-        self.subpopulation_config = subpopulation_config \
-            if subpopulation_config else {}
+        self.subpopulation_config = sub_config \
+            if sub_config else {}
 
         self.attack_methods = attack_methods
         self.validate_methods = self.get_generate_methods(validate_methods,
-                                                           ALLOWED_VALIDATORS)
+                                                          ALLOWED_VALIDATORS)
         self.check_config()
 
     def check_config(self):
