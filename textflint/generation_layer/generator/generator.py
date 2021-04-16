@@ -10,7 +10,7 @@ from abc import ABC
 from itertools import product
 
 from ...input_layer.dataset import Dataset
-from ..validator import Validator
+from ...common.utils.seed import set_seed
 from ...common.utils.logger import logger
 from ...common.preprocess import EnProcessor
 from ...common.utils.load import pkg_class_load, load_module_from_file
@@ -42,6 +42,7 @@ class Generator(ABC):
         self,
         task='UT',
         max_trans=1,
+        random_seed=1,
         fields='x',
         transformation_methods=None,
         transformation_config=None,
@@ -57,6 +58,7 @@ class Generator(ABC):
         :param str task: Indicate which task of your transformation data.
         :param int max_trans: Maximum transformed samples generate by one
             original sample pre Transformation.
+        :param int random_seed: random number seed to reproduce generation.
         :param str|list fields: Indicate which fields to apply transformations.
             Multi fields transform just for some special task, like: SM、NLI.
         :param list transformation_methods: list of transformations' name.
@@ -74,6 +76,7 @@ class Generator(ABC):
         """
         self.task = task
         self.max_trans = max_trans
+        self.random_seed = random_seed
         self.fields = fields
 
         self.return_unk = return_unk
@@ -99,6 +102,7 @@ class Generator(ABC):
         assert isinstance(dataset, Dataset)
         self._check_dataset(dataset)
         self._check_fields()
+        set_seed(self.random_seed)
 
     def generate(self, dataset, model=None):
         r"""

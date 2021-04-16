@@ -26,6 +26,7 @@ class Config:
         task='UT',
         out_dir=None,
         max_trans=1,
+        random_seed=1,
         fields=None,
         flint_model=None,
         transformation_methods=None,
@@ -43,6 +44,7 @@ class Config:
             default current path.
         :param int max_trans: maximum transformed samples generate by
             one original sample pre Transformation.
+        :param int random_seed: random number seed to reproduce generation.
         :param str|list[str] fields: fields on which new samples are generated.
         ::param str model_file: path to the python file containing
          the FlintModel instance which named 'model'.
@@ -67,6 +69,7 @@ class Config:
         self.max_trans = max_trans
         self.fields = fields if fields else TRANSFORM_FIELDS[self.task]
         self.flint_model = flint_model
+        self.random_seed = random_seed
 
         self.transformation_methods = \
             self.get_generate_methods(transformation_methods,
@@ -100,6 +103,7 @@ class Config:
 
         assert isinstance(self.out_dir, str)
         assert isinstance(self.max_trans, int)
+        assert isinstance(self.random_seed, int)
         assert isinstance(self.fields, (str, list))
         assert isinstance(self.transformation_config, dict)
         assert isinstance(self.return_unk, bool)

@@ -69,6 +69,5 @@ class TestEngine(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    download_if_needed('TEST/ABSA.json')
-    # unittest.main()
-    # os.remove(os.path.normcase('./test_result_test'))
+    unittest.main()
+    os.remove(os.path.normcase('./test_result_test'))
