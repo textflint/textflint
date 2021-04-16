@@ -32,7 +32,8 @@ class CorefGenerator(Generator):
         subpopulation_config=None,
         attack_methods=None,
         validate_methods=None,
-        num_other_samples=2
+        num_other_samples=2,
+        **kwargs
     ):
         super().__init__(
             task=task,
@@ -45,6 +46,7 @@ class CorefGenerator(Generator):
             subpopulation_config=subpopulation_config,
             attack_methods=attack_methods,
             validate_methods=validate_methods,
+            **kwargs
         )
         self.num_other_samples = num_other_samples # default 2
 

@@ -22,6 +22,10 @@ setup(
                 'for Natural Language Processing',
     long_description=readme,
     long_description_content_type='text/markdown',
+    entry_points={
+        "console_scripts": [
+            "textflint=textflint.textflint_cli:main"],
+    },
     license='GNU GENERAL PUBLIC LICENSE',
     author='Fudan NLP Team',
     author_email='xiao_wang20@fudan.edu.cn',

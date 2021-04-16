@@ -49,6 +49,7 @@ class ABSAGenerator(Generator):
         attack_methods=None,
         validate_methods=None,
         dataset_config='restaurant',
+        **kwargs
     ):
         self.dataset_config = dataset_config
         self.nlp = Transformation.processor.nlp
@@ -64,6 +65,7 @@ class ABSAGenerator(Generator):
             subpopulation_config=subpopulation_config,
             attack_methods=attack_methods,
             validate_methods=validate_methods,
+            **kwargs
         )
         self.transform_methods = transformation_methods
         if self.dataset_config is None:
