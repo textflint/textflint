@@ -56,12 +56,12 @@ class Engine:
         :return: textflint.Dataset, textflint.Config, textflint.FlintModel
 
         """
-        config = get_config(config=config)
+        config = auto_config(config=config)
 
-        dataset = get_dataset(data_input=data_input, task=config.task)
+        dataset = auto_dataset(data_input=data_input, task=config.task)
         # Prefer to use the model passed from parameter
         model = model if model else config.flint_model
-        model = get_flintmodel(model=model, task=config.task)
+        model = auto_flintmodel(model=model, task=config.task)
 
         return dataset, config, model
 
@@ -78,11 +78,11 @@ class Engine:
         :return: save generated samples to json file.
 
         """
-        generator = get_generator(config)
+        generator = auto_generator(config)
         out_dir = config.out_dir
 
         if model:
-            model = get_flintmodel(model, generator.task)
+            model = auto_flintmodel(model, config.task)
         evaluate_result = {}
         generate_map = {
             "transformation": generator.generate_by_transformations,
@@ -139,5 +139,5 @@ class Engine:
 
         """
         if evaluate_result:
-            report_generator = get_report_generator()
+            report_generator = auto_report_generator()
             report_generator.plot(evaluate_result)

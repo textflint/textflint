@@ -1,5 +1,5 @@
 """
-textflint Adapter Class
+TextFlint Adapter Class
 ============================================
 
 """
@@ -11,6 +11,7 @@ from .common import logger
 from .input_layer.dataset import Dataset
 from .input_layer.model import FlintModel
 from .common.utils import task_class_load
+from .common.utils.load import load_module_from_file
 from .generation_layer.generator import Generator, UTGenerator
 from .common.settings import GENERATOR_PATH, NLP_TASK_MAP
 from .report_layer.report_generator import ReportGenerator
@@ -18,15 +19,15 @@ from .report_layer.report_generator import ReportGenerator
 nlp_tasks = [key.upper() for key in NLP_TASK_MAP.keys()]
 
 __all__ = [
-    "get_config",
-    "get_dataset",
-    "get_flintmodel",
-    "get_generator",
-    "get_report_generator"
+    "auto_config",
+    "auto_dataset",
+    "auto_flintmodel",
+    "auto_generator",
+    "auto_report_generator"
 ]
 
 
-def get_config(task='UT', config=None):
+def auto_config(task='UT', config=None):
     r"""
     Check config input or create config automatically.
 
@@ -53,7 +54,7 @@ def get_config(task='UT', config=None):
     return config_obj
 
 
-def get_generator(config_obj):
+def auto_generator(config_obj):
     r"""
     Automatic create task generator to apply transformations, subpopulations
     and adversarial attacks.
@@ -79,7 +80,7 @@ def get_generator(config_obj):
     return generator_obj
 
 
-def get_dataset(data_input=None, task='UT'):
+def auto_dataset(data_input=None, task='UT'):
     r"""
     Create Dataset instance and load data input automatically.
 
@@ -117,24 +118,33 @@ def get_dataset(data_input=None, task='UT'):
     return dataset_obj
 
 
-def get_flintmodel(model=None, task=None):
+def auto_flintmodel(model, task):
     r"""
     Check flint model type and whether compatible to task.
 
-    :param model:
-    :return:
+    :param textflint.FlintModel|str model: FlintModel instance or
+        python file path which contains FlintModel instance
+    :param str task: task name
+    :return: textflint.FlintModel
+
     """
     if not model:
         return None
-    assert isinstance(model, FlintModel), f"Not support {type(model)} " \
+
+    assert isinstance(model, (FlintModel, str)), f"Not support {type(model)} " \
         f"input, please wrapper your model with FlintModel."
+
+    if isinstance(model, str):
+        assert os.path.exists(model), f"Cant find model file {model}"
+        model = load_module_from_file(model, 'model')
+
     assert model.task == task, f"The task of your FlintModel is " \
         f"{model.task}, not compatible with task {task}"
 
     return model
 
 
-def get_report_generator():
+def auto_report_generator():
     r"""
     Return a ReportGenerator instance.
 
