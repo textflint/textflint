@@ -40,6 +40,9 @@ class Engine:
         """
         dataset, config, model = self.load(data_input, config, model)
 
+        if len(dataset) == 0:
+            raise ValueError("Empty dataset, please check your data format!")
+
         evaluate_result = self.generate(dataset, config, model)
 
         if evaluate_result:
