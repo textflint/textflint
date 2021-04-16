@@ -30,9 +30,9 @@ class TestNLIGenerator(unittest.TestCase):
     def test_generate(self):
         # test task transformation, ignore NliOverlap because it
         # does't rely on the original data
-        transformation_methods = ["SwapAnt", "AddSent", "NumWord"]
-        gene = NLIGenerator(transformation_methods=transformation_methods,
-                            subpopulation_methods=[])
+        trans_methods = ["SwapAnt", "AddSent", "NumWord"]
+        gene = NLIGenerator(trans_methods=trans_methods,
+                            sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
 
             for index in range(len(original_samples)):
@@ -57,8 +57,8 @@ class TestNLIGenerator(unittest.TestCase):
                         > len(original_samples[index].hypothesis.field_value))
 
         # test part of UT transformations
-        gene = NLIGenerator(transformation_methods=['WordCase'],
-                            subpopulation_methods=[])
+        gene = NLIGenerator(trans_methods=['WordCase'],
+                            sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(4, len(original_samples))
             for index in range(len(original_samples)):
@@ -71,7 +71,7 @@ class TestNLIGenerator(unittest.TestCase):
                             original_samples[index].get_words('premise')):
                     self.assertEqual(trans_word, ori_word.upper())
         gene = NLIGenerator(
-            transformation_methods=['SwapNum'], subpopulation_methods=[])
+            trans_methods=['SwapNum'], sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(1, len(original_samples))
             for index in range(len(original_samples)):
@@ -86,15 +86,15 @@ class TestNLIGenerator(unittest.TestCase):
                     if ori_word.isdigit():
                         self.assertTrue(ori_word != trans_word)
 
-        # test wrong transformation_methods
+        # test wrong trans_methods
         gene = NLIGenerator(
-            transformation_methods=["wrong_transform_method"],
-            subpopulation_methods=[])
+            trans_methods=["wrong_transform_method"],
+            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = NLIGenerator(transformation_methods=["AddSubtree"],
-                            subpopulation_methods=[])
+        gene = NLIGenerator(trans_methods=["AddSubtree"],
+                            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = NLIGenerator(transformation_methods="OOV", subpopulation_methods=[])
+        gene = NLIGenerator(trans_methods="OOV", sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
 
 

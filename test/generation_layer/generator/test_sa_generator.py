@@ -23,40 +23,40 @@ class TestSpecialEntityTyposSwap(unittest.TestCase):
 
     def test_generate(self):
         # test task transformation
-        transformation_methods = ["SwapSpecialEnt", "AddSum",
+        trans_methods = ["SwapSpecialEnt", "AddSum",
                              "DoubleDenial", "SwapNum"]
         SA_config = {'AddSum': [{'entity_type': 'movie'},
                                 {'entity_type': 'person'}],
                      'SwapSpecialEnt': [{'entity_type': 'movie'},
                                         {'entity_type': 'person'}]}
-        gene = SAGenerator(transformation_methods=transformation_methods,
-                           subpopulation_methods=[],
-                           transformation_config=SA_config)
+        gene = SAGenerator(trans_methods=trans_methods,
+                           sub_methods=[],
+                           trans_config=SA_config)
 
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             for index in range(len(original_samples)):
                 self.assertEqual(original_samples[index].y, trans_rst[index].y)
 
-        # test wrong transformation_methods
-        gene = SAGenerator(transformation_methods=["wrong_transform_method"],
-                           subpopulation_methods=[])
+        # test wrong trans_methods
+        gene = SAGenerator(trans_methods=["wrong_transform_method"],
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = SAGenerator(transformation_methods=["AddSubtree"],
-                           subpopulation_methods=[])
+        gene = SAGenerator(trans_methods=["AddSubtree"],
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = SAGenerator(transformation_methods=["OOV"],
-                           subpopulation_methods=[])
+        gene = SAGenerator(trans_methods=["OOV"],
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = SAGenerator(transformation_methods="ReverseNeg",
-                           subpopulation_methods=[])
+        gene = SAGenerator(trans_methods="ReverseNeg",
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
 
-        # test pipeline transformation_methods
-        transformation_methods = [["SwapSpecialEnt", "AddSum"],
+        # test pipeline trans_methods
+        trans_methods = [["SwapSpecialEnt", "AddSum"],
                              ["SwapSpecialEnt", "DoubleDenial"]]
-        gene = SAGenerator(transformation_methods=transformation_methods,
-                           subpopulation_methods=[],
-                           transformation_config=SA_config)
+        gene = SAGenerator(trans_methods=trans_methods,
+                           sub_methods=[],
+                           trans_config=SA_config)
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(len(trans_rst), len(original_samples))
 

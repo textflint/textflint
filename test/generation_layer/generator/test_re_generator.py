@@ -30,23 +30,23 @@ class TestSpecialEntityTyposSwap(unittest.TestCase):
 
     def test_generate(self):
         # test task transformation
-        transformation_methods = ["SwapBirth", "SwapAge"]
-        gene = REGenerator(transformation_methods=transformation_methods,
-                           subpopulation_methods=[])
+        trans_methods = ["SwapBirth", "SwapAge"]
+        gene = REGenerator(trans_methods=trans_methods,
+                           sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(1, len(original_samples))
             for index in range(len(original_samples)):
                 self.assertTrue(original_samples[index] != trans_rst[index])
 
-        # test wrong transformation_methods
-        gene = REGenerator(transformation_methods=["wrong_transform_method"],
-                           subpopulation_methods=[])
+        # test wrong trans_methods
+        gene = REGenerator(trans_methods=["wrong_transform_method"],
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = REGenerator(transformation_methods=["AddSubtree"],
-                           subpopulation_methods=[])
+        gene = REGenerator(trans_methods=["AddSubtree"],
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = REGenerator(transformation_methods="OOV",
-                           subpopulation_methods=[])
+        gene = REGenerator(trans_methods="OOV",
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
 
 

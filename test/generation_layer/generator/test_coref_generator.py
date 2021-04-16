@@ -18,22 +18,22 @@ dataset.load(samples)
 class TestCorefGenerator(unittest.TestCase):
 
     def test_generate(self):
-        gene = CorefGenerator(transformation_methods=["RndConcat"],
-                              subpopulation_methods=[])
+        gene = CorefGenerator(trans_methods=["RndConcat"],
+                              sub_methods=[])
         print(gene.transform_methods)
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(len(original_samples), len(trans_rst))  
-        gene = CorefGenerator(transformation_methods=["wrong_transform_method"],
-                              subpopulation_methods=[])
+        gene = CorefGenerator(trans_methods=["wrong_transform_method"],
+                              sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = CorefGenerator(transformation_methods=["AddSubtree"],
-                              subpopulation_methods=[])
+        gene = CorefGenerator(trans_methods=["AddSubtree"],
+                              sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = CorefGenerator(transformation_methods="OOV",
-                              subpopulation_methods=[])
+        gene = CorefGenerator(trans_methods="OOV",
+                              sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = CorefGenerator(transformation_methods=["Contraction", "SwapNamedEnt"],
-                              subpopulation_methods=[])
+        gene = CorefGenerator(trans_methods=["Contraction", "SwapNamedEnt"],
+                              sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertTrue(len(original_samples) >= len(trans_rst))  
 

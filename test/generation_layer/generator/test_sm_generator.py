@@ -29,9 +29,9 @@ class TestSMGenerator(unittest.TestCase):
     def test_generate(self):
         # test task transformation, ignore SmOverlap because
         # it does't rely on the original data
-        transformation_methods = ["SwapWord", "SwapNum"]
-        gene = SMGenerator(transformation_methods=transformation_methods,
-                           subpopulation_methods=[])
+        trans_methods = ["SwapWord", "SwapNum"]
+        gene = SMGenerator(trans_methods=trans_methods,
+                           sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             for index in range(len(original_samples)):
                 # test whether the sample changed or not
@@ -45,8 +45,8 @@ class TestSMGenerator(unittest.TestCase):
                     self.assertEqual('0', trans_rst[index].y.field_value)
 
         # test part of UT transformations
-        gene = SMGenerator(transformation_methods=['WordCase'],
-                           subpopulation_methods=[])
+        gene = SMGenerator(trans_methods=['WordCase'],
+                           sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(4, len(original_samples))
             for index in range(len(original_samples)):
@@ -58,8 +58,8 @@ class TestSMGenerator(unittest.TestCase):
                         trans_rst[index].get_words('sentence2'),
                         original_samples[index].get_words('sentence2')):
                     self.assertEqual(trans_word, ori_word.upper())
-        gene = SMGenerator(transformation_methods=['SwapNum'],
-                           subpopulation_methods=[])
+        gene = SMGenerator(trans_methods=['SwapNum'],
+                           sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(1, len(original_samples))
             for index in range(len(original_samples)):
@@ -74,15 +74,15 @@ class TestSMGenerator(unittest.TestCase):
                     if ori_word.isdigit():
                         self.assertTrue(ori_word != trans_word)
 
-        # test wrong transformation_methods
-        gene = SMGenerator(transformation_methods=["wrong_transform_method"],
-                           subpopulation_methods=[])
+        # test wrong trans_methods
+        gene = SMGenerator(trans_methods=["wrong_transform_method"],
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = SMGenerator(transformation_methods=["AddSubtree"],
-                           subpopulation_methods=[])
+        gene = SMGenerator(trans_methods=["AddSubtree"],
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = SMGenerator(transformation_methods="OOV",
-                           subpopulation_methods=[])
+        gene = SMGenerator(trans_methods="OOV",
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
 
 

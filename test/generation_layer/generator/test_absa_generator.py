@@ -71,46 +71,46 @@ class TestABSAGenerator(unittest.TestCase):
 
     def test_generate(self):
         # test task transformation
-        transformation_methods = ['RevTgt', 'RevNon', 'AddDiff']
-        gene = ABSAGenerator(transformation_methods=transformation_methods,
-                             subpopulation_methods=[],
+        trans_methods = ['RevTgt', 'RevNon', 'AddDiff']
+        gene = ABSAGenerator(trans_methods=trans_methods,
+                             sub_methods=[],
                              dataset_config='restaurant')
 
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(3, len(original_samples))
 
-        # test wrong transformation_methods
-        gene = ABSAGenerator(transformation_methods=["wrong_transform_method"],
-                             subpopulation_methods=[],
+        # test wrong trans_methods
+        gene = ABSAGenerator(trans_methods=["wrong_transform_method"],
+                             sub_methods=[],
                              dataset_config='restaurant')
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = ABSAGenerator(transformation_methods=["Addabc"],
-                             subpopulation_methods=[],
+        gene = ABSAGenerator(trans_methods=["Addabc"],
+                             sub_methods=[],
                              dataset_config='restaurant')
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = ABSAGenerator(transformation_methods=["AddSubtree"],
-                             subpopulation_methods=[],
+        gene = ABSAGenerator(trans_methods=["AddSubtree"],
+                             sub_methods=[],
                              dataset_config='restaurant')
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = ABSAGenerator(transformation_methods="OOV",
-                             subpopulation_methods=[],
+        gene = ABSAGenerator(trans_methods="OOV",
+                             sub_methods=[],
                              dataset_config='restaurant')
         self.assertRaises(ValueError, next, gene.generate(dataset))
 
-        # test pipeline transformation_methods
-        transformation_methods = [['RevTgt', 'RevNon'],
+        # test pipeline trans_methods
+        trans_methods = [['RevTgt', 'RevNon'],
                              ['RevNon', 'AddDiff']]
-        gene = ABSAGenerator(transformation_methods=transformation_methods,
-                             subpopulation_methods=[],
+        gene = ABSAGenerator(trans_methods=trans_methods,
+                             sub_methods=[],
                              dataset_config='restaurant')
         for original_samples, trans_rst, trans_type \
                 in gene.generate(special_dataset):
             self.assertEqual(len(trans_rst), len(original_samples))
 
         # test special data
-        transformation_methods = ['AddDiff']
-        gene = ABSAGenerator(transformation_methods=transformation_methods,
-                             subpopulation_methods=[],
+        trans_methods = ['AddDiff']
+        gene = ABSAGenerator(trans_methods=trans_methods,
+                             sub_methods=[],
                              dataset_config='restaurant')
         for original_samples, trans_rst, trans_type \
                 in gene.generate(special_dataset):

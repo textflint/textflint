@@ -44,11 +44,11 @@ class Generator(ABC):
         max_trans=1,
         random_seed=1,
         fields='x',
-        transformation_methods=None,
-        transformation_config=None,
+        trans_methods=None,
+        trans_config=None,
         return_unk=True,
-        subpopulation_methods=None,
-        subpopulation_config=None,
+        sub_methods=None,
+        sub_config=None,
         attack_methods=None,
         validate_methods=None,
         **kwargs
@@ -61,14 +61,14 @@ class Generator(ABC):
         :param int random_seed: random number seed to reproduce generation.
         :param str|list fields: Indicate which fields to apply transformations.
             Multi fields transform just for some special task, like: SM、NLI.
-        :param list transformation_methods: list of transformations' name.
-        :param dict transformation_config: transformation class configs, useful
+        :param list trans_methods: list of transformations' name.
+        :param dict trans_config: transformation class configs, useful
             to control the behavior of transformations.
         :param bool return_unk: Some transformation may generate unk labels,
             s.t. insert a word to a sequence in NER task.
             If set False, would skip these transformations.
-        :param list subpopulation_methods: list of subpopulations' name.
-        :param dict subpopulation_config: subpopulation class configs, useful
+        :param list sub_methods: list of subpopulations' name.
+        :param dict sub_config: subpopulation class configs, useful
             to control the behavior of subpopulation.
         :param str attack_methods: path to the python file containing
          the Attack instances.
@@ -82,13 +82,13 @@ class Generator(ABC):
         self.return_unk = return_unk
         # text processor to do nlp preprocess
         self.processor = EnProcessor()
-        self.transform_methods = transformation_methods
-        self.transformation_config = transformation_config \
-            if transformation_config else {}
+        self.transform_methods = trans_methods
+        self.trans_config = trans_config \
+            if trans_config else {}
 
-        self.subpopulation_methods = subpopulation_methods
-        self.subpopulation_config = subpopulation_config \
-            if subpopulation_config else {}
+        self.sub_methods = sub_methods
+        self.sub_config = sub_config \
+            if sub_config else {}
         self.attack_methods = attack_methods
         self.validate_methods = validate_methods
 
@@ -166,7 +166,7 @@ class Generator(ABC):
         self.prepare(dataset)
 
         for sub_obj in self._get_flint_objs(
-            self.subpopulation_methods,
+            self.sub_methods,
             TASK_SUBPOPULATION_PATH,
             ALLOWED_SUBPOPULATIONS
         ):
@@ -234,7 +234,7 @@ class Generator(ABC):
             if len(flint_methods) == 0:
                 return []
         elif flint_methods:
-            raise ValueError(f'The type of transformation_methods must be list '
+            raise ValueError(f'The type of trans_methods must be list '
                              f'or None, not {type(flint_methods)}')
         else:
             flint_methods = allowed_methods[self.task]
@@ -263,9 +263,9 @@ class Generator(ABC):
                 "Method {0} is not allowed in task {1}".format(
                     flint_method, self.task)
             )
-        config = self.transformation_config \
+        config = self.trans_config \
             if flint_path is TASK_TRANSFORMATION_PATH \
-            else self.subpopulation_config
+            else self.sub_config
 
         objs = []
         # support any legal sequence transformation

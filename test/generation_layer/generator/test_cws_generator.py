@@ -17,21 +17,21 @@ class TestSpecialEntityTyposSwap(unittest.TestCase):
                 'SwapContraction',
                 'SwapVerb',
                 'SwapSyn']
-        gene = CWSGenerator(transformation_methods=mode,
-                            subpopulation_methods=[])
+        gene = CWSGenerator(trans_methods=mode,
+                            sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertTrue(len(original_samples) == 0)
             self.assertTrue(len(trans_rst) == 0)
 
-        # test wrong transformation_methods
-        gene = CWSGenerator(transformation_methods=["wrong_transform_method"],
-                            subpopulation_methods=[])
+        # test wrong trans_methods
+        gene = CWSGenerator(trans_methods=["wrong_transform_method"],
+                            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = CWSGenerator(transformation_methods=["AddSubtree"],
-                            subpopulation_methods=[])
+        gene = CWSGenerator(trans_methods=["AddSubtree"],
+                            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = CWSGenerator(transformation_methods="CnMLM",
-                            subpopulation_methods=[])
+        gene = CWSGenerator(trans_methods="CnMLM",
+                            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
 
         sent1 = '周小明生产一万'
@@ -40,8 +40,8 @@ class TestSpecialEntityTyposSwap(unittest.TestCase):
         dataset.load({'x': [sent1, sent2], 'y': [
             ['B', 'M', 'E', 'B', 'E', 'B', 'E'], ['B', 'E', 'S', 'B', 'E']]})
 
-        gene = CWSGenerator(transformation_methods=mode,
-                            subpopulation_methods=[])
+        gene = CWSGenerator(trans_methods=mode,
+                            sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertTrue(len(original_samples) == len(trans_rst))
 

@@ -46,9 +46,9 @@ class TestMRCGenerator(unittest.TestCase):
     def test_generate(self):
         # test task transformation
         # TODO, domain transformation addsentdiverse
-        transformation_methods = ["PerturbAnswer", "ModifyPos"]
-        gene = MRCGenerator(transformation_methods=transformation_methods,
-                            subpopulation_methods=[])
+        trans_methods = ["PerturbAnswer", "ModifyPos"]
+        gene = MRCGenerator(trans_methods=trans_methods,
+                            sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(1, len(trans_rst))
             for index in range(len(original_samples)):
@@ -62,15 +62,15 @@ class TestMRCGenerator(unittest.TestCase):
                     self.assertEqual(ori_answers[i]['text'],
                                      tran_answers[i]['text'])
 
-        # test wrong transformation_methods
-        gene = MRCGenerator(transformation_methods=["wrong_transform_method"],
-                            subpopulation_methods=[])
+        # test wrong trans_methods
+        gene = MRCGenerator(trans_methods=["wrong_transform_method"],
+                            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = MRCGenerator(transformation_methods=["AddSubtree"],
-                            subpopulation_methods=[])
+        gene = MRCGenerator(trans_methods=["AddSubtree"],
+                            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = MRCGenerator(transformation_methods="OOV",
-                            subpopulation_methods=[])
+        gene = MRCGenerator(trans_methods="OOV",
+                            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
 
 

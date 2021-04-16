@@ -12,17 +12,17 @@ tasks = ['ABSA', 'COREF', 'CWS', 'DP',
 test_config = {
     "max_trans": 1,
     "return_unk": True,
-    "transformation_config": {},
-    "transformation_methods": [],
-    "subpopulation_methods": []
+    "trans_config": {},
+    "trans_methods": [],
+    "sub_methods": []
     }
 
 
 def get_test(task):
-    test_config['transformation_methods'] = TASK_TRANSFORMATIONS[task]
+    test_config['trans_methods'] = TASK_TRANSFORMATIONS[task]
     # for ut in TASK_TRANSFORMATIONS['UT']:
     #     if ut not in UNMATCH_UT_TRANSFORMATIONS['SA']:
-    #         test_config['transformation_methods'].append(ut)
+    #         test_config['trans_methods'].append(ut)
     test_config['task'] = task
     test_config['out_dir'] = './test_result_test/' + task + '/'
     config = Config.from_dict(test_config)

@@ -41,11 +41,11 @@ class ABSAGenerator(Generator):
         task='ABSA',
         fields='sentence',
         max_trans=1,
-        transformation_methods=None,
-        transformation_config=None,
+        trans_methods=None,
+        trans_config=None,
         return_unk=True,
-        subpopulation_methods=None,
-        subpopulation_config=None,
+        sub_methods=None,
+        sub_config=None,
         attack_methods=None,
         validate_methods=None,
         dataset_config='restaurant',
@@ -58,16 +58,16 @@ class ABSAGenerator(Generator):
             task=task,
             max_trans=max_trans,
             fields=fields,
-            transformation_methods=transformation_methods,
-            transformation_config=transformation_config,
+            trans_methods=trans_methods,
+            trans_config=trans_config,
             return_unk=return_unk,
-            subpopulation_methods=subpopulation_methods,
-            subpopulation_config=subpopulation_config,
+            sub_methods=sub_methods,
+            sub_config=sub_config,
             attack_methods=attack_methods,
             validate_methods=validate_methods,
             **kwargs
         )
-        self.transform_methods = transformation_methods
+        self.transform_methods = trans_methods
         if self.dataset_config is None:
             logger.info(
                 '******No config of dataset is available for AddDiff!******'
@@ -75,13 +75,13 @@ class ABSAGenerator(Generator):
             if 'AddDiff' in ALLOWED_TRANSFORMATIONS['ABSA']:
                 ALLOWED_TRANSFORMATIONS['ABSA'].remove('AddDiff')
         else:
-            if 'AddDiff' in transformation_methods and \
+            if 'AddDiff' in trans_methods and \
                     self.dataset_config == 'restaurant':
                 self.examples = absa_dict_loader(
                     download_if_needed(ABSA_TRAIN_RESTAURANT_PATH))
                 self.extra_text = self.get_extra_text()
             else:
-                for transform_method in transformation_methods:
+                for transform_method in trans_methods:
                     if 'AddDiff' in transform_method and \
                             self.dataset_config == 'laptop':
                         self.examples = absa_dict_loader(

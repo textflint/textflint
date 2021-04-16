@@ -55,8 +55,8 @@ class TestDPGenerator(unittest.TestCase):
 
     def test_generate(self):
         # test task transformation
-        gene = DPGenerator(transformation_methods=["DeleteSubTree"],
-                           subpopulation_methods=[])
+        gene = DPGenerator(trans_methods=["DeleteSubTree"],
+                           sub_methods=[])
         for original_samples, trans_rst, trans_type in \
                 gene.generate(self.dataset):
             self.assertEqual(2, len(original_samples))
@@ -65,28 +65,28 @@ class TestDPGenerator(unittest.TestCase):
                 self.assertTrue(len(original_sample.get_value('x')) !=
                                 len(transformed_sample.get_value('x')))
 
-        transformation_methods = ["DeleteSubTree", "Ocr"]
-        gene = DPGenerator(transformation_methods=transformation_methods,
-                           subpopulation_methods=[])
+        trans_methods = ["DeleteSubTree", "Ocr"]
+        gene = DPGenerator(trans_methods=trans_methods,
+                           sub_methods=[])
         for original_samples, trans_rst, trans_type in \
                 gene.generate(self.dataset):
             for ori_sample, trans_sample in zip(original_samples, trans_rst):
                 self.assertTrue(ori_sample != trans_sample)
 
-        # test wrong transformation_methods
-        gene = DPGenerator(transformation_methods=["wrong_transform_method"],
-                           subpopulation_methods=[])
+        # test wrong trans_methods
+        gene = DPGenerator(trans_methods=["wrong_transform_method"],
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(self.dataset))
-        gene = DPGenerator(transformation_methods=["EntityTyposSwap"],
-                           subpopulation_methods=[])
+        gene = DPGenerator(trans_methods=["EntityTyposSwap"],
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(self.dataset))
-        gene = DPGenerator(transformation_methods="RemoveSubtree",
-                           subpopulation_methods=[])
+        gene = DPGenerator(trans_methods="RemoveSubtree",
+                           sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(self.dataset))
 
         # test part of UT transformations
-        gene = DPGenerator(transformation_methods=['WordCase'],
-                           subpopulation_methods=[])
+        gene = DPGenerator(trans_methods=['WordCase'],
+                           sub_methods=[])
         for original_samples, trans_rst, trans_type \
                 in gene.generate(self.dataset):
             self.assertEqual(2, len(original_samples))
@@ -95,8 +95,8 @@ class TestDPGenerator(unittest.TestCase):
                         zip(trans_rst[index].get_words('x'),
                             original_samples[index].get_words('x')):
                     self.assertEqual(trans_word, ori_word.upper())
-        gene = DPGenerator(transformation_methods=['SwapNum'],
-                           subpopulation_methods=[])
+        gene = DPGenerator(trans_methods=['SwapNum'],
+                           sub_methods=[])
         for original_samples, trans_rst, trans_type \
                 in gene.generate(self.dataset):
             for index in range(len(original_samples)):

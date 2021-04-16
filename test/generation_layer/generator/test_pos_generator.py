@@ -23,9 +23,9 @@ class TestPOSGenerate(unittest.TestCase):
 
     def test_generate(self):
         # test MultiPOSSwap transformation
-        gene = POSGenerator(transformation_methods=["SwapMultiPOS"],
-                            subpopulation_methods=[],
-                            transformation_config={"SwapMultiPOS":
+        gene = POSGenerator(trans_methods=["SwapMultiPOS"],
+                            sub_methods=[],
+                            trans_config={"SwapMultiPOS":
                                         [{"treebank_tag": "NN"}]})
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(2, len(original_samples))
@@ -36,8 +36,8 @@ class TestPOSGenerate(unittest.TestCase):
                                 original_samples[index].get_words('x')[-1])
 
         # test PrefixSwap transformation
-        gene = POSGenerator(transformation_methods=['SwapPrefix'],
-                            subpopulation_methods=[])
+        gene = POSGenerator(trans_methods=['SwapPrefix'],
+                            sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(2, len(original_samples))
             self.assertEqual(2, len(trans_rst))
@@ -46,16 +46,16 @@ class TestPOSGenerate(unittest.TestCase):
                 self.assertTrue(trans_rst[index].get_words('x')[-2] !=
                                 original_samples[index].get_words('x')[-2])
 
-        # test wrong transformation_methods
-        gene = POSGenerator(transformation_methods=["wrong_transform_method"],
-                            subpopulation_methods=[])
+        # test wrong trans_methods
+        gene = POSGenerator(trans_methods=["wrong_transform_method"],
+                            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = POSGenerator(transformation_methods=["AddSubtree"],
-                            subpopulation_methods=[])
+        gene = POSGenerator(trans_methods=["AddSubtree"],
+                            sub_methods=[])
 
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = POSGenerator(transformation_methods="OOV",
-                            subpopulation_methods=[])
+        gene = POSGenerator(trans_methods="OOV",
+                            sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
 
         # test empty dataset

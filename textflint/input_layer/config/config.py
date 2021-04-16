@@ -71,19 +71,19 @@ class Config:
         self.flint_model = flint_model
         self.random_seed = random_seed
 
-        self.transformation_methods = \
+        self.trans_methods = \
             self.get_generate_methods(trans_methods,
                                       ALLOWED_TRANSFORMATIONS,
                                       allow_pipeline=True)
-        self.transformation_config = trans_config \
+        self.trans_config = trans_config \
             if trans_config else {}
         # TODO, support the function. default not return origin and return unk
         self.return_unk = return_unk
 
-        self.subpopulation_methods = \
+        self.sub_methods = \
             self.get_generate_methods(sub_methods,
                                       ALLOWED_SUBPOPULATIONS)
-        self.subpopulation_config = sub_config \
+        self.sub_config = sub_config \
             if sub_config else {}
 
         self.attack_methods = attack_methods
@@ -105,9 +105,9 @@ class Config:
         assert isinstance(self.max_trans, int)
         assert isinstance(self.random_seed, int)
         assert isinstance(self.fields, (str, list))
-        assert isinstance(self.transformation_config, dict)
+        assert isinstance(self.trans_config, dict)
         assert isinstance(self.return_unk, bool)
-        assert isinstance(self.subpopulation_config, dict)
+        assert isinstance(self.sub_config, dict)
 
         if self.flint_model:
             assert os.path.exists(self.flint_model), \

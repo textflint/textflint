@@ -16,8 +16,8 @@ dataset.load(samples)
 class TestRndRepeat(unittest.TestCase):
 
     def test_transform(self):
-        gene = CorefGenerator(transformation_methods=["RndRepeat"],
-                              subpopulation_methods=[])
+        gene = CorefGenerator(trans_methods=["RndRepeat"],
+                              sub_methods=[])
         for original_samples, trans_rst, trans_type in gene.generate(dataset):
             self.assertEqual(len(original_samples), len(trans_rst))  
             for so, st in zip(original_samples, trans_rst):
