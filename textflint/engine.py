@@ -120,9 +120,13 @@ class Engine:
 
                 if model is not None and len(trans_samples):
                     eval_json[trans_type] = {"size": len(trans_samples)}
-                    eval_json[trans_type].update(
-                        model.evaluate(original_samples.dump(), prefix="ori_")
-                    )
+                    if original_samples:
+                        eval_json[trans_type].update(
+                            model.evaluate(
+                                original_samples.dump(),
+                                prefix="ori_"
+                            )
+                        )
                     eval_json[trans_type].update(
                         model.evaluate(trans_samples.dump(), prefix="trans_")
                     )

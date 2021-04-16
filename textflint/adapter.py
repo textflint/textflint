@@ -136,7 +136,7 @@ def auto_flintmodel(model, task):
 
     if isinstance(model, str):
         assert os.path.exists(model), f"Cant find model file {model}"
-        model = load_module_from_file(model, 'model')
+        model = load_module_from_file('model', model)
 
     assert model.task == task, f"The task of your FlintModel is " \
         f"{model.task}, not compatible with task {task}"
