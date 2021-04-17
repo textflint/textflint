@@ -43,7 +43,6 @@ def auto_config(task='UT', config=None):
     elif isinstance(config, dict):
         config_obj = Config(**config)
     elif isinstance(config, str):
-        print(config)
         assert os.path.exists(config), f"Cant load config from {config}"
         config_obj = Config().from_json_file(config)
     elif isinstance(config, Config):

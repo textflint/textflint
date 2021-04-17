@@ -163,233 +163,233 @@ evaluate_result = {
 }
 
 
-# class TestBarChart(unittest.TestCase):
-#     def setUp(self):
-#         self.cols = [
-#             ScoreColumn("f1", 0, 1, is_0_to_1=True),
-#             ScoreColumn("perplexity", 0, 50),
-#             NumericColumn("Size"),
-#         ]
-#         self.data = pd.DataFrame(
-#             [
-#                 ["Cat A", "Slice C", 0.1, 5, 300],
-#                 ["Cat C", "Slice A", 0.2, 10, 3],
-#                 ["Cat A", "Slice A", 0.3, 15, 5000],
-#                 ["Cat B", "Slice B", 0.4, 20, 812],
-#                 ["Cat B", "Slice D", 0.5, 25, 13312],
-#             ]
-#         )
-#         self.model_name = "BERT"
-#         self.dataset_name = "SNLI"
-#
-#     def test_init(self):
-#         # Create a basic report
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#         self.assertTrue(self.data.equals(report.data))
-#
-#         # Pass config params
-#         custom_color_scheme = ["#000000"]
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#             color_scheme=custom_color_scheme,
-#         )
-#         self.assertEqual(custom_color_scheme, report.config["color_scheme"])
-#
-#     def test_sort(self):
-#         # Sort alphabetically
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#         report.sort()
-#         actual = report.data
-#         expected = pd.DataFrame(
-#             [
-#                 ["Cat A", "Slice A", 0.3, 15, 5000],
-#                 ["Cat A", "Slice C", 0.1, 5, 300],
-#                 ["Cat B", "Slice B", 0.4, 20, 812],
-#                 ["Cat B", "Slice D", 0.5, 25, 13312],
-#                 ["Cat C", "Slice A", 0.2, 10, 3],
-#             ]
-#         )
-#         self.assertTrue(actual.equals(expected))
-#
-#         # Sort by specified category order
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#         report.sort(
-#             category_order={
-#                 "Cat B": 0,
-#                 "Cat C": 2,
-#                 "Cat A": 1,
-#             }
-#         )
-#         actual = report.data
-#         expected = pd.DataFrame(
-#             [
-#                 ["Cat B", "Slice B", 0.4, 20, 812],
-#                 ["Cat B", "Slice D", 0.5, 25, 13312],
-#                 ["Cat A", "Slice A", 0.3, 15, 5000],
-#                 ["Cat A", "Slice C", 0.1, 5, 300],
-#                 ["Cat C", "Slice A", 0.2, 10, 3],
-#             ]
-#         )
-#         self.assertTrue(actual.equals(expected))
-#
-#         # Sort by specified slice order
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#         report.sort(
-#             slice_order={"Slice D": 0, "Slice C": 1, "Slice B": 2, "Slice A": 3}
-#         )
-#         actual = report.data
-#         expected = pd.DataFrame(
-#             [
-#                 ["Cat A", "Slice C", 0.1, 5, 300],
-#                 ["Cat A", "Slice A", 0.3, 15, 5000],
-#                 ["Cat B", "Slice D", 0.5, 25, 13312],
-#                 ["Cat B", "Slice B", 0.4, 20, 812],
-#                 ["Cat C", "Slice A", 0.2, 10, 3],
-#             ]
-#         )
-#         self.assertTrue(actual.equals(expected))
-#
-#         # Sort by specified category order and slice order
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#         report.sort(
-#             category_order={
-#                 "Cat B": 0,
-#                 "Cat C": 2,
-#                 "Cat A": 1,
-#             },
-#             slice_order={"Slice D": 0, "Slice C": 1, "Slice B": 2, "Slice A": 3},
-#         )
-#         actual = report.data
-#         expected = pd.DataFrame(
-#             [
-#                 ["Cat B", "Slice D", 0.5, 25, 13312],
-#                 ["Cat B", "Slice B", 0.4, 20, 812],
-#                 ["Cat A", "Slice C", 0.1, 5, 300],
-#                 ["Cat A", "Slice A", 0.3, 15, 5000],
-#                 ["Cat C", "Slice A", 0.2, 10, 3],
-#             ]
-#         )
-#         self.assertTrue(actual.equals(expected))
-#
-#     def test_filter(self):
-#         # Filter by category
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#         report.filter(categories=["Cat B"])
-#         actual = report.data
-#         expected = pd.DataFrame(
-#             [
-#                 ["Cat B", "Slice B", 0.4, 20, 812],
-#                 ["Cat B", "Slice D", 0.5, 25, 13312],
-#             ]
-#         )
-#         self.assertTrue(actual.equals(expected))
-#
-#         # Filter by slice
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#         report.filter(slices=["Slice A", "Slice C"])
-#         actual = report.data
-#         expected = pd.DataFrame(
-#             [
-#                 ["Cat A", "Slice C", 0.1, 5, 300],
-#                 ["Cat C", "Slice A", 0.2, 10, 3],
-#                 ["Cat A", "Slice A", 0.3, 15, 5000],
-#             ]
-#         )
-#         self.assertTrue(actual.equals(expected))
-#
-#     def test_rename(self):
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#         category_map = {"Cat C": "Cat D"}
-#         slice_map = {"Slice A": "Slice D"}
-#         report.rename(category_map=category_map, slice_map=slice_map)
-#         actual = report.data
-#         expected = pd.DataFrame(
-#             [
-#                 ["Cat A", "Slice C", 0.1, 5, 300],
-#                 ["Cat D", "Slice D", 0.2, 10, 3],
-#                 ["Cat A", "Slice D", 0.3, 15, 5000],
-#                 ["Cat B", "Slice B", 0.4, 20, 812],
-#                 ["Cat B", "Slice D", 0.5, 25, 13312],
-#             ]
-#         )
-#         self.assertTrue(actual.equals(expected))
-#
-#     def test_set_range(self):
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#         report.set_range("f1", 0.1, 0.3)
-#         for col in report.columns:
-#             if col.title == "f1":
-#                 self.assertEqual((col.min_val, col.max_val), (0.1, 0.3))
-#
-#     def test_figure(self):
-#         report = BarChart(
-#             self.data,
-#             self.cols,
-#             model_name=self.model_name,
-#             dataset_name=self.dataset_name,
-#         )
-#
-#         # Original unsorted data should cause an error
-#         self.assertRaises(ValueError, report.figure)
-#
-#         # Sort should resolve that error
-#         report.sort()
-#         try:
-#             report.figure()
-#         except ValueError:
-#             self.fail("report.figure() raised ValueError unexpectedly!")
+class TestBarChart(unittest.TestCase):
+    def setUp(self):
+        self.cols = [
+            ScoreColumn("f1", 0, 1, is_0_to_1=True),
+            ScoreColumn("perplexity", 0, 50),
+            NumericColumn("Size"),
+        ]
+        self.data = pd.DataFrame(
+            [
+                ["Cat A", "Slice C", 0.1, 5, 300],
+                ["Cat C", "Slice A", 0.2, 10, 3],
+                ["Cat A", "Slice A", 0.3, 15, 5000],
+                ["Cat B", "Slice B", 0.4, 20, 812],
+                ["Cat B", "Slice D", 0.5, 25, 13312],
+            ]
+        )
+        self.model_name = "BERT"
+        self.dataset_name = "SNLI"
+
+    def test_init(self):
+        # Create a basic report
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+        self.assertTrue(self.data.equals(report.data))
+
+        # Pass config params
+        custom_color_scheme = ["#000000"]
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+            color_scheme=custom_color_scheme,
+        )
+        self.assertEqual(custom_color_scheme, report.config["color_scheme"])
+
+    def test_sort(self):
+        # Sort alphabetically
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+        report.sort()
+        actual = report.data
+        expected = pd.DataFrame(
+            [
+                ["Cat A", "Slice A", 0.3, 15, 5000],
+                ["Cat A", "Slice C", 0.1, 5, 300],
+                ["Cat B", "Slice B", 0.4, 20, 812],
+                ["Cat B", "Slice D", 0.5, 25, 13312],
+                ["Cat C", "Slice A", 0.2, 10, 3],
+            ]
+        )
+        self.assertTrue(actual.equals(expected))
+
+        # Sort by specified category order
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+        report.sort(
+            category_order={
+                "Cat B": 0,
+                "Cat C": 2,
+                "Cat A": 1,
+            }
+        )
+        actual = report.data
+        expected = pd.DataFrame(
+            [
+                ["Cat B", "Slice B", 0.4, 20, 812],
+                ["Cat B", "Slice D", 0.5, 25, 13312],
+                ["Cat A", "Slice A", 0.3, 15, 5000],
+                ["Cat A", "Slice C", 0.1, 5, 300],
+                ["Cat C", "Slice A", 0.2, 10, 3],
+            ]
+        )
+        self.assertTrue(actual.equals(expected))
+
+        # Sort by specified slice order
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+        report.sort(
+            slice_order={"Slice D": 0, "Slice C": 1, "Slice B": 2, "Slice A": 3}
+        )
+        actual = report.data
+        expected = pd.DataFrame(
+            [
+                ["Cat A", "Slice C", 0.1, 5, 300],
+                ["Cat A", "Slice A", 0.3, 15, 5000],
+                ["Cat B", "Slice D", 0.5, 25, 13312],
+                ["Cat B", "Slice B", 0.4, 20, 812],
+                ["Cat C", "Slice A", 0.2, 10, 3],
+            ]
+        )
+        self.assertTrue(actual.equals(expected))
+
+        # Sort by specified category order and slice order
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+        report.sort(
+            category_order={
+                "Cat B": 0,
+                "Cat C": 2,
+                "Cat A": 1,
+            },
+            slice_order={"Slice D": 0, "Slice C": 1, "Slice B": 2, "Slice A": 3},
+        )
+        actual = report.data
+        expected = pd.DataFrame(
+            [
+                ["Cat B", "Slice D", 0.5, 25, 13312],
+                ["Cat B", "Slice B", 0.4, 20, 812],
+                ["Cat A", "Slice C", 0.1, 5, 300],
+                ["Cat A", "Slice A", 0.3, 15, 5000],
+                ["Cat C", "Slice A", 0.2, 10, 3],
+            ]
+        )
+        self.assertTrue(actual.equals(expected))
+
+    def test_filter(self):
+        # Filter by category
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+        report.filter(categories=["Cat B"])
+        actual = report.data
+        expected = pd.DataFrame(
+            [
+                ["Cat B", "Slice B", 0.4, 20, 812],
+                ["Cat B", "Slice D", 0.5, 25, 13312],
+            ]
+        )
+        self.assertTrue(actual.equals(expected))
+
+        # Filter by slice
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+        report.filter(slices=["Slice A", "Slice C"])
+        actual = report.data
+        expected = pd.DataFrame(
+            [
+                ["Cat A", "Slice C", 0.1, 5, 300],
+                ["Cat C", "Slice A", 0.2, 10, 3],
+                ["Cat A", "Slice A", 0.3, 15, 5000],
+            ]
+        )
+        self.assertTrue(actual.equals(expected))
+
+    def test_rename(self):
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+        category_map = {"Cat C": "Cat D"}
+        slice_map = {"Slice A": "Slice D"}
+        report.rename(category_map=category_map, slice_map=slice_map)
+        actual = report.data
+        expected = pd.DataFrame(
+            [
+                ["Cat A", "Slice C", 0.1, 5, 300],
+                ["Cat D", "Slice D", 0.2, 10, 3],
+                ["Cat A", "Slice D", 0.3, 15, 5000],
+                ["Cat B", "Slice B", 0.4, 20, 812],
+                ["Cat B", "Slice D", 0.5, 25, 13312],
+            ]
+        )
+        self.assertTrue(actual.equals(expected))
+
+    def test_set_range(self):
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+        report.set_range("f1", 0.1, 0.3)
+        for col in report.columns:
+            if col.title == "f1":
+                self.assertEqual((col.min_val, col.max_val), (0.1, 0.3))
+
+    def test_figure(self):
+        report = BarChart(
+            self.data,
+            self.cols,
+            model_name=self.model_name,
+            dataset_name=self.dataset_name,
+        )
+
+        # Original unsorted data should cause an error
+        self.assertRaises(ValueError, report.figure)
+
+        # Sort should resolve that error
+        report.sort()
+        try:
+            report.figure()
+        except ValueError:
+            self.fail("report.figure() raised ValueError unexpectedly!")
 
 
 class TestReportGenerator(unittest.TestCase):
-    # @unittest.skip("Manual test")
+    @unittest.skip("Manual test")
     def test_plot(self):
         reporter = ReportGenerator()
         reporter.plot(test_evaluate_result)

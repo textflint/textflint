@@ -2,8 +2,9 @@ import pandas as pd
 import numpy as np
 from functools import reduce
 from copy import deepcopy
-
 from collections import OrderedDict
+
+from ...common.utils import logger
 
 __all__ = ['Analyzer', 'ReportColumn', 'ScoreColumn', 'NumericColumn']
 
@@ -222,6 +223,8 @@ class Analyzer:
 
         """
         if "transformation" not in evaluate_json:
+            logger.info(("Cant find transformation in given json, "
+                        "skip sunburst report generation!"))
             return None, None
 
         transformations = evaluate_json["transformation"]
@@ -318,6 +321,8 @@ class Analyzer:
 
         """
         if "transformation" not in evaluate_json:
+            logger.info(("Cant find transformation in given json, "
+                         "skip linguistic radar report generation!"))
             return None
 
         transformations = evaluate_json['transformation']

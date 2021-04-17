@@ -61,19 +61,19 @@ The general workflow of TextFlint is displayed above. Evaluation of target model
 The following code snippet shows how to generate transformed data on the Sentiment Analysis task.
 
 ```python
-from textflint import Engine
+from textflint import Engine, auto_config
 
 # load the data samples
 sample1 = {'x': 'Titanic is my favorite movie.', 'y': 'pos'}
 sample2 = {'x': 'I don\'t like the actor Tim Hill', 'y': 'neg'}
 data_samples = [sample1, sample2]
 
-# define the output directory
-out_dir_path = './test_result/'
+# default config or load from json file
+config = auto_config(task='SA')
 
-# run transformation/subpopulation/attack and save the transformed data to out_dir_path in json format
-engine = Engine('SA')
-engine.run(data_samples, out_dir_path)
+# run transformation/subpopulation/attack and save the transformed data to out_dir in json format
+engine = Engine()
+engine.run(data_samples, config)
 ```
 
 You can also feed data to `Engine` in other ways (e.g., `json` or `csv`) where one line represents for a sample. We have defined some transformations and subpopulations in `SA.json`, and you can also pass your own  configuration file as you need.

@@ -53,11 +53,11 @@ class TestAnalyzer(unittest.TestCase):
     def test_json_to_sunburst(self):
         Analyzer.json_to_sunburst(evaluate_result)
         Analyzer.json_to_sunburst(evaluate_result, 'f1')
-        self.assertRaises(ValueError, Analyzer.json_to_sunburst, {})
+        self.assertEqual((None, None), Analyzer.json_to_sunburst({}))
 
     def test_json_to_linguistic_radar(self):
         Analyzer.json_to_linguistic_radar(evaluate_result)
-        self.assertRaises(ValueError, Analyzer.json_to_linguistic_radar, {})
+        self.assertEqual(None, Analyzer.json_to_linguistic_radar({}))
 
 
 if __name__ == '__main__':

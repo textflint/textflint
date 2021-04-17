@@ -115,6 +115,7 @@ class TestEnProcessor(unittest.TestCase):
                           ('dog', 'NN', 6, 'pobj'), ('.', '.', 5, 'punct')],
                          self.test_processor.get_dep_parser(sent))
 
+    @unittest.skip("Manual test")
     def test_get_cfg_parser(self):
         self.assertRaises(ValueError, self.test_processor.get_parser, {})
         self.assertEqual('', self.test_processor.get_parser(''))
