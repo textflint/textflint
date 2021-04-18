@@ -24,9 +24,9 @@ copyright = '2021, Fudan NLP Team'
 author = 'Fudan NLP Team'
 
 # The short X.Y version
-version = '0.0.1'
+version = '0.0.2'
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = '0.0.2'
 
 # -- General configuration ---------------------------------------------------
 
@@ -42,7 +42,8 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
     'sphinx.ext.mathjax',
-    'sphinx.ext.todo'
+    'sphinx.ext.todo',
+    'nbsphinx'
 ]
 
 autodoc_default_options = {
@@ -75,8 +76,7 @@ language = "en"
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path .
-exclude_patterns = ['modules.rst']
-
+exclude_patterns = ['modules.rst', '_build', '**.ipynb_checkpoints']
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
