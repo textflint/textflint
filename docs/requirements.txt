@@ -1,2 +1,4 @@
 sphinx
 sphinx-rtd-theme
+sphinx-autobuild
+nbsphinx

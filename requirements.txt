@@ -1,3 +1,4 @@
+click==7.1.1
 editdistance
 nltk
 pandas>=1.0.1
@@ -5,7 +6,6 @@ torch
 transformers
 datasets
 tokenizers
-tqdm
 ltp
 spacy>=3.0.0
 morfessor
