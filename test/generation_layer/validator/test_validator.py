@@ -25,7 +25,6 @@ for trans_sentence in trans_sentences:
 
 
 class TestValidator(unittest.TestCase):
-    @unittest.skip("Manual test")
     def test_sentence_encoding(self):
         from textflint.generation_layer.validator.sentence_encoding \
             import SentenceEncoding

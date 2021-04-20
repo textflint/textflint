@@ -16,6 +16,7 @@ The committers are the granted write access to the project.
 * [Zexiong Pang](https://github.com/pzxbjx)
 * [Rui Zheng](https://github.com/ruizheng20)
 * [Chong Zhang](https://github.com/WinterShiver)
+* [Zichu Fei](https://github.com/sion-zcfei)
 * [Xingwu Hu](https://github.com/anaivebird)
 * [Zhiheng Yan](https://github.com/CooperNLPer)
 * [Gui Tao](https://github.com/orgs/textflint/people/guitaowufeng)
