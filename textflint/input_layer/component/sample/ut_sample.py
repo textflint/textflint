@@ -45,3 +45,12 @@ class UTSample(Sample):
 
     def dump(self):
         return {'x': self.x.text, 'sample_id': self.sample_id}
+
+    def is_legal(self):
+        r"""
+        Validate whether the sample is legal
+
+        :return: bool
+
+        """
+        return True
