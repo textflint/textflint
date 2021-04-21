@@ -84,15 +84,15 @@ where *input\_file* is the input file of csv or json format, *config.json* is a 
 }
 ```
 
-*task* is the name of target task. 
+- *task* is the name of target task. 
 
-*out\_dir* is the directory where each of the generated sample and its corresponding original sample are saved.
+- *out\_dir* is the directory where each of the generated sample and its corresponding original sample are saved.
 
-*flint\_model* is the python file path that saves the instance of FlintModel.
+- *flint\_model* is the python file path that saves the instance of FlintModel.
 
-*trans\_methods* is used to specify the transformation method. For example, *"Ocr"* denotes the universal transformation **Ocr**,  and *["InsertAdv", "SwapNamedEnt"]* denotes a pipeline of task-specific transformations, namely **InsertAdv** and **SwapNamedEnt**.
+- *trans\_methods* is used to specify the transformation method. For example, *"Ocr"* denotes the universal transformation **Ocr**,  and *["InsertAdv", "SwapNamedEnt"]* denotes a pipeline of task-specific transformations, namely **InsertAdv** and **SwapNamedEnt**.
 
-*trans\_config* configures the parameters for the transformation methods. The default parameter is also a good choice. 
+- *trans\_config* configures the parameters for the transformation methods. The default parameter is also a good choice. 
 
 Based on the design of decoupling sample generation and model verification, **TextFlint** can be used inside another NLP project with just a few lines of code.
 
