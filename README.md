@@ -131,7 +131,7 @@ The content in `trans_Keyboard_2.json`:
 
 ## Design
 
-<img src="images/architecture.pdf" style="zoom:50%;" />
+<img src="https://github.com/textflint/textflint/blob/master/images/architecture.pdf" style="zoom:50%;" />
 
 ### Architecture
 
