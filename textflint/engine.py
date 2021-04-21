@@ -25,20 +25,21 @@ class Engine:
 
     """
 
-    def run(self, data_input, config=None, model=None):
+    def run(self, data_input, config=None, task=None, model=None):
         r"""
         Engine start entrance, load data and apply transformations,
         finally generate robustness report if needed.
 
         :param dict|list|string data_input: json object or json/csv file
         :param string|textflint.Config config: json file or Config object
+        :param str task: task name which will be helpful without config input.
         :param textflint.FlintModel model: model wrapper which implements
             FlintModel abstract methods, not a necessary input.
         :return: save generated data to out dir
             and provide report in html format.
 
         """
-        dataset, config, model = self.load(data_input, config, model)
+        dataset, config, model = self.load(data_input, config, task, model)
 
         if len(dataset) == 0:
             raise ValueError("Empty dataset, please check your data format!")
@@ -48,18 +49,19 @@ class Engine:
         if evaluate_result:
             self.report(evaluate_result)
 
-    def load(self, data_input, config=None, model=None):
+    def load(self, data_input, config=None, task=None, model=None):
         r"""
         Load data input, config file and FlintModel.
 
         :param dict|list|string data_input: json object or json/csv file
         :param string|textflint.Config config: json file or Config object
+        :param str task: task name which will be helpful without config input.
         :param textflint.FlintModel model: model wrapper which implements
             FlintModel abstract methods, not a necessary input.
         :return: textflint.Dataset, textflint.Config, textflint.FlintModel
 
         """
-        config = auto_config(config=config)
+        config = auto_config(config=config, task=task)
 
         dataset = auto_dataset(data_input=data_input, task=config.task)
         # Prefer to use the model passed from parameter

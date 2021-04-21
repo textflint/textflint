@@ -76,8 +76,8 @@ class ReportColumn:
     """
 
     def __init__(
-            self,
-            title
+        self,
+        title
     ):
         self.title = title
 
@@ -93,11 +93,11 @@ class ScoreColumn(ReportColumn):
     """
 
     def __init__(
-            self,
-            title,
-            min_val,
-            max_val,
-            is_0_to_1=False
+        self,
+        title,
+        min_val,
+        max_val,
+        is_0_to_1=False
     ):
         super(ScoreColumn, self).__init__(title)
         self.min_val = min_val
@@ -119,8 +119,8 @@ class NumericColumn(ReportColumn):
     """
 
     def __init__(
-            self,
-            title
+        self,
+        title
     ):
         super(NumericColumn, self).__init__(title)
 
@@ -187,8 +187,7 @@ class Analyzer:
                 for method in generate_methods:
                     bar_json = OrderedDict({
                         "generate_type": generate_type,
-                        "generate_method": method if len(method) < 20 \
-                            else method[:17] + "...",
+                        "generate_method": method,
                     })
                     metrics = {
                         (k, v) for k, v in generate_methods[method].items()

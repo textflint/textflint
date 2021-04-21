@@ -13,7 +13,7 @@ import plotly.express as px
 from ..analyzer.analyzer import *
 
 
-__all__ = ['']
+__all__ = ['ReportGenerator', 'BarChart']
 
 
 class BarChart:
@@ -487,13 +487,13 @@ class ReportGenerator:
         model_name = evaluate_json.get("model_name", None)
         dataset_name = evaluate_json.get("dataset_name", None)
 
-        radar_pd = Analyzer.json_to_linguistic_radar(evaluate_json)
-        if radar_pd is not None:
-            self.get_radar_fig(radar_pd).show()
-
-        df, settings = Analyzer.json_to_sunburst(evaluate_json)
-        if df is not None:
-            self.get_sunburst_fig(df, settings).show()
+        # radar_pd = Analyzer.json_to_linguistic_radar(evaluate_json)
+        # if radar_pd is not None:
+        #     self.get_radar_fig(radar_pd).show()
+        #
+        # df, settings = Analyzer.json_to_sunburst(evaluate_json)
+        # if df is not None:
+        #     self.get_sunburst_fig(df, settings).show()
 
         pd, cols = Analyzer.json_to_bar_chart(evaluate_json)
         if pd is not None:

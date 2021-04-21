@@ -7,7 +7,8 @@ TextFlint Command Arg Parsing Main Function
 # !/usr/bin/env python
 import argparse
 from .engine import Engine
-from .adapter import auto_config
+
+__all__ = ["main"]
 
 
 def main():
@@ -61,8 +62,8 @@ def main():
     args = parser.parse_args()
 
     engine = Engine()
-    config = args.config if args.config else auto_config(args.task)
-    engine.run(args.dataset, config)
+    engine.run(args.dataset, config=args.config,
+               task=args.task, model=args.model)
 
 
 if __name__ == "__main__":
