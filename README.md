@@ -28,7 +28,7 @@ TextFlint is a multilingual robustness evaluation platform for natural language 
 
 There are lots of reasons to use TextFlint:
 
-- **Full coverage of transformation types**, including 20 general transformations, 8 subpopulations and 60 task-specific transformations, as well as thousands of their combinations, which basically covers all aspects of text transformations to comprehensively evaluate the robustness of your model. textflint also supports adversarial attack to generate model specific transformed datas.
+- **Full coverage of transformation types**, including 20 general transformations, 8 subpopulations and 60 task-specific transformations, as well as thousands of their combinations, which basically covers all aspects of text transformations to comprehensively evaluate the robustness of your model. TextFlint also supports **Subpopulation** and **Adversarial Attack** to generate model specific transformed datas.
 - **Generate targeted augmented data**, and you can use the additional data to train or fine-tune your model to improve your model's robustness.
 - **Provide a complete analytical report automatically** to accurately explain where your model's shortcomings are, such as the problems in lexical rules or syntactic rules. 
 
@@ -58,29 +58,56 @@ The general workflow of TextFlint is displayed above. Evaluation of target model
 
 ### Quick Start
 
-The following code snippet shows how to generate transformed data on the Sentiment Analysis task.
+Using TextFlint to verify the robustness of a specific model is as simple as running the following command:
 
-```python
-from textflint import Engine, auto_config
-
-# load the data samples
-sample1 = {'x': 'Titanic is my favorite movie.', 'y': 'pos'}
-sample2 = {'x': 'I don\'t like the actor Tim Hill', 'y': 'neg'}
-data_samples = [sample1, sample2]
-
-# default config or load from json file
-config = auto_config(task='SA')
-
-# run transformation/subpopulation/attack and save the transformed data to out_dir in json format
-engine = Engine()
-engine.run(data_samples, config)
+```shell
+$ textflint --dataset input_file --config config.json
 ```
 
-You can also feed data to `Engine` in other ways (e.g., `json` or `csv`) where one line represents for a sample. We have defined some transformations and subpopulations in `SA.json`, and you can also pass your own  configuration file as you need.
+where *input\_file* is the input file of csv or json format, *config.json* is a configuration file with generation and target model options. Take the configuration for **TextCNN** model on SA task as example:
+
+```json
+{
+  "task": "SA",
+  "out_dir": "./DATA/",
+  "flint_model": "./textcnn_model.py",
+  "trans_methods": [
+    "Ocr",
+    ["InsertAdv", "SwapNamedEnt"],   
+    ...
+  ],
+  "trans_config": {
+    "Ocr": {"trans_p": 0.3},
+    ...
+  },
+...
+}
+```
+
+*task* is the name of target task. 
+
+*out\_dir* is the directory where each of the generated sample and its corresponding original sample are saved.
+
+*flint\_model* is the python file path that saves the instance of FlintModel.
+
+*trans\_methods* is used to specify the transformation method. For example, *"Ocr"* denotes the universal transformation **Ocr**,  and *["InsertAdv", "SwapNamedEnt"]* denotes a pipeline of task-specific transformations, namely **InsertAdv** and **SwapNamedEnt**.
+
+*trans\_config* configures the parameters for the transformation methods. The default parameter is also a good choice. 
+
+Based on the design of decoupling sample generation and model verification, **TextFlint** can be used inside another NLP project with just a few lines of code.
+
+```python
+from textflint import Engine
+
+data_path = 'input_file'
+config = 'config.json'
+engine = Engine()
+engine.run(data_path, config)
+```
 
 ####  Transformed Datasets
 
-After transformation, here are the contents in `./test_result/`:
+After transformation, here are the contents in `./DATA/`:
 
 ```
 ori_Keyboard_2.json
@@ -104,7 +131,7 @@ The content in `trans_Keyboard_2.json`:
 
 ## Design
 
-<img src="images/architecture.png" style="zoom:50%;" />
+<img src="images/architecture.pdf" style="zoom:50%;" />
 
 ### Architecture
 
@@ -603,8 +630,6 @@ In Generation Layer, TextFlint can generate three types of adversarial samples a
 
 
 
-
-
 ## Citation
 
 If you are using TextFlint for your work, please cite:
@@ -617,5 +642,3 @@ If you are using TextFlint for your work, please cite:
   year={2021}
 }
 ```
-
-
