@@ -95,11 +95,26 @@ class SwapAnt(Transformation):
                                 continue
                             if each_word not in tokens1:
                                 continue
+
                             new_s1 = original_text2.replace(
                                 each_word, antonym._name, 1)
+
                             sample = sample.replace_fields(
                                 ['hypothesis', 'premise', 'y'],
                                 [new_s1, original_text2, 'contradiction'])
         return [sample]
 
 
+if __name__ == "__main__":
+    from ....input_layer.component.sample import NLISample
+    swap_trans = SwapAnt()
+    sample = NLISample({
+        "premise": "A little boy in a gray and white striped sweater and tan "
+                   "pants is playing on a piece of playground equipment.",
+        "hypothesis": "A boy is on a playground.",
+        "y": 'entailment'
+    })
+    trans_samples = swap_trans.transform(sample, field='hypothesis')
+
+    for x in trans_samples:
+        print(x.dump())

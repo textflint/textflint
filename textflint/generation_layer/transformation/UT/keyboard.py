@@ -157,7 +157,8 @@ class Keyboard(WordSubstitute):
             trans_min=trans_min,
             trans_max=trans_max,
             trans_p=trans_p,
-            stop_words=stop_words)
+            stop_words=stop_words
+        )
 
         self.include_special_char = include_special_char
         self.include_numeric = include_numeric
