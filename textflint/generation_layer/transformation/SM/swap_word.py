@@ -98,11 +98,15 @@ class SwapWord(Transformation):
                                 continue
                             if each_word not in tokens1:
                                 continue
+
                             new_s1 = original_text2.replace(
-                                each_word, antonym._name, 1)
-                            sample = sample.replace_fields([
-                                'sentence1', 'sentence2', 'y'],
-                                [new_s1, original_text2, '0'])
+                                each_word, antonym._name, 1
+                            )
+
+                            sample = sample.replace_fields(
+                                ['sentence1', 'y'],
+                                [new_s1, '0']
+                            )
 
         return [sample]
 

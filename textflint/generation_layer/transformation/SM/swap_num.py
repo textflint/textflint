@@ -11,6 +11,7 @@ UPPER_YEAR_NUM = 2020
 
 __all__ = ['SwapNum']
 
+
 class SwapNum(Transformation):
     r"""
     Transforms an input by replacing its number word
@@ -61,7 +62,6 @@ class SwapNum(Transformation):
 
         """
         tokens = sample.get_words('sentence2')
-        original_text = sample.get_text('sentence2')
         flag = False
 
         for num, token in enumerate(tokens):
@@ -77,7 +77,6 @@ class SwapNum(Transformation):
         if not flag:
             return None
 
-        sample = sample.replace_fields(['sentence1', 'sentence2', 'y'],
-                                       [original_text, cont_hyp, '0'])
+        sample = sample.replace_fields(['sentence2', 'y'], [cont_hyp, '0'])
 
         return [sample]
