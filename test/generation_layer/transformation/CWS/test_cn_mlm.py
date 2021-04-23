@@ -36,6 +36,5 @@ class TestCnMLM(unittest.TestCase):
         self.assertEqual(1, len(trans_data))
 
 
-
 if __name__ == "__main__":
     unittest.main()
