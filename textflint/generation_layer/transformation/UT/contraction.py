@@ -89,13 +89,19 @@ class Contraction(Transformation):
         """
         indices_list = []
         contractions_list = []
+        # avoid collision
+        skip = False
 
         for i in range(len(tokens)):
             # one sublist less judge to avoid Exception
             if len(tokens) > i + 2:
+                if skip:
+                    skip = False
+                    continue
                 phrase_string = " ".join(tokens[i: i + 2])
 
                 if phrase_string in self.phrases:
+                    skip = True
                     indices_list.append([i, i + 2])
                     contractions_list.append(self.phrases[phrase_string])
 

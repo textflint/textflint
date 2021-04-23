@@ -377,15 +377,6 @@ class RESample(Sample):
                 ners[i] = type
         return ners
 
-    def get_pos(self):
-        r"""
-        get pos tagging of sentence
-
-        :return list: pos tags
-
-        """
-        return self.x.pos_tagging
-
     def dump(self):
         r"""
         output data sample

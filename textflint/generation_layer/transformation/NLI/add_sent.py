@@ -7,6 +7,8 @@ from ..transformation import Transformation
 
 __all__ = ['AddSent']
 
+IRR_TEXT = ' And we have to say that the sun is not moon, the moon is not sun.'
+
 
 class AddSent(Transformation):
     r"""
@@ -30,18 +32,13 @@ class AddSent(Transformation):
         return 'AddSent'
 
     # TODO, add irrelevant sentence resource
-    def transform(
-            self,
-            sample,
-            n=1,
-            text=' And we have to say that the sun '
-                 'is not moon, the moon is not sun.',
-            **kwargs):
+    def transform(self, sample, n=1, text=IRR_TEXT, **kwargs):
         r"""
         Transform data sample to a list of Sample.
 
         :param ~NLISample sample: Data sample for augmentation
         :param int n: Default is 1. MAX number of unique augmented output
+        :param str text: irrelevant text to append to the original text.
         :param **kwargs:
         :return: Augmented data
         """
@@ -65,12 +62,10 @@ class AddSent(Transformation):
             one sample
         """
 
-        label_tag = sample.get_value('y')
-        original_text1 = sample.get_text('hypothesis') + text
-        original_text2 = sample.get_text('premise')
-
-        sample = sample.replace_fields(['hypothesis', 'premise', 'y'],
-                                       [original_text1, original_text2,
-                                        label_tag])
+        index = len(sample.get_words('hypothesis')) - 1
+        insert_tokens = self.processor.tokenize(text)
+        sample = sample.insert_field_after_index(
+            'hypothesis', index, insert_tokens
+        )
 
         return [sample]

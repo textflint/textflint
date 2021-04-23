@@ -148,7 +148,7 @@ class SwapBirth(Transformation):
         if 'birth' not in relation:
             return [sample]
         sh, st, oh, ot = sample.get_en()
-        pos_tag = sample.get_pos()
+        pos_tag = sample.get_pos(field)
         head_pos = [sh, st]
         subj = ' '.join(words[sh:st + 1])
         obj = ' '.join(words[oh:ot + 1])

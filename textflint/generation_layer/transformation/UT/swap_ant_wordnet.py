@@ -17,13 +17,14 @@ class SwapAntWordNet(WordSubstitute):
 
     """
     def __init__(
-            self,
-            trans_min=1,
-            trans_max=10,
-            trans_p=0.1,
-            stop_words=None,
-            language="eng",
-            **kwargs):
+        self,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words=None,
+        language="eng",
+        **kwargs
+    ):
         super().__init__(
             trans_min=trans_min,
             trans_max=trans_max,

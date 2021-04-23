@@ -58,7 +58,6 @@ class NumWord(Transformation):
             one sample
         """
         tokens = sample.get_words('premise')
-        original_text = sample.get_text('premise')
         flag = False
 
         for num, token in enumerate(tokens):
@@ -66,7 +65,6 @@ class NumWord(Transformation):
                 number = int(token)
                 if LOWER_YEAR_NUM <= number <= UPPER_YEAR_NUM:
                     continue
-                # ent_hyp = _get_entailed_hypothesis(tokens, num, number)
                 cont_hyp = _get_contradictory_hypothesis(tokens, num, number)
                 flag = True
                 break
@@ -74,8 +72,9 @@ class NumWord(Transformation):
         if not flag:
             return None
 
-        sample = sample.replace_fields(['hypothesis', 'premise', 'y'], [
-            original_text, cont_hyp, 'contradiction'])
+        sample = sample.replace_fields(
+            ['premise', 'y'], [cont_hyp, 'contradiction']
+        )
 
         return [sample]
 

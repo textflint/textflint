@@ -53,8 +53,8 @@ class TestNLIGenerator(unittest.TestCase):
                 # is longer than before
                 if trans_type == 'AddSent':
                     self.assertTrue(
-                        len(trans_rst[index].hypothesis.field_value)
-                        > len(original_samples[index].hypothesis.field_value))
+                        len(trans_rst[index].hypothesis.words)
+                        > len(original_samples[index].hypothesis.words))
 
         # test part of UT transformations
         gene = NLIGenerator(trans_methods=['WordCase'],

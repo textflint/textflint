@@ -30,8 +30,9 @@ class SwapAnt(Transformation):
     """
 
     def __init__(
-            self,
-            language="eng"):
+        self,
+        language="eng"
+    ):
         r"""
         :param string language: language of transformation
         """
@@ -95,11 +96,11 @@ class SwapAnt(Transformation):
                                 continue
                             if each_word not in tokens1:
                                 continue
+
                             new_s1 = original_text2.replace(
                                 each_word, antonym._name, 1)
+
                             sample = sample.replace_fields(
-                                ['hypothesis', 'premise', 'y'],
-                                [new_s1, original_text2, 'contradiction'])
+                                ['hypothesis', 'y'], [new_s1, 'contradiction']
+                            )
         return [sample]
-
-
