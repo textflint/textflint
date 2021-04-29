@@ -48,21 +48,6 @@ class MRCGenerator(Generator):
             download_if_needed(NEAR_DICT_PATH),
             download_if_needed(POS_DICT_PATH))
 
-    @staticmethod
-    def sample_filter(samples, type):
-
-        if 'Case-upper' in type or 'Case-lower' in type or 'Case-title' in type:
-            for sample in samples:
-                for answer in sample.answers:
-                    if 'Case-upper' in type:
-                        answer['text'] = answer['text'].upper()
-                    elif 'Case-lower' in type:
-                        answer['text'] = answer['text'].lower()
-                    else:
-                        answer['text'] = answer['text'].title()
-
-        return samples
-
     def generate_by_transformations(self, dataset, **kwargs):
         self.prepare(dataset)
 
@@ -85,7 +70,6 @@ class MRCGenerator(Generator):
                     nearby_word_dict=self.nearby_word_dict,
                     pos_tag_dict=self.pos_tag_dict
                 )
-                trans_rst = self.sample_filter(trans_rst, trans_obj.__repr__())
                 if trans_rst:
                     generated_samples.extend(trans_rst)
                     original_samples.append(sample)

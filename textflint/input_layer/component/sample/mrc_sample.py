@@ -181,10 +181,28 @@ class MRCSample(Sample):
         :return: bool
 
         """
+        import re
+
+        def normalize_answer(s):
+            def remove_articles(text):
+                return re.sub(r'\b(a|an|the)\b', ' ', text)
+
+            def white_space_fix(text):
+                return ' '.join(text.split())
+
+            def lower(text):
+                return text.lower()
+
+            return white_space_fix(remove_articles(lower(s)))
+
         for answer in self.answers:
-            if self.text_processor.inverse_tokenize(self.context.words[
-                    answer['start']:answer['end'] + 1]) != answer['text']:
+            answer_text = self.text_processor.inverse_tokenize(
+                self.context.words[answer['start']:answer['end'] + 1]
+            )
+            if normalize_answer(answer_text) != \
+                    normalize_answer(answer['text']):
                 return False
+            answer['text'] = answer_text
         return True
 
     @staticmethod
@@ -261,6 +279,11 @@ class MRCSample(Sample):
         self.context = TextField(data['context'])
         self.question = TextField(data['question'])
         self.title = Field(data['title'])
+        if isinstance(data['is_impossible'], bool):
+            self.is_impossible = data['is_impossible']
+        elif isinstance(data['is_impossible'], str):
+            self.is_impossible = True if data['is_impossible'] == 'True' \
+                else False
         self.is_impossible = data['is_impossible']
         self.answers = []
 
