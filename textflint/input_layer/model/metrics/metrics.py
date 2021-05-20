@@ -29,3 +29,18 @@ class SQuADMetric(object):
         """
         return self.metric.compute(
             predictions=predictions, references=references)
+
+
+class POSMetric(object):
+    def __call__(self, pred, gold, ignore_label_id=0):
+        r"""
+        Computes POS score accuracy.
+        :param pred, tensor or numpy, the prediction label id
+        :param gold: tensor or numpy, the gold label id
+        :param ignore_label_id: int, the ignore_label_id in gold will be ignored when calculate the metric
+        :return: float, the computed accuracy
+        """
+        total = gold != ignore_label_id
+        acc = (total & (pred == gold)).sum() / total.sum()
+        return {"precision": acc}
+

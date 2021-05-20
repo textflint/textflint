@@ -2,15 +2,17 @@ from abc import ABC
 import numpy as np
 
 from ..metrics.metrics import accuracy_score as Accuracy
+from ..metrics.metrics import POSMetric
 
 
 __all__ = ["FlintModel"]
 
 TASK_METRICS = {
-    'SA': [{"name": "accuracy", "fun": Accuracy}]
+    'SA': [{"name": "accuracy", "fun": Accuracy}],
+    'POS': [{"name": "accuracy", "fun": POSMetric}]
 }
 
-CLASSIFICATION_TASKS = ['ABSA', 'SA', 'SM', 'NLI', 'TC']
+CLASSIFICATION_TASKS = ['ABSA', 'SA', 'SM', 'NLI', 'TC', 'POS']
 ALLOWED_ATTACK_TASKS = ['SA', 'SM', 'NLI', 'TC']
 
 
