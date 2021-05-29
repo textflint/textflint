@@ -1,15 +1,20 @@
 from abc import ABC
 import numpy as np
+from fastNLP import SpanFPreRecMetric
 
 from ..metrics.metrics import accuracy_score as Accuracy
 from ..metrics.metrics import POSMetric
 
 
-__all__ = ["FlintModel"]
+__all__ = ["FlintModel", "TASK_METRICS"]
 
 TASK_METRICS = {
     'SA': [{"name": "accuracy", "fun": Accuracy}],
-    'POS': [{"name": "accuracy", "fun": POSMetric}]
+    'POS': [{"name": "accuracy", "fun": POSMetric}],
+    'CWS': [{"name": ["precision", "recall", "f1_socre"],
+             "fun": SpanFPreRecMetric}],
+    'NER': [{"name": ["precision", "recall", "f1_socre"],
+             "fun": SpanFPreRecMetric}]
 }
 
 CLASSIFICATION_TASKS = ['ABSA', 'SA', 'SM', 'NLI', 'TC', 'POS']
