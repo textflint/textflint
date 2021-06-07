@@ -1,7 +1,7 @@
 from abc import ABC
 import numpy as np
-from fastNLP import SpanFPreRecMetric
 
+from textflint.input_layer.model.metrics.nerspanmetric import NERSpanMetric
 from ..metrics.metrics import accuracy_score as Accuracy
 from ..metrics.metrics import POSMetric
 
@@ -12,9 +12,9 @@ TASK_METRICS = {
     'SA': [{"name": "accuracy", "fun": Accuracy}],
     'POS': [{"name": "accuracy", "fun": POSMetric}],
     'CWS': [{"name": ["precision", "recall", "f1_socre"],
-             "fun": SpanFPreRecMetric}],
+             "fun": NERSpanMetric}],
     'NER': [{"name": ["precision", "recall", "f1_socre"],
-             "fun": SpanFPreRecMetric}]
+             "fun": NERSpanMetric}]
 }
 
 CLASSIFICATION_TASKS = ['ABSA', 'SA', 'SM', 'NLI', 'TC', 'POS']
