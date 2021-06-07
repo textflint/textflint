@@ -2,7 +2,7 @@ from abc import ABC
 
 
 class NERSpanMetric(ABC):
-    def __init__(self, encoding_type=None):
+    def __init__(self, encoding_type=None, tag_vocab=None):
         self.all_word = 0.0
         self.pred_word = 0.0
         self.pred_real_word = 0.0
@@ -17,6 +17,7 @@ class NERSpanMetric(ABC):
             raise ValueError(
                 "Only support 'bio', 'bmes', 'bmeso', 'bioes' type."
             )
+        self.tag_voacb = tag_vocab
 
     def get_metric(self):
         p = self.pred_real_word / self.pred_word
@@ -24,13 +25,24 @@ class NERSpanMetric(ABC):
         return {'f': 2 * (p * r) / (p + r), 'pre': p, 'rec': r}
 
     def evaluate(self, pred, target, seq_len):
-        for i in range(seq_len):
-            Pred = self.tag_to_span_func(pred[i])
-            Target = self.tag_to_span_func(target[i])
+        for i in range(int(seq_len.shape[0])):
+            if self.tag_voacb:
+                Pred = ['O'] * int(seq_len[i])
+                Target = ['O'] * int(seq_len[i])
+                for j, k in enumerate(pred[i]):
+                    if k >= 0 and k < seq_len[i]:
+                        Pred[j] = self.tag_voacb[int(k)]
+                for j, k in enumerate(target[i]):
+                    if k >= 0 and k < seq_len[i]:
+                        Target[j] = self.tag_voacb[int(k)]
+                Pred = self.tag_to_span_func(Pred)
+                Target = self.tag_to_span_func(Target)
+            else:
+                Pred = self.tag_to_span_func(pred[i])
+                Target = self.tag_to_span_func(target[i])
 
             self.all_word += len(Target)
             self.pred_word += len(Pred)
-
             for (i, j) in Pred:
                 for (n, m) in Target:
                     if i == n and j == m:
