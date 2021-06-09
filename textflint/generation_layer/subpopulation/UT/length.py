@@ -17,8 +17,8 @@ class LengthSubPopulation(SubPopulation):
         sample 2: "I love textflint very much", score: 5
     """
     def __init__(
-            self,
-            intervals=["0%", "20%"]
+        self,
+        intervals=["0%", "20%"]
     ):
         if intervals is None:
             raise ValueError(

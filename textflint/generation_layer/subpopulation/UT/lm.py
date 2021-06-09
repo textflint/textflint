@@ -19,10 +19,10 @@ class LMSubPopulation(SubPopulation):
         sample 2: "I love TextFlinet", score: 6.34
     """
     def __init__(
-            self,
-            intervals=["0%", "20%"],
-            device='cpu',
-            max_sent_size=512
+        self,
+        intervals=["0%", "20%"],
+        device='cpu',
+        max_sent_size=512
     ):
         if intervals is None:
             raise ValueError(
