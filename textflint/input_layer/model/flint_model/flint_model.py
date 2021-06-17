@@ -1,16 +1,23 @@
 from abc import ABC
 import numpy as np
 
+from textflint.input_layer.model.metrics.nerspanmetric import NERSpanMetric
 from ..metrics.metrics import accuracy_score as Accuracy
+from ..metrics.metrics import POSMetric
 
 
-__all__ = ["FlintModel"]
+__all__ = ["FlintModel", "TASK_METRICS"]
 
 TASK_METRICS = {
-    'SA': [{"name": "accuracy", "fun": Accuracy}]
+    'SA': [{"name": "accuracy", "fun": Accuracy}],
+    'POS': [{"name": "accuracy", "fun": POSMetric}],
+    'CWS': [{"name": ["precision", "recall", "f1_socre"],
+             "fun": NERSpanMetric}],
+    'NER': [{"name": ["precision", "recall", "f1_socre"],
+             "fun": NERSpanMetric}]
 }
 
-CLASSIFICATION_TASKS = ['ABSA', 'SA', 'SM', 'NLI', 'TC']
+CLASSIFICATION_TASKS = ['ABSA', 'SA', 'SM', 'NLI', 'TC', 'POS']
 ALLOWED_ATTACK_TASKS = ['SA', 'SM', 'NLI', 'TC']
 
 
