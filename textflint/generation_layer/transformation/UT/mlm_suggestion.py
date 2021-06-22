@@ -9,7 +9,6 @@ import torch
 from copy import copy
 from collections import defaultdict
 
-from .back_trans import BackTrans
 from ....common import device as default_device
 from ...transformation.word_substitute import WordSubstitute
 from ....common.settings import BERT_MODEL_NAME
@@ -281,16 +280,20 @@ class MLMSuggestion(WordSubstitute):
 
         trans_num = self.get_trans_cnt(len(words))
         sub_indices = sorted(self.sample_num(legal_indices, trans_num))
+        valid_sub_indices = []
         sub_sentences = []
         sub_sent_indices = []
 
         for sub_index in sub_indices:
             for idx, sentence_indices in enumerate(sentences_indices):
-                if sub_index in sentence_indices:
+                # skip out of index cases
+                if sub_index in sentence_indices and \
+                        sentence_indices.index(sub_index) < self.max_sent_size:
+                    valid_sub_indices.append(sub_index)
                     sub_sentences.append(idx)
                     sub_sent_indices.append(sentence_indices.index(sub_index))
 
-        return sub_indices, sub_sentences, sub_sent_indices
+        return valid_sub_indices, sub_sentences, sub_sent_indices
 
     def _get_candidates(self, batch_tokens_tensor, segments_tensors,
                         mask_indices, mask_word_pos_list, n=5):
@@ -315,10 +318,12 @@ class MLMSuggestion(WordSubstitute):
             allowed_token_id = self.pos_allowed_token_id[mask_original_word_pos]
             pos_allowed_predict = predict_tensor.gather(0, allowed_token_id)
             prob_values, topk_index = pos_allowed_predict.topk(
-                min(pos_allowed_predict.shape[0], n))
+                min(pos_allowed_predict.shape[0], n)
+            )
             original_vocab_index = allowed_token_id.gather(0, topk_index)
             replace_words = self.tokenizer.convert_ids_to_tokens(
-                original_vocab_index)
+                original_vocab_index
+            )
             candidates_list.append(replace_words)
 
         return candidates_list

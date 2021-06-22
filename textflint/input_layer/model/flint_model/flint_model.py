@@ -2,7 +2,8 @@ from abc import ABC
 import numpy as np
 
 from ..metrics.metrics import accuracy_score as Accuracy
-from ..metrics.metrics import POSMetric, NERSpanMetric
+from ..metrics.metrics import POSMetric
+from ..metrics.nerspanmetric import NERSpanMetric
 
 
 __all__ = ["FlintModel", "TASK_METRICS"]
