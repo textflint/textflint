@@ -9,7 +9,6 @@ import torch
 from copy import copy
 from collections import defaultdict
 
-from .back_trans import BackTrans
 from ....common import device as default_device
 from ...transformation.word_substitute import WordSubstitute
 from ....common.settings import BERT_MODEL_NAME
@@ -59,7 +58,7 @@ class MLMSuggestion(WordSubstitute):
             trans_p=trans_p,
             stop_words=stop_words
         )
-        self.device = BackTrans.get_device(device) if device else default_device
+        self.device = self.get_device(device) if device else default_device
         self.max_sent_size = max_sent_size
         self.get_pos = True
         self.accrue_threshold = accrue_threshold
@@ -70,6 +69,20 @@ class MLMSuggestion(WordSubstitute):
 
     def __repr__(self):
         return 'MLMSuggestion'
+
+    @staticmethod
+    def get_device(device):
+        r"""
+        Get gpu or cpu device.
+        :param str device: device string
+                           "cpu" means use cpu device.
+                           "cuda:0" means use gpu device which index is 0.
+        :return: device in torch.
+        """
+        if "cuda" not in device:
+            return torch.device("cpu")
+        else:
+            return torch.device(device)
 
     def get_model(self):
         r"""
@@ -96,7 +109,8 @@ class MLMSuggestion(WordSubstitute):
         pos_to_token_id_dict = defaultdict(list)
 
         bert_tokens = self.tokenizer.convert_ids_to_tokens(
-            list(range(self.tokenizer.vocab_size)))
+            list(range(self.tokenizer.vocab_size))
+        )
         bert_token_pos = self.processor.get_pos(bert_tokens)
 
         for index, pos in enumerate(bert_token_pos):
@@ -108,8 +122,9 @@ class MLMSuggestion(WordSubstitute):
             pos_to_token_id_dict[pos[1][:2]].append(index)
 
         for pos, indices in pos_to_token_id_dict.items():
-            pos_to_token_id_dict[pos] \
-                = torch.tensor(indices, dtype=torch.long, device=self.device)
+            pos_to_token_id_dict[pos] = torch.tensor(
+                indices, dtype=torch.long, device=self.device
+            )
 
         return pos_to_token_id_dict
 
@@ -132,8 +147,13 @@ class MLMSuggestion(WordSubstitute):
         tokens = sample.get_words(field)
         tokens_mask = sample.get_mask(field)
         # accelerate computation for long text
-        sentences_tokens = sample.get_sentences(field) if len(
-            tokens) > self.max_sent_size else [tokens]
+        if len(tokens) > self.max_sent_size:
+            sentences = sample.get_sentences(field)
+            sentences_tokens = [
+                self.processor.tokenize(sent) for sent in sentences
+            ]
+        else:
+            sentences_tokens = [tokens]
 
         # return up to (len(sub_indices) * n) candidates
         pos_info = sample.get_pos(field)
@@ -143,11 +163,13 @@ class MLMSuggestion(WordSubstitute):
             return []
 
         sub_words, sub_indices = self._get_substitute_words(
-            tokens, legal_indices, sentences_tokens, pos=pos_info, n=n)
+            tokens, legal_indices, sentences_tokens, pos=pos_info, n=n
+        )
 
         # select property candidates
-        sub_words, sub_indices = trade_off_sub_words(sub_words, sub_indices,
-                                                     n=n)
+        sub_words, sub_indices = trade_off_sub_words(
+            sub_words, sub_indices, n=n
+        )
 
         if not sub_words:
             return []
@@ -162,8 +184,8 @@ class MLMSuggestion(WordSubstitute):
 
         return trans_samples
 
-    def _get_substitute_words(self, words, legal_indices, sentences_tokens,
-                              pos=None, n=5):
+    def _get_substitute_words(self, words, legal_indices,
+                              sentences_tokens, pos=None, n=5):
         r"""
         Returns a list containing all possible words .
 
@@ -190,7 +212,8 @@ class MLMSuggestion(WordSubstitute):
         mask_word_pos_list = []
         mask_indices = []
         batch_tokens_tensor = torch.tensor(
-            [], dtype=torch.long, device=self.device)
+            [], dtype=torch.long, device=self.device
+        )
         batch_size = 0
 
         for i, mask_word_index in enumerate(sub_indices):
@@ -210,11 +233,14 @@ class MLMSuggestion(WordSubstitute):
             sent_tokens = sent_tokens + ['[PAD]'] * \
                 (self.max_sent_size - len(sent_tokens))
             indexed_tokens = self.tokenizer.convert_tokens_to_ids(
-                sent_tokens[:self.max_sent_size])
+                sent_tokens[:self.max_sent_size]
+            )
             tokens_tensor = torch.tensor(
-                [indexed_tokens], dtype=torch.long, device=self.device)
+                [indexed_tokens], dtype=torch.long, device=self.device
+            )
             batch_tokens_tensor = torch.cat(
-                (batch_tokens_tensor, tokens_tensor))
+                (batch_tokens_tensor, tokens_tensor)
+            )
             batch_size += 1
 
         if batch_size > 0:
@@ -222,40 +248,65 @@ class MLMSuggestion(WordSubstitute):
                 batch_size,
                 self.max_sent_size,
                 dtype=torch.int64,
-                device=self.device)
+                device=self.device
+            )
             candidates_list = self._get_candidates(
                 batch_tokens_tensor,
                 segments_tensors,
                 mask_indices,
                 mask_word_pos_list,
-                n=n)
+                n=n
+            )
 
         return candidates_list, candidates_indices
 
     def _get_relate_sub_info(self, words, sentences_tokens, legal_indices):
+        r"""
+        Get indices of substitute words.
+
+        :param list words: original tokens without sentence split
+        :param list sentences_tokens: sentence token lists split from words
+        :param list legal_indices: legal indices which are allowed substituted
+        :return: list sub_indices, sub_sentences, sub_sent_indices
+        """
         sentences_indices = []
         idx = 0
 
         for sentence_tokens in sentences_tokens:
             sentences_indices.append(
-                list(range(idx, idx + len(sentence_tokens))))
+                list(range(idx, idx + len(sentence_tokens)))
+            )
             idx += len(sentence_tokens)
 
         trans_num = self.get_trans_cnt(len(words))
         sub_indices = sorted(self.sample_num(legal_indices, trans_num))
+        valid_sub_indices = []
         sub_sentences = []
         sub_sent_indices = []
 
         for sub_index in sub_indices:
             for idx, sentence_indices in enumerate(sentences_indices):
-                if sub_index in sentence_indices:
+                # skip out of index cases
+                if sub_index in sentence_indices and \
+                        sentence_indices.index(sub_index) < self.max_sent_size:
+                    valid_sub_indices.append(sub_index)
                     sub_sentences.append(idx)
                     sub_sent_indices.append(sentence_indices.index(sub_index))
 
-        return sub_indices, sub_sentences, sub_sent_indices
+        return valid_sub_indices, sub_sentences, sub_sent_indices
 
     def _get_candidates(self, batch_tokens_tensor, segments_tensors,
-                        mask_indices,mask_word_pos_list, n=5):
+                        mask_indices, mask_word_pos_list, n=5):
+        r"""
+        Get candidates from MLM model.
+
+        :param torch.tensor batch_tokens_tensor: tokens tensor input
+        :param torch.tensor segments_tensors: segment input
+        :param list mask_indices: indices to predict candidates
+        :param list mask_word_pos_list: pos tags of original target words
+        :param int n: candidates number
+        :return: list candidates
+        """
         with torch.no_grad():
             output = self.model(batch_tokens_tensor, segments_tensors)
 
@@ -267,14 +318,15 @@ class MLMSuggestion(WordSubstitute):
             allowed_token_id = self.pos_allowed_token_id[mask_original_word_pos]
             pos_allowed_predict = predict_tensor.gather(0, allowed_token_id)
             prob_values, topk_index = pos_allowed_predict.topk(
-                min(pos_allowed_predict.shape[0], n))
+                min(pos_allowed_predict.shape[0], n)
+            )
             original_vocab_index = allowed_token_id.gather(0, topk_index)
             replace_words = self.tokenizer.convert_ids_to_tokens(
-                original_vocab_index)
+                original_vocab_index
+            )
             candidates_list.append(replace_words)
 
         return candidates_list
 
     def skip_aug(self, tokens, mask, pos=None):
         return self.pre_skip_aug(tokens, mask)
-
