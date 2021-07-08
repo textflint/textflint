@@ -70,7 +70,6 @@ where *input\_file* is the input file of csv or json format, *config.json* is a 
 {
   "task": "SA",
   "out_dir": "./DATA/",
-  "flint_model": "./textcnn_model.py",
   "trans_methods": [
     "Ocr",
     ["InsertAdv", "SwapNamedEnt"],   
@@ -99,7 +98,7 @@ Based on the design of decoupling sample generation and model verification, **Te
 ```python
 from textflint import Engine
 
-data_path = 'input_file'
+data_path = 'input.json'
 config = 'config.json'
 engine = Engine()
 engine.run(data_path, config)
