@@ -4,7 +4,7 @@ import os
 
 from textflint.engine import Engine
 from textflint.common.utils.install import download_if_needed
-from textflint.input_layer.config.config import Config
+from textflint.input.config.config import Config
 from textflint.common.settings import UNMATCH_UT_TRANSFORMATIONS, \
     TASK_TRANSFORMATIONS
 tasks = ['ABSA', 'COREF', 'CWS', 'DP',

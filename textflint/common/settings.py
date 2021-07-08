@@ -15,12 +15,12 @@ else:
     )
 os.environ["TR_CACHE_DIR"] = CACHE_DIR
 DATA_PATH = os.path.join(current_path, './res/')
-GENERATOR_PATH = os.path.join(current_path, './../generation_layer/generator/')
-SAMPLE_PATH = os.path.join(current_path, './../input_layer/component/sample/')
+GENERATOR_PATH = os.path.join(current_path, './../generation/generator/')
+SAMPLE_PATH = os.path.join(current_path, './../input/component/sample/')
 TRANSFORMATION_PATH = os.path.join(current_path,
-                                   './../generation_layer/transformation/')
+                                   './../generation/transformation/')
 SUBPOPULATION_PATH = os.path.join(current_path,
-                                  './../generation_layer/subpopulation/')
+                                  './../generation/subpopulation/')
 
 # mask settings
 ORIGIN = 0
