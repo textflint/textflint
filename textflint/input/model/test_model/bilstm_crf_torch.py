@@ -3,13 +3,26 @@ biLSTM-crf for NER
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 """
+import argparse
 import codecs
 import math
 import os
+import re
+import string
+
+import numpy as np
 
 import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
+
+def str2bool(v):
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 
 def log_sum_exp(x):
     max_score, _ = torch.max(x, -1)
@@ -18,6 +31,318 @@ def log_sum_exp(x):
 
 def get_words_num(word_sequences):
     return sum(len(word_seq) for word_seq in word_sequences)
+
+class DatasetsBank():
+    """DatasetsBank provides storing the train/dev/test data subsets and sampling batches from the train dataset."""
+    def __init__(self, verbose=True):
+        self.verbose = verbose
+        self.unique_words_list = list()
+
+    def __add_to_unique_words_list(self, word_sequences):
+        for word_seq in word_sequences:
+            for word in word_seq:
+                if word not in self.unique_words_list:
+                    self.unique_words_list.append(word)
+        if self.verbose:
+            print('DatasetsBank: len(unique_words_list) = %d unique words.' % (len(self.unique_words_list)))
+
+    def add_train_sequences(self, word_sequences_train, tag_sequences_train):
+        self.train_data_num = len(word_sequences_train)
+        self.word_sequences_train = word_sequences_train
+        self.tag_sequences_train = tag_sequences_train
+        self.__add_to_unique_words_list(word_sequences_train)
+
+    def add_dev_sequences(self, word_sequences_dev, tag_sequences_dev):
+        self.word_sequences_dev = word_sequences_dev
+        self.tag_sequences_dev = tag_sequences_dev
+        self.__add_to_unique_words_list(word_sequences_dev)
+
+    def add_test_sequences(self, word_sequences_test, tag_sequences_test):
+        self.word_sequences_test = word_sequences_test
+        self.tag_sequences_test = tag_sequences_test
+        self.__add_to_unique_words_list(word_sequences_test)
+
+    def __get_train_batch(self, batch_indices):
+        word_sequences_train_batch = [self.word_sequences_train[i] for i in batch_indices]
+        tag_sequences_train_batch = [self.tag_sequences_train[i] for i in batch_indices]
+        return word_sequences_train_batch, tag_sequences_train_batch
+
+    def get_train_batches(self, batch_size):
+        random_indices = np.random.permutation(np.arange(self.train_data_num))
+        for k in range(self.train_data_num // batch_size): # oh yes, we drop the last batch
+            batch_indices = random_indices[k:k + batch_size].tolist()
+            word_sequences_train_batch, tag_sequences_train_batch = self.__get_train_batch(batch_indices)
+            yield word_sequences_train_batch, tag_sequences_train_batch
+
+class SeqIndexerBase():
+    """
+    SeqIndexerBase is a base abstract class for sequence indexers. It converts list of lists of string items
+    to the list of lists of integer indices and back. Items could be either words, tags or characters.
+    """
+    def __init__(self, gpu=-1, check_for_lowercase=True, zero_digits=False, pad='<pad>', unk='<unk>',
+                 load_embeddings=False, embeddings_dim=0, verbose=False):
+        self.gpu = gpu
+        self.check_for_lowercase = check_for_lowercase
+        self.zero_digits = zero_digits
+        self.pad = pad
+        self.unk = unk
+        self.load_embeddings = load_embeddings
+        self.embeddings_dim = embeddings_dim
+        self.verbose = verbose
+        self.out_of_vocabulary_list = list()
+        self.item2idx_dict = dict()
+        self.idx2item_dict = dict()
+        if load_embeddings:
+            self.embeddings_loaded = False
+            self.embedding_vectors_list = list()
+        if pad is not None:
+            self.pad_idx = self.add_item(pad)
+            if load_embeddings:
+                self.add_emb_vector(self.generate_zero_emb_vector())
+        if unk is not None:
+            self.unk_idx = self.add_item(unk)
+            if load_embeddings:
+                self.add_emb_vector(self.generate_random_emb_vector())
+
+    def get_items_list(self):
+        return list(self.item2idx_dict.keys())
+
+    def get_items_count(self):
+        return len(self.get_items_list())
+
+    def item_exists(self, item):
+        return item in self.item2idx_dict.keys()
+
+    def add_item(self, item):
+        idx = len(self.get_items_list())
+        self.item2idx_dict[item] = idx
+        self.idx2item_dict[idx] = item
+        return idx
+
+    def get_class_num(self):
+        if self.pad is not None and self.unk is not None:
+            return self.get_items_count() - 2
+        if self.pad is not None or self.unk is not None:
+            return self.get_items_count() - 1
+        return self.get_items_count()
+
+    def items2idx(self, item_sequences):
+        idx_sequences = []
+        for item_seq in item_sequences:
+            idx_seq = list()
+            for item in item_seq:
+                if item in self.item2idx_dict:
+                    idx_seq.append(self.item2idx_dict[item])
+                else:
+                    if self.unk is not None:
+                        idx_seq.append(self.item2idx_dict[self.unk])
+                    else:
+                        idx_seq.append(self.item2idx_dict[self.pad])
+            idx_sequences.append(idx_seq)
+        return idx_sequences
+
+    def idx2items(self, idx_sequences):
+        item_sequences = []
+        for idx_seq in idx_sequences:
+            item_seq = [self.idx2item_dict[idx] for idx in idx_seq]
+            item_sequences.append(item_seq)
+        return item_sequences
+
+    def items2tensor(self, item_sequences, align='left', word_len=-1):
+        idx = self.items2idx(item_sequences)
+        return self.idx2tensor(idx, align, word_len)
+
+    def idx2tensor(self, idx_sequences, align='left', word_len=-1):
+        batch_size = len(idx_sequences)
+        if word_len == -1:
+            word_len = max([len(idx_seq) for idx_seq in idx_sequences])
+        tensor = torch.zeros(batch_size, word_len, dtype=torch.long)
+        #if self.gpu >= 0:
+        #    tensor = torch.cuda.LongTensor(batch_size, word_len).fill_(0)
+        #else:
+        #    tensor = torch.LongTensor(batch_size, word_len).fill_(0)
+        for k, idx_seq in enumerate(idx_sequences):
+            curr_seq_len = len(idx_seq)
+            if curr_seq_len > word_len:
+                idx_seq = [idx_seq[i] for i in range(word_len)]
+                curr_seq_len = word_len
+            if align == 'left':
+                tensor[k, :curr_seq_len] = torch.LongTensor(np.asarray(idx_seq))
+            elif align == 'center':
+                start_idx = (word_len - curr_seq_len) // 2
+                tensor[k, start_idx:start_idx+curr_seq_len] = torch.LongTensor(np.asarray(idx_seq))
+            else:
+                raise ValueError('Unknown align string.')
+        if self.gpu >= 0:
+            tensor = tensor.cuda(device=self.gpu)
+        return tensor
+
+class SeqIndexerTag(SeqIndexerBase):
+    """SeqIndexerTag converts list of lists of string tags to list of lists of integer indices and back."""
+    def __init__(self, gpu):
+        SeqIndexerBase.__init__(self, gpu=gpu, check_for_lowercase=False, zero_digits=False,
+                                      pad='<pad>', unk=None, load_embeddings=False, verbose=True)
+
+    def add_tag(self, tag):
+        if not self.item_exists(tag):
+            self.add_item(tag)
+
+    def load_items_from_tag_sequences(self, tag_sequences):
+        assert self.load_embeddings == False
+        for tag_seq in tag_sequences:
+            for tag in tag_seq:
+                self.add_tag(tag)
+        if self.verbose:
+            print('\nload_vocabulary_from_tag_sequences:')
+            print(' -- class_num = %d' % self.get_class_num())
+            print(' --', self.item2idx_dict)
+
+class SeqIndexerBaseEmbeddings(SeqIndexerBase):
+    """
+    SeqIndexerBaseEmbeddings is a basic abstract sequence indexers class that implements work qith embeddings.
+    """
+    def __init__(self, gpu, check_for_lowercase, zero_digits, pad, unk, load_embeddings, embeddings_dim, verbose):
+        SeqIndexerBase.__init__(self, gpu, check_for_lowercase, zero_digits, pad, unk, load_embeddings, embeddings_dim,
+                                verbose)
+    @staticmethod
+    def load_embeddings_from_file(emb_fn, emb_delimiter, verbose=True):
+        for k, line in enumerate(open(emb_fn, 'r', encoding='utf-8')):
+            values = line.split(emb_delimiter)
+            if len(values) < 5:
+                continue
+            word = values[0]
+            emb_vector = list(map(lambda t: float(t), filter(lambda n: n and not n.isspace(), values[1:])))
+            if verbose:
+                if k % 25000 == 0:
+                    print('Reading embeddings file %s, line = %d' % (emb_fn, k))
+            yield word, emb_vector
+
+    def generate_zero_emb_vector(self):
+        if self.embeddings_dim == 0:
+            raise ValueError('embeddings_dim is not known.')
+        return [0 for _ in range(self.embeddings_dim)]
+
+    def generate_random_emb_vector(self):
+        if self.embeddings_dim == 0:
+            raise ValueError('embeddings_dim is not known.')
+        return np.random.uniform(-np.sqrt(3.0 / self.embeddings_dim), np.sqrt(3.0 / self.embeddings_dim),
+                                 self.embeddings_dim).tolist()
+
+    def add_emb_vector(self, emb_vector):
+        self.embedding_vectors_list.append(emb_vector)
+
+    def get_loaded_embeddings_tensor(self):
+        return torch.FloatTensor(np.asarray(self.embedding_vectors_list))
+
+class SeqIndexerWord(SeqIndexerBaseEmbeddings):
+    """SeqIndexerWord converts list of lists of words as strings to list of lists of integer indices and back."""
+    def __init__(self, gpu=-1, check_for_lowercase=True, embeddings_dim=0, verbose=True):
+        SeqIndexerBaseEmbeddings.__init__(self, gpu=gpu, check_for_lowercase=check_for_lowercase, zero_digits=True,
+                                          pad='<pad>', unk='<unk>', load_embeddings=True, embeddings_dim=embeddings_dim,
+                                          verbose=verbose)
+        self.original_words_num = 0
+        self.lowercase_words_num = 0
+        self.zero_digits_replaced_num = 0
+        self.zero_digits_replaced_lowercase_num = 0
+        self.capitalize_word_num = 0
+        self.uppercase_word_num = 0
+
+    def load_items_from_embeddings_file_and_unique_words_list(self, emb_fn, emb_delimiter, emb_load_all,
+                                                              unique_words_list):
+        # Get the full list of available case-sensitive words from text file with pretrained embeddings
+        embeddings_words_list = [emb_word for emb_word, _ in SeqIndexerBaseEmbeddings.load_embeddings_from_file(emb_fn,
+                                                                                                          emb_delimiter,
+                                                                                                          verbose=True)]
+        # Create reverse mapping word from the embeddings file -> list of unique words from the dataset
+        emb_word_dict2unique_word_list = dict()
+        out_of_vocabulary_words_list = list()
+        for unique_word in unique_words_list:
+            emb_word = self.get_embeddings_word(unique_word, embeddings_words_list)
+            if emb_word is None:
+                out_of_vocabulary_words_list.append(unique_word)
+            else:
+                if emb_word not in emb_word_dict2unique_word_list:
+                    emb_word_dict2unique_word_list[emb_word] = [unique_word]
+                else:
+                    emb_word_dict2unique_word_list[emb_word].append(unique_word)
+        # Add pretrained embeddings for unique_words
+        for emb_word, emb_vec in SeqIndexerBaseEmbeddings.load_embeddings_from_file(emb_fn, emb_delimiter,verbose=True):
+            if emb_word in emb_word_dict2unique_word_list:
+                for unique_word in emb_word_dict2unique_word_list[emb_word]:
+                    self.add_word_emb_vec(unique_word, emb_vec)
+        if self.verbose:
+            print('\nload_vocabulary_from_embeddings_file_and_unique_words_list:')
+            print('    First 50 OOV words:')
+            for i, oov_word in enumerate(out_of_vocabulary_words_list):
+                print('        out_of_vocabulary_words_list[%d] = %s' % (i, oov_word))
+                if i > 49:
+                    break
+            print(' -- len(out_of_vocabulary_words_list) = %d' % len(out_of_vocabulary_words_list))
+            print(' -- original_words_num = %d' % self.original_words_num)
+            print(' -- lowercase_words_num = %d' % self.lowercase_words_num)
+            print(' -- zero_digits_replaced_num = %d' % self.zero_digits_replaced_num)
+            print(' -- zero_digits_replaced_lowercase_num = %d' % self.zero_digits_replaced_lowercase_num)
+        # Load all embeddings
+        if emb_load_all:
+            loaded_words_list = self.get_items_list()
+            load_all_words_num_before = len(loaded_words_list)
+            load_all_words_lower_num = 0
+            load_all_words_upper_num = 0
+            load_all_words_capitalize_num = 0
+            for emb_word, emb_vec in SeqIndexerBaseEmbeddings.load_embeddings_from_file(emb_fn, emb_delimiter,                                                                                        verbose=True):
+                if emb_word in loaded_words_list:
+                    continue
+                if emb_word.lower() not in loaded_words_list and emb_word.lower() not in embeddings_words_list:
+                    self.add_word_emb_vec(emb_word.lower(), emb_vec)
+                    load_all_words_lower_num += 1
+                if emb_word.upper() not in loaded_words_list and emb_word.upper() not in embeddings_words_list:
+                    self.add_word_emb_vec(emb_word.upper(), emb_vec)
+                    load_all_words_upper_num += 1
+                if emb_word.capitalize() not in loaded_words_list and emb_word.capitalize() not in \
+                        embeddings_words_list:
+                    self.add_word_emb_vec(emb_word.capitalize(), emb_vec)
+                    load_all_words_capitalize_num += 1
+                self.add_item(emb_word)
+                self.add_emb_vector(emb_vec)
+            load_all_words_num_after = len(self.get_items_list())
+            if self.verbose:
+                print(' ++ load_all_words_num_before = %d ' % load_all_words_num_before)
+                print(' ++ load_all_words_lower_num = %d ' % load_all_words_lower_num)
+                print(' ++ load_all_words_num_after = %d ' % load_all_words_num_after)
+
+    def get_embeddings_word(self, word, embeddings_word_list):
+        if word in embeddings_word_list:
+            self.original_words_num += 1
+            return word
+        elif self.check_for_lowercase and word.lower() in embeddings_word_list:
+            self.lowercase_words_num += 1
+            return word.lower()
+        elif self.zero_digits and re.sub('\d', '0', word) in embeddings_word_list:
+            self.zero_digits_replaced_num += 1
+            return re.sub('\d', '0', word)
+        elif self.check_for_lowercase and self.zero_digits and re.sub('\d', '0', word.lower()) in embeddings_word_list:
+            self.zero_digits_replaced_lowercase_num += 1
+            return re.sub('\d', '0', word.lower())
+        return None
+
+    def add_word_emb_vec(self, word, emb_vec):
+        self.add_item(word)
+        self.add_emb_vector(emb_vec)
+
+    def get_unique_characters_list(self, verbose=False, init_by_printable_characters=True):
+        if init_by_printable_characters:
+            unique_characters_set = set(string.printable)
+        else:
+            unique_characters_set = set()
+        if verbose:
+            cnt = 0
+        for n, word in enumerate(self.get_items_list()):
+            len_delta = len(unique_characters_set)
+            unique_characters_set = unique_characters_set.union(set(word))
+            if verbose and len(unique_characters_set) > len_delta:
+                cnt += 1
+                print('n = %d/%d (%d) %s' % (n, len(self.get_items_list), cnt, word))
+        return list(unique_characters_set)
 
 class LayerBase(nn.Module):
     """Abstract base class for all type of layers."""

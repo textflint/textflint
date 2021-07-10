@@ -47,7 +47,7 @@ class FlintModelNER(FlintModel):
         :return: dict obj to save metrics result
 
         """
-        word_seq, target_tag_seq = self.encode(data_samples)
+        word_seq, target_tag_seq, seq_len = self.encode(data_samples)
         pred_tag_seq = self.model.predict_tags_from_words(
             word_seq,
             batch_size=self.batch_size
@@ -56,7 +56,7 @@ class FlintModelNER(FlintModel):
         metric.evaluate(
             pred_tag_seq,
             target_tag_seq,
-            len(pred_tag_seq)
+            seq_len
         )
         score = {}
         for key in metric.get_metric():
@@ -72,8 +72,10 @@ class FlintModelNER(FlintModel):
         """
         word_seq = []
         tag_seq = []
+        seq_len = []
         for sample in inputs:
             word_seq.append(sample['x'])
             tag_seq.append(sample['y'])
-        return word_seq, tag_seq
+            seq_len.append(len(sample['x']))
+        return word_seq, tag_seq, seq_len
 

@@ -17,7 +17,7 @@ class NERSpanMetric(ABC):
             raise ValueError(
                 "Only support 'bio', 'bmes', 'bmeso', 'bioes' type."
             )
-        self.tag_voacb = tag_vocab
+        self.tag_vocab = tag_vocab
 
     def get_metric(self):
         p = self.pred_real_word / self.pred_word
@@ -25,16 +25,17 @@ class NERSpanMetric(ABC):
         return {'f': 2 * (p * r) / (p + r), 'pre': p, 'rec': r}
 
     def evaluate(self, pred, target, seq_len):
-        for i in range(int(seq_len.shape[0])):
-            if self.tag_voacb:
+        # for i in range(int(seq_len.shape[0])):
+        for i in range(len(seq_len)):
+            if self.tag_vocab:
                 Pred = ['O'] * int(seq_len[i])
                 Target = ['O'] * int(seq_len[i])
                 for j, k in enumerate(pred[i]):
                     if k >= 0 and k < seq_len[i]:
-                        Pred[j] = self.tag_voacb[int(k)]
+                        Pred[j] = self.tag_vocab[int(k)]
                 for j, k in enumerate(target[i]):
                     if k >= 0 and k < seq_len[i]:
-                        Target[j] = self.tag_voacb[int(k)]
+                        Target[j] = self.tag_vocab[int(k)]
                 Pred = self.tag_to_span_func(Pred)
                 Target = self.tag_to_span_func(Target)
             else:
