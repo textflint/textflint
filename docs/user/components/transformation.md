@@ -374,4 +374,4 @@ In order to verify the robustness comprehensively, TextFlint offers 20 universal
 </table>
 </div>
 
-In addition, you can define your own Transformation follow this [tutorial](./1_Transformaions.ipynb). We also provide a [Interactive Demo](https://www.textflint.com/tutorials) to show how TextFlint can perform transformations on different tasks.
+In addition, you can define your own Transformation follow this [tutorial](1_Transformaions.ipynb). We also provide a [Interactive Demo](https://www.textflint.com/tutorials) to show how TextFlint can perform transformations on different tasks.

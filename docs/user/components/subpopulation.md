@@ -47,4 +47,4 @@
 </tbody>
 </table>
 
-In addition, you can define your own subpopulation follow this [tutorial](./2_SubPopulation.ipynb).
+In addition, you can define your own subpopulation follow this [tutorial](2_SubPopulation.ipynb).
