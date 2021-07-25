@@ -191,6 +191,8 @@ class EnProcessor:
 
         """
         assert isinstance(sentence, (str, list))
+        self.check_initialized()
+
         tokens = self.tokenize(sentence) if isinstance(
             sentence, str) else sentence  # concatenate tokens
 
