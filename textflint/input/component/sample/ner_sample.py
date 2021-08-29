@@ -44,8 +44,10 @@ class NERSample(Sample):
         """
         assert 'x' in data and isinstance(data['x'], (str, list)), \
             r"Type of 'x' should be 'str' or 'list'"
-        assert 'y' in data and isinstance(data['y'], list), \
+
+        assert 'y' in data and isinstance(data['y'], (str, list)), \
             r"Type of 'y' should be 'list'"
+
         assert self.mode == 'BIO' or self.mode == 'BIOES', \
             'Not support {0} type, plz ensure mode in {1}' .format(
                     self.mode, ['BIO', 'BIOES'])
@@ -64,7 +66,8 @@ class NERSample(Sample):
 
         """
         self.text = TextField(data['x'])
-        self.tags = ListField(data['y'])
+        tags = data['y'].split() if isinstance(data['y'], str) else tags
+        self.tags = ListField(tags)
 
         # set mask to prevent UT transform modify entity word.
         if self.mode == 'BIO':
