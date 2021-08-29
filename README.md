@@ -143,16 +143,15 @@ If you are using TextFlint for your work, please kindly cite our [ACL2021 TextFl
 
 ```latex
 @inproceedings{wang-etal-2021-textflint,
-    title = "TextFlint: Unified Multilingual Robustness Evaluation Toolkit for Natural Language Processing",
-    author = "Wang, Xiao  and Liu, Qin  and Gui, Tao  and Zhang, Qi and others",
-    booktitle = "Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing: System Demonstrations",
-    month = aug,
-    year = "2021",
-    address = "Online",
-    publisher = "Association for Computational Linguistics",
-    url = "https://aclanthology.org/2021.acl-demo.41",
-    doi = "10.18653/v1/2021.acl-demo.41",
-    pages = "347--355"
+    title = {TextFlint: Unified Multilingual Robustness Evaluation Toolkit for Natural Language Processing},
+    author = {Wang, Xiao  and Liu, Qin  and Gui, Tao  and Zhang, Qi and others},
+    booktitle = {Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing: System Demonstrations},
+    month = {aug},
+    year = {2021},
+    address = {Online},
+    publisher = {Association for Computational Linguistics},
+    url = {https://aclanthology.org/2021.acl-demo.41},
+    doi = {10.18653/v1/2021.acl-demo.41},
+    pages = {347--355}
 }
 ```
-
