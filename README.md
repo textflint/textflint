@@ -131,7 +131,7 @@ For more input and output instructions of TextFlint, please refer to the [IO for
 | [Tutorial](https://github.com/textflint/textflint/tree/master/docs/user) | The tutorial of textflint components and pipeline            |
 | [Website](https://www.textflint.io/textflint)                | Provides evaluation results of SOTA models and transformed data download |
 | [Online Demo](https://www.textflint.io/tutorials)            | Interactive demo to try single text transformations          |
-| [Paper](http://www.qizhang.info/paper/acl2021.textflint.pdf) | Our system paper which was received by ACL2021               |
+| [Paper](https://aclanthology.org/2021.acl-demo.41.pdf) | Our system paper which was received by ACL2021               |
 
 ## Contributing
 
@@ -139,7 +139,7 @@ We welcome community contributions to TextFlint in the form of bugfixes 🛠️ 
 
 ## Citation
 
-If you are using TextFlint for your work, please kindly cite our [ACL2021 TextFlint demo paper](https://arxiv.org/abs/2003.07082):
+If you are using TextFlint for your work, please kindly cite our [ACL2021 TextFlint demo paper](https://aclanthology.org/2021.acl-demo.41.pdf):
 
 ```latex
 @article{wangtextflint,
