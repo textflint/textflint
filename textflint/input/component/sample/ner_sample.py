@@ -66,7 +66,7 @@ class NERSample(Sample):
 
         """
         self.text = TextField(data['x'])
-        tags = data['y'].split() if isinstance(data['y'], str) else tags
+        tags = data['y'].split() if isinstance(data['y'], str) else data['y']
         self.tags = ListField(tags)
 
         # set mask to prevent UT transform modify entity word.
