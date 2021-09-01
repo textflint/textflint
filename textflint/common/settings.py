@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import platform
 import copy
-
+import string
 # default settings
 current_path = Path(__file__).resolve().parent
 if platform.system() == 'Windows':
@@ -39,7 +39,8 @@ NLP_TASK_MAP = {
     'SM': 'Semantic Matching',
     'NLI': 'Natural language inference',
     'RE': 'Relation Extraction',
-    'COREF': 'Coreference resolution'
+    'COREF': 'Coreference resolution',
+    'WSD': 'Word Sense Disambiguation',
 }
 
 TRANSFORM_FIELDS = {
@@ -54,7 +55,8 @@ TRANSFORM_FIELDS = {
     'SM': ['sentence1', 'sentence2'],
     'NLI': ['premise', 'hypothesis'],
     'RE': 'x',
-    'COREF': 'x'
+    'COREF': 'x',
+    'WSD': 'sentence',
 }
 TASK_SUBPOPULATION_PATH = dict(
     (task, os.path.join(SUBPOPULATION_PATH, task))
@@ -136,7 +138,11 @@ UNMATCH_UT_TRANSFORMATIONS = {
     'COREF': [
         'BackTrans'
     ],
-    'RE': []
+    'RE': [],
+    'WSD': [
+        'BackTrans',
+        'Prejudice'
+    ],
 }
 
 TASK_TRANSFORMATIONS = {
@@ -204,7 +210,10 @@ TASK_TRANSFORMATIONS = {
         'RndRepeat',
         'RndReplace',
         'RndShuffle'
-    ]
+    ],
+    'WSD': [
+        'SwapTarget',
+    ],
 }
 
 # indicate allowed transformations of specific task
@@ -481,3 +490,5 @@ NEGATION = [
 QUESTION = [
     "what", "how", "why", "when", "where", "who", "whom"
 ]
+# ---------------------------WSD settings---------------------------
+PUNC = string.punctuation + "`` ！？｡＂“＃＄％＆＇（）＊＋－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘'‛“”„‟…‧﹏"
