@@ -140,7 +140,7 @@ class WSDSample(Sample):
         idx_list = sorted(list(set(idx_list)))
         return idx_list
 
-    def check_indices_and_items(selfs, indices, items):
+    def check_indices_and_items(self, indices, items):
         r"""
         check validity of indices
         :param list indices: a list of index varying in type(int,list,slice)
@@ -171,7 +171,7 @@ class WSDSample(Sample):
 
          :param dict data: data name
          """
-        self.sentence = TextField(data['sentence'])
+        self.sentence = TextField(data['sentence'], split_by_space=True)
         self.lemma = ListField(data['lemma'])
         self.pos = ListField(data['pos'])
         self.instance = ListField(data['instance'])
@@ -687,4 +687,3 @@ class WSDSample(Sample):
 
         setattr(sample, 'instance', ListField(targets))
         return sample
-

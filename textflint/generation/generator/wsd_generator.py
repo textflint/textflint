@@ -4,6 +4,7 @@ WSD Generator Class
 
 """
 __all__ = ["WSDGenerator"]
+
 from .generator import Generator
 from tqdm import tqdm
 from ...common.utils.logger import logger
@@ -21,18 +22,18 @@ Flint = {
 
 class WSDGenerator(Generator):
     def __init__(
-        self,
-        task='WSD',
-        max_trans=1,
-        fields='sentence',
-        trans_methods=None,
-        trans_config=None,
-        return_unk=True,
-        sub_methods=None,
-        sub_config=None,
-        attack_methods=None,
-        validate_methods=None,
-        **kwargs
+            self,
+            task='WSD',
+            max_trans=1,
+            fields='sentence',
+            trans_methods=None,
+            trans_config=None,
+            return_unk=True,
+            sub_methods=None,
+            sub_config=None,
+            attack_methods=None,
+            validate_methods=None,
+            **kwargs
     ):
         super().__init__(
             task=task,
@@ -74,6 +75,7 @@ class WSDGenerator(Generator):
                     sample,
                     n=self.max_trans,
                     field=self.fields,
+                    split_by_space=True,
                 )
                 if trans_rst:
                     generated_samples.extend(trans_rst)
