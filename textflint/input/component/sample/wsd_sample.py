@@ -171,7 +171,7 @@ class WSDSample(Sample):
 
          :param dict data: data name
          """
-        self.sentence = TextField(data['sentence'], split_by_space=True)
+        self.sentence = TextField(data['sentence'])
         self.lemma = ListField(data['lemma'])
         self.pos = ListField(data['pos'])
         self.instance = ListField(data['instance'])
