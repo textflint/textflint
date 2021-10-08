@@ -3,6 +3,7 @@ Transformation Abstract Class
 ============================================
 """
 __all__ = ["Transformation"]
+
 import random
 from abc import ABC, abstractmethod
 
@@ -21,15 +22,15 @@ class Transformation(ABC):
     processor = EnProcessor()
 
     def __init__(
-        self,
-        **kwargs
+            self,
+            **kwargs
     ):
         pass
 
     def __repr__(self):
         return 'Transformation'
 
-    def transform(self, sample, n=1, field='x', **kwargs):
+    def transform(self, sample, n=1, field='x', split_by_space=False, **kwargs):
         r"""
         Transform data sample to a list of Sample.
 
@@ -59,7 +60,7 @@ class Transformation(ABC):
         try:  # Deal with textflint Exception
             if len(fields) == 1:
                 transform_results = self._transform(sample, n=n,
-                                                    field=fields[0], **kwargs)
+                                                    field=fields[0], split_by_space=split_by_space, **kwargs)
             else:
                 transform_results = []
                 for field in fields:
@@ -92,7 +93,7 @@ class Transformation(ABC):
             return []
 
     @abstractmethod
-    def _transform(self, sample, n=1, field='x', **kwargs):
+    def _transform(self, sample, n=1, field='x', split_by_space=False, **kwargs):
         r"""
         Returns a list of all possible transformations for ``component``.
 

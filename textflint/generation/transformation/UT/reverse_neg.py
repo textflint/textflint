@@ -14,16 +14,17 @@ class ReverseNeg(Transformation):
     Each sample generate one transformed sample at most.
 
     """
+
     def __init__(
-        self,
-        **kwargs
+            self,
+            **kwargs
     ):
         super().__init__()
 
     def __repr__(self):
         return "ReverseNeg"
 
-    def _transform(self, sample, field='x', n=1, **kwargs):
+    def _transform(self, sample, field='x', n=1, split_by_space=False, **kwargs):
         r"""
         Transform text string according transform_field.
 
@@ -42,12 +43,12 @@ class ReverseNeg(Transformation):
         judge_sentence = self._judge_sentence(tokens)
 
         if judge_sentence == 'remove':
-            del_sample = self._get_del_sample(tokens, field, sample)
+            del_sample = self._get_del_sample(tokens, field, sample, split_by_space=split_by_space)
             if del_sample:
                 trans_samples.append(del_sample)
 
         if judge_sentence == 'add':
-            add_sample = self._get_add_sample(field, tokens, sample)
+            add_sample = self._get_add_sample(field, tokens, sample, split_by_space=split_by_space)
             if add_sample:
                 trans_samples.append(add_sample)
 
@@ -85,7 +86,7 @@ class ReverseNeg(Transformation):
         else:
             return True
 
-    def _parse_sentence(self, tokens):
+    def _parse_sentence(self, tokens, split_by_space=False):
         """
         Dependency Parsing
         """
@@ -94,7 +95,7 @@ class ReverseNeg(Transformation):
         root_id_list = []
 
         parse_tokens = self.processor.get_dep_parser(
-            sentence_tokens[0])
+            sentence_tokens[0], split_by_space=split_by_space)
 
         for i, token in enumerate(parse_tokens):
             if len(token) < 4:
@@ -104,16 +105,16 @@ class ReverseNeg(Transformation):
 
         return root_id_list
 
-    def _get_del_sample(self, tokens, field, sample):
+    def _get_del_sample(self, tokens, field, sample, split_by_space=False):
         for i, token in enumerate(tokens):
             # do not + verb → verb
             if token in ['do', 'does', 'did'] and len(tokens) > i + 2:
                 if tokens[i + 1] in ['not', 'n\'t']:
-                    root_id_list = self._parse_sentence(tokens)
+                    root_id_list = self._parse_sentence(tokens, split_by_space=split_by_space)
                     pos_tag = self.processor.get_pos(tokens[i + 2])[0][1]
 
                     if pos_tag in [
-                            'VB', 'VBP', 'VBZ', 'VBG', 'VBD', 'VBN'] or (
+                        'VB', 'VBP', 'VBZ', 'VBG', 'VBD', 'VBN'] or (
                             i + 2) in root_id_list:
                         del_list = [i, i + 1]
                         del_sample = sample
@@ -130,8 +131,8 @@ class ReverseNeg(Transformation):
 
         return []
 
-    def _get_add_sample(self, field, tokens, sample):
-        root_id_list = self._parse_sentence(tokens)
+    def _get_add_sample(self, field, tokens, sample, split_by_space=False):
+        root_id_list = self._parse_sentence(tokens, split_by_space=split_by_space)
         if root_id_list:
             check_sentence = self._check_sentence(tokens)
             if check_sentence:
@@ -180,4 +181,3 @@ class ReverseNeg(Transformation):
                 return add_sample
 
             return trans_sent
-
