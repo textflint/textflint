@@ -1,5 +1,5 @@
 from textflint.common.utils.fp_utils import concat
-from textflint.input_layer.component.sample.coref_sample import *
+from textflint.input.component.sample.coref_sample import *
 
 class CorefDebug:
 
@@ -74,7 +74,7 @@ class CorefDebug:
     @staticmethod
     def coref_sample1():
         r""" Returns a debug sample for coref.
-        :return ~textflint.input_layer.component.sample.CorefSample: A CorefSample
+        :return ~textflint.input.component.sample.CorefSample: A CorefSample
         """
         sens = [
             CorefDebug.words("I love my pet Anna ."),
@@ -87,7 +87,7 @@ class CorefDebug:
     @staticmethod
     def coref_sample2():
         r""" Returns a debug sample for coref.
-        :return ~textflint.input_layer.component.sample.CorefSample: A CorefSample
+        :return ~textflint.input.component.sample.CorefSample: A CorefSample
         """
         sens = [
             CorefDebug.words("Bob 's wife Anna likes winter ."),
@@ -100,7 +100,7 @@ class CorefDebug:
     @staticmethod
     def coref_sample3():
         r""" Returns a debug sample for coref.
-        :return ~textflint.input_layer.component.sample.CorefSample: A CorefSample
+        :return ~textflint.input.component.sample.CorefSample: A CorefSample
         """
         sens = [CorefDebug.words("Nothing .")]
         clusters = []
@@ -110,7 +110,7 @@ class CorefDebug:
     @staticmethod
     def coref_sample4():
         r""" Returns a debug sample for coref.
-        :return ~textflint.input_layer.component.sample.CorefSample: A CorefSample
+        :return ~textflint.input.component.sample.CorefSample: A CorefSample
         """
         sens = [
             CorefDebug.words(
@@ -124,14 +124,14 @@ class CorefDebug:
     @staticmethod
     def coref_sample5():
         r""" Returns a debug sample for coref.
-        :return ~textflint.input_layer.component.sample.CorefSample: A CorefSample
+        :return ~textflint.input.component.sample.CorefSample: A CorefSample
         """
         return CorefSample(None)
 
     @staticmethod
     def coref_sample6():
         r""" Returns a debug sample for coref.
-        :return ~textflint.input_layer.component.sample.CorefSample: A CorefSample
+        :return ~textflint.input.component.sample.CorefSample: A CorefSample
         """
         sens = [
             CorefDebug.words("textflint ! @ # $ % ^ & * J ) 1321"),

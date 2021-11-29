@@ -4,11 +4,11 @@ import os
 
 from textflint.engine import Engine
 from textflint.common.utils.install import download_if_needed
-from textflint.input_layer.config.config import Config
+from textflint.input.config.config import Config
 from textflint.common.settings import UNMATCH_UT_TRANSFORMATIONS, \
     TASK_TRANSFORMATIONS
 tasks = ['ABSA', 'COREF', 'CWS', 'DP',
-                 'MRC', 'NER', 'NLI', 'POS', 'RE', 'SA', 'SM']
+                 'MRC', 'NER', 'NLI', 'POS', 'RE', 'SA', 'SM','WSD']
 test_config = {
     "max_trans": 1,
     "return_unk": True,
@@ -66,6 +66,9 @@ class TestEngine(unittest.TestCase):
 # 
 #     def test_coref_engine(self):
 #         get_test('COREF')
+#
+#     def test_coref_engine(self):
+#         get_test('WSD')
 
 
 if __name__ == "__main__":

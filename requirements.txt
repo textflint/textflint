@@ -3,6 +3,7 @@ click==7.1.1
 editdistance
 nltk
 pandas>=1.0.1
+scikit-learn
 torch
 transformers
 datasets
@@ -11,7 +12,6 @@ ltp
 spacy>=3.0.0
 morfessor
 flashtext
-textattack
 wikidata
 fuzzywuzzy
 plotly

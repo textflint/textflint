@@ -13,9 +13,13 @@ __all__ = [
     "Validator"
 ]
 
-from .input_layer import *
-from .generation_layer.generator import Generator
-from .generation_layer.validator import Validator
+from . import input as input_layer
+from . import generation as generation_layer
+from . import report as report_layer
+
+from .input import *
+from .generation.generator import Generator
+from .generation.validator import Validator
 from .engine import Engine
 from .adapter import *
 

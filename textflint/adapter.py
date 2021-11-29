@@ -6,15 +6,15 @@ TextFlint Adapter Class
 
 import os
 
-from .input_layer.config import Config
+from .input.config import Config
 from .common import logger
-from .input_layer.dataset import Dataset
-from .input_layer.model import FlintModel
+from .input.dataset import Dataset
+from .input.model import FlintModel
 from .common.utils import task_class_load
 from .common.utils.load import load_module_from_file
-from .generation_layer.generator import Generator, UTGenerator
+from .generation.generator import Generator, UTGenerator
 from .common.settings import GENERATOR_PATH, NLP_TASK_MAP
-from .report_layer.report_generator import ReportGenerator
+from .report.report_generator import ReportGenerator
 
 nlp_tasks = [key.upper() for key in NLP_TASK_MAP.keys()]
 

@@ -42,7 +42,7 @@ class CnProcessor:
         r"""
         NER function.
 
-        :param str sent: the sentence need to be ner
+        :param str sentence: the sentence need to be ner
         :return two forms of tags
             The first is the triple form (tags,start,end)
             The second is the list form, which marks the ner label of each word

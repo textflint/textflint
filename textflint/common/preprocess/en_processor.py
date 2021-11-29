@@ -22,7 +22,9 @@ class EnProcessor:
 
     """
     _instance_lock = threading.Lock()
-    nlp = spacy.load(download_if_needed(MODEL_PATH_WEB) + MODEL_PATH)
+    initialized = False
+    nlp = None
+    model_manager = None
 
     def __init__(self):
         self.nltk = __import__("nltk")
@@ -36,7 +38,6 @@ class EnProcessor:
         self.__wordnet = None
         self.__word2vec = None
         self.__attribute_ruler = None
-        self.model_manager = ModelManager()
 
     # Single instance mode
     def __new__(cls, *args, **kwargs):
@@ -45,6 +46,21 @@ class EnProcessor:
                 if not hasattr(EnProcessor, "_instance"):
                     EnProcessor._instance = object.__new__(cls)
         return EnProcessor._instance
+
+    @classmethod
+    def check_initialized(cls):
+        if not cls.initialized:
+            cls.load_resource()
+
+    @classmethod
+    def load_resource(cls):
+        if cls.model_manager is None:
+            cls.model_manager = ModelManager()
+        if cls.nlp is None:
+            cls.nlp = spacy.load(
+                download_if_needed(MODEL_PATH_WEB) + MODEL_PATH
+            )
+        cls.initialized = True
 
     def sentence_tokenize(self, text):
         r"""
@@ -55,6 +71,7 @@ class EnProcessor:
 
         """
         assert isinstance(text, str)
+        self.check_initialized()
         text = self.nlp.tokenizer(text)
 
         if not self.__sent_tokenizer:
@@ -76,9 +93,11 @@ class EnProcessor:
 
         """
         assert isinstance(text, str)
+
         if split_by_space:
             return text.split(" ")
         else:
+            self.check_initialized()
             return [
                 word.text.replace("''", '"')
                     .replace("``", '"') for word in self.nlp.tokenizer(text)
@@ -172,6 +191,8 @@ class EnProcessor:
 
         """
         assert isinstance(sentence, (str, list))
+        self.check_initialized()
+
         tokens = self.tokenize(sentence) if isinstance(
             sentence, str) else sentence  # concatenate tokens
 
@@ -221,6 +242,7 @@ class EnProcessor:
         :return: A list of tuples, *(entity, start, end, label)*
 
         """
+        self.check_initialized()
 
         if self.__ner is None:
             self.__ner = self.nlp.pipeline[3][1]
@@ -264,6 +286,8 @@ class EnProcessor:
         :return:The result tree of lexicalized parser in string format.
 
         """
+        self.check_initialized()
+
         if self.__parser is None:
             self.__parser = self.model_manager.load(CFG_PARSER)
 
@@ -305,6 +329,8 @@ class EnProcessor:
         :return: dp tags.
 
         """
+        self.check_initialized()
+
         if self.__dp_parser is None:
             self.__dp_parser = self.nlp.pipeline[2][1]
 
@@ -345,6 +371,8 @@ class EnProcessor:
         :return: A lemma or a list of lemmas depends on your input.
 
         """
+        self.check_initialized()
+
         if not isinstance(token_and_pos, list):
             token_and_pos = [token_and_pos]
         if self.__lemmatize is None:
@@ -376,6 +404,8 @@ class EnProcessor:
         :return: A list of lemmas that have the given pos tag.
 
         """
+        self.check_initialized()
+
         if self.__wordnet is None:
             self.__wordnet = self.model_manager.load(NLTK_WORDNET)
 
@@ -396,6 +426,8 @@ class EnProcessor:
             form of input lemma.
 
         """
+        self.check_initialized()
+
         if self.__delemmatize is None:
             self.__delemmatize = self.model_manager.load(NLTK_WORDNET_DELEMMA)
         if not isinstance(lemma_and_pos, list):
@@ -403,13 +435,15 @@ class EnProcessor:
             return (
                 self.__delemmatize[token][pos] if (
                     token in self.__delemmatize) and (
-                    pos in self.__delemmatize[token]) else token)
+                    pos in self.__delemmatize[token])
+                else token
+            )
         else:
             return [
                 self.__delemmatize[token][pos]
                 if (token in self.__delemmatize) and
-                   (pos in self.__delemmatize[token]) else token
-                for token, pos in lemma_and_pos
+                (pos in self.__delemmatize[token])
+                else token for token, pos in lemma_and_pos
             ]
 
     def get_synsets(self, tokens_and_pos, lang="eng"):
@@ -534,8 +568,10 @@ class EnProcessor:
         ner_num = len(ner)
         ner_idx = 0
         it, ner_start, ner_end, ner_type = 0, None, None, None
+
         if ner_num > 0:
             _, ner_start, ner_end, ner_type = ner[ner_idx]
+
         for i, tok in enumerate(sent_pos):
             text, pos = tok
             it += sent[it:].find(text)
@@ -553,11 +589,12 @@ class EnProcessor:
                     word_ner = ner_type
                 else:
                     word_ner = "O"
-            word = {'word': text,
-                    'pos': pos,
-                    'lemma': sent_lemma[i],
-                    'ner': word_ner
-                    }
+            word = {
+                'word': text,
+                'pos': pos,
+                'lemma': sent_lemma[i],
+                'ner': word_ner
+            }
             tokens.append(word)
         return tokens
 
