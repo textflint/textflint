@@ -1,7 +1,7 @@
-textflint.report\_layer.analyzer.analyzer
+textflint.report.analyzer.analyzer
 ================================================
 
-.. automodule:: textflint.report_layer.analyzer.analyzer
+.. automodule:: textflint.report.analyzer.analyzer
    :members:
    :undoc-members:
    :show-inheritance:

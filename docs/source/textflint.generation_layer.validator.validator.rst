@@ -1,7 +1,7 @@
-textflint.generation\_layer.validator.validator
+textflint.generation.validator.validator
 ======================================================
 
-.. automodule:: textflint.generation_layer.validator.validator
+.. automodule:: textflint.generation.validator.validator
    :members:
    :undoc-members:
    :show-inheritance:

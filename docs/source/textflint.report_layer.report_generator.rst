@@ -1,7 +1,7 @@
-textflint.report\_layer.report\_generator
+textflint.report.report\_generator
 =================================================
 
-.. automodule:: textflint.report_layer.report_generator
+.. automodule:: textflint.report.report_generator
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,4 +12,4 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
-   textflint.report_layer.report_generator.report_generator
+   textflint.report.report_generator.report_generator

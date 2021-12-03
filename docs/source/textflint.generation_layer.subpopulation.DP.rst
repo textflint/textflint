@@ -1,7 +1,7 @@
-textflint.generation\_layer.subpopulation.DP
+textflint.generation.subpopulation.DP
 ====================================================
 
-.. automodule:: textflint.generation_layer.subpopulation.DP
+.. automodule:: textflint.generation.subpopulation.DP
    :members:
    :undoc-members:
    :show-inheritance:
