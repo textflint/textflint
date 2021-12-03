@@ -1,7 +1,7 @@
 import unittest
 
-from textflint.input_layer.component.sample import SASample
-from textflint.generation_layer.transformation.UT.ocr \
+from textflint.input.component.sample import SASample
+from textflint.generation.transformation.UT.ocr \
     import Ocr
 
 

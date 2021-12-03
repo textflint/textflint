@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.MRC.perturb\_question
+textflint.generation.transformation.MRC.perturb\_question
 =======================================================================
 
-.. automodule:: textflint.generation_layer.transformation.MRC.perturb_question
+.. automodule:: textflint.generation.transformation.MRC.perturb_question
    :members:
    :undoc-members:
    :show-inheritance:

@@ -13,9 +13,9 @@ Subpackages
    :maxdepth: 1
 
    textflint.common
-   textflint.generation_layer
-   textflint.input_layer
-   textflint.report_layer
+   textflint.generation
+   textflint.input
+   textflint.report
 
 Submodules
 ----------
