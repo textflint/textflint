@@ -161,7 +161,7 @@ class CWSSample(Sample):
         if len(indices):
             cws = self.clone(self)
             new_mask = unequal_replace_at_scopes(self.mask, indices, mask)
-            new_field = unequal_replace_at_scopes(self.x.token, indices, items)
+            new_field = unequal_replace_at_scopes(self.x.tokens, indices, items)
             x = self.x.new_field(new_field, mask=new_mask)
             setattr(cws, 'x', x)
             if y_new_items:
