@@ -81,6 +81,11 @@ ALLOWED_SUBPOPULATIONS = {
 ALLOWED_SUBPOPULATIONS['CWS'] = []
 
 UT_TRANSFORMATIONS = [
+    'AddPunc',
+    'RmvPunc',
+    'AddNeg',
+    'RmvNeg',
+    'Appendlrr',
     'InsertAdv',
     'AppendIrr',
     'BackTrans',
@@ -97,9 +102,9 @@ UT_TRANSFORMATIONS = [
     'Tense',
     'TwitterType',
     'Typos',
-    'SwapSynWordEmbedding',
-    'SwapAntWordNet',
-    'SwapSynWordNet',
+    'SwapSyn-WordEmbedding',
+    'SwapAnt-WordNet',
+    'SwapSyn-WordNet',
     'Prejudice'
 ]
 
