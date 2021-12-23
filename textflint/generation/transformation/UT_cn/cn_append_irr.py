@@ -47,7 +47,7 @@ class AppendIrr(Transformation):
         """
 
         trans_samples = []
-        tokens = sample.get_tokens()(field)
+        tokens = sample.get_tokens(field)
         beginnings = self._get_beginnings(n)
 
         # add beginning phrase
@@ -63,7 +63,7 @@ class AppendIrr(Transformation):
         proverbs = self._get_proverbs(n)
 
         for i in range(min(len(trans_samples), len(proverbs))):
-            _tokens = trans_samples[i].get_words(field)
+            _tokens = trans_samples[i].get_tokens(field)
             trans_samples[i] = trans_samples[i].insert_field_after_index(
                 field, len(_tokens) - 1, proverbs[i])
 
@@ -71,7 +71,6 @@ class AppendIrr(Transformation):
 
     def _get_beginnings(self, n):
         beginnings = self.sample_num(self.beginnings, n)
-        print(beginnings)
         return [self.cn_processor.tokenize(
             beginning) for beginning in beginnings]
 

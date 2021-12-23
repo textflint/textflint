@@ -1,6 +1,6 @@
 from .cn_append_irr import AppendIrr
 from .cn_back_trans import BackTrans
-from .cn_nasal import CNNASAL
+from .cn_nasal import CnNasal
 from .cn_wordEmbedding import CnSwapSynWordEmbedding
 from .cn_insert_adv import InsertAdv
 from .cn_mlm_suggestion import MLMSuggestion

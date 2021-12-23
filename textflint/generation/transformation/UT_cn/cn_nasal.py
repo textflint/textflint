@@ -3,7 +3,7 @@ Swapping words by Mask Language Model
 ==========================================================
 """
 
-__all__ = ['CNNASAL']
+__all__ = ['CnNasal']
 
 import random
 from copy import copy
@@ -14,7 +14,7 @@ from Pinyin2Hanzi import DefaultHmmParams
 from Pinyin2Hanzi import viterbi
 
 hmmparams = DefaultHmmParams()
-class CNNASAL(WordSubstitute):
+class CnNasal(WordSubstitute):
     r"""
     Transforms an input by replacing its tokens with words of mask language
     predicted.
@@ -70,14 +70,10 @@ class CNNASAL(WordSubstitute):
         :return list trans_samples: transformed sample list.
 
         """
-        #判断sample是个sample
-        #assert
         tokens = sample.get_tokens(field)
         tokens_mask = sample.get_mask(field)
 
-        print(tokens)
-
-        # 得到可以变形的tokens
+        #find legal indices
         legal_indices = self.skip_aug(tokens, tokens_mask)
 
         if not legal_indices:
@@ -92,10 +88,9 @@ class CNNASAL(WordSubstitute):
 
         trans_samples = []
 
-        if trans_samples == []:
-            return []
-
         for i in range(len(new_tokens)):
+            if i >= n:
+                break
             trans_samples.append(
                 sample.unequal_replace_field_at_indices(field, [new_tokens[i][1]], [new_tokens[i][0]]))
 

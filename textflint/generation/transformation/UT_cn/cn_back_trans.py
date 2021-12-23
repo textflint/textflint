@@ -65,9 +65,9 @@ class BackTrans(Transformation):
 
     def get_model(self):
         # accelerate load efficiency
-        from transformers import FSMTForConditionalGeneration, FSMTTokenizer
-        generation = FSMTForConditionalGeneration
-        tokenizer = FSMTTokenizer
+        from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+        generation = AutoModelForSeq2SeqLM
+        tokenizer = AutoTokenizer
 
         """ Load models of translation. """
         self.from_tokenizer = tokenizer.from_pretrained(self.from_model_name)
