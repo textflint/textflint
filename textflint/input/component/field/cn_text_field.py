@@ -72,6 +72,22 @@ class CnTextField(Field):
     def mask(self):
         return self._mask[:]
 
+    def set_mask(self, index, value):
+        if not self._mask:
+            self._mask = [ORIGIN] * len(self.words)
+
+        if index > len(self.mask) - 1:
+            raise ValueError(
+                "Index {0} out of range {1}".format(
+                    index, len(
+                        self.mask) - 1))
+        if value not in [ORIGIN, TASK_MASK, MODIFIED_MASK]:
+            raise ValueError(
+                'Support mask value in {0},  while input mask value is {1}!'
+                    .format([ORIGIN, TASK_MASK, MODIFIED_MASK], value)
+            )
+        self._mask[index] = value
+
     @property
     def text(self):
         return self._text
@@ -327,3 +343,4 @@ class CnTextField(Field):
 
         """
         return self.replace_at_indices([index], [new_items])
+

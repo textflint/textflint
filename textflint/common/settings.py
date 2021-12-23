@@ -252,15 +252,19 @@ STOP_WORDS = [
     'have', 'Has', 'has', 'in', 'In', 'by', 'By',
     'on', 'On', 'of', 'Of', 'at', 'At', 'from', 'From'
 ]
+CN_STOP_WORDS = []
 
 # sentence splitter prefixes
 EN_NON_BREAKING_PRE = 'UT_DATA/en_non_breaking_prefixes.txt'
 
 BERT_MODEL_NAME = 'bert-base-uncased'
+CN_BERT_MODEL_NAME = 'hfl/chinese-bert-wwm-ext'
 
 # back translation model
 TRANS_FROM_MODEL = "facebook/wmt19-en-de"  # "allenai/wmt16-en-de-dist-6-1"
 TRANS_TO_MODEL = "facebook/wmt19-de-en"  # allenai/wmt19-de-en-6-6-base"
+CN_TRANS_FROM_MODEL = "Helsinki-NLP/opus-mt-zh-en"
+CN_TRANS_TO_MODEL = "Helsinki-NLP/opus-mt-en-zh"
 
 # Offline Vocabulary
 EMBEDDING_PATH = 'UT_DATA/sim_words_dic.json'
@@ -282,8 +286,21 @@ PREJUDICE_LOC2IDX = {
     'America': 1, 'Europe': 2, 'Africa': 3, 'China': 4,
     'Japan': 5, 'India': 6, 'Middle East': 7
 }
+# zx
+CN_SYNONYM_PATH = 'UT_DATA_CN/dict_synonym.txt'
+CN_ANTONYM_PATH = 'UT_DATA_CN/dict_antonym.txt'
+CN_CORENLP_ENTITY_MAP = {
+    'Nh': 'PERSON',
+    'Ni': 'ORGANIZATION',
+    'Ns': 'LOCATION'
+}
 
 ENTITIES_PATH = 'UT_DATA/lop_entities.json'
+#cn_file_path
+CN_BEGINNING_PATH = 'UT_DATA_CN/beginning.txt'
+CN_PROVERB_PATH = 'UT_DATA_CN/proverb.txt'
+CN_ADVERB_PATH = 'UT_DATA_CN/adverb_word.txt'
+CN_EMBEDDING_PATH = 'UT_DATA_CN/CnSynEmbedding.json'
 
 # Verb pos tag
 VERB_TAG = ['VB', 'VBP', 'VBZ', 'VBG', 'VBD', 'VBN']

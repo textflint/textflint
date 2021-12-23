@@ -3,6 +3,8 @@ CnProcessor Class
 ============================================
 """
 import threading
+from ..settings import CN_SYNONYM_PATH, CN_ANTONYM_PATH
+from ..utils.install import download_if_needed
 
 __all__ = ['CnProcessor']
 
@@ -232,80 +234,119 @@ class CnProcessor:
             tokens.append(word)
         return tokens
 
-    def get_synonyms(self, sent):
-        r"""
-        Get synonyms from Dictionary.
+    def generate_synonym_dict(self, synonym_file):
+        from collections import defaultdict
+        synonym_dict = defaultdict(set)
+        f = open(synonym_file, 'r', encoding='utf-8')
+        lines = f.readlines()
+        for line in lines:
+            words = line.strip().split()[1:]
+            for i in range(len(words)):
+                for j in range(i + 1, len(words)):
+                    synonym_dict[words[i]].add(words[j])
+                    synonym_dict[words[j]].add(words[i])
+        self.__synonym_dict = synonym_dict
 
-        :param str sent: The text.
-        :return: A list of str, represents the sense of each input token.
-
-        """
-        assert isinstance(sent, str)
-
-        def generate_synonym_dict(synonym_file):
-            from collections import defaultdict
-            synonym_dict = defaultdict(set)
-            f = open(synonym_file, 'r', encoding='utf-8')
-            lines = f.readlines()
-            for line in lines:
-                words = line.strip().split()[1:]
-                for i in range(len(words)):
-                    for j in range(i + 1, len(words)):
-                        synonym_dict[words[i]].add(words[j])
-                        synonym_dict[words[j]].add(words[i])
-            return synonym_dict
-
+    def get_synonym(self, word, n):
+        import random
         if self.__synonym_dict is None:
-            self.__synonym_dict = generate_synonym_dict('dictionary/dict_synonym.txt')
+            self.generate_synonym_dict(download_if_needed(CN_SYNONYM_PATH))
+        return random.sample(list(self.__synonym_dict[word]), min(n, len(list(self.__synonym_dict[word]))))
 
-        words_and_pos = self.get_word_pos(sent, self.get_pos_tag(sent))
+    def generate_antonym_dict(self, antonym_file):
+        from collections import defaultdict
+        antonym_dict = defaultdict(set)
+        f = open(antonym_file, 'r', encoding='utf-8')
+        lines = f.readlines()
+        for line in lines:
+            try:
+                word1, word2 = line.strip().replace('-', ' ').replace('—', ' ').replace('─', ' ').replace('―', ' ').split()
+            except Exception:
+                pass
+            antonym_dict[word1].add(word2)
+            antonym_dict[word2].add(word1)
+        self.__antonym_dict = antonym_dict
 
-        ret = []
-        for word, pos in words_and_pos:
-            synonyms = []
-            if self.normalize_pos(pos) is not None:
-                synonyms = list(self.__synonym_dict[word])
-            ret.append(synonyms)
-
-        return ret
-
-    def get_antonyms(self, sent):
-        r"""
-        Get antonyms from Dictionary.
-
-        :param str sent: The text.
-        :return: A list of str, represents the sense of each input token.
-
-        """
-        assert isinstance(sent, str)
-
-        def generate_antonym_dict(antonym_file):
-            from collections import defaultdict
-            antonym_dict = defaultdict(set)
-            f = open(antonym_file, 'r', encoding='utf-8')
-            lines = f.readlines()
-            for line in lines:
-                try:
-                    word1, word2 = line.strip().replace('-', ' ').replace('—', ' ').replace('─', ' ').replace('―',' ').split()
-                except Exception:
-                    pass
-                antonym_dict[word1].add(word2)
-                antonym_dict[word2].add(word1)
-            return antonym_dict
-
+    def get_antonym(self, word, n):
+        import random
         if self.__antonym_dict is None:
-            self.__antonym_dict = generate_antonym_dict('dictionary/dict_antonym.txt')
+            self.generate_antonym_dict(download_if_needed(CN_ANTONYM_PATH))
+        return random.sample(list(self.__antonym_dict[word]), min(n, len(list(self.__antonym_dict[word]))))
 
-        words_and_pos = self.get_word_pos(sent, self.get_pos_tag(sent))
-
-        ret = []
-        for word, pos in words_and_pos:
-            antonyms = []
-            if self.normalize_pos(pos) is not None:
-                antonyms = list(self.__antonym_dict[word])
-            ret.append(antonyms)
-
-        return ret
+    # def get_synonyms(self, sent):
+    #     r"""
+    #     Get synonyms from Dictionary.
+    #
+    #     :param str sent: The text.
+    #     :return: A list of str, represents the sense of each input token.
+    #
+    #     """
+    #     assert isinstance(sent, str)
+    #
+    #     def generate_synonym_dict(synonym_file):
+    #         from collections import defaultdict
+    #         synonym_dict = defaultdict(set)
+    #         f = open(synonym_file, 'r', encoding='utf-8')
+    #         lines = f.readlines()
+    #         for line in lines:
+    #             words = line.strip().split()[1:]
+    #             for i in range(len(words)):
+    #                 for j in range(i + 1, len(words)):
+    #                     synonym_dict[words[i]].add(words[j])
+    #                     synonym_dict[words[j]].add(words[i])
+    #         return synonym_dict
+    #
+    #     if self.__synonym_dict is None:
+    #         self.__synonym_dict = generate_synonym_dict('dictionary/dict_synonym.txt')
+    #
+    #     words_and_pos = self.get_word_pos(sent, self.get_pos_tag(sent))
+    #
+    #     ret = []
+    #     for word, pos in words_and_pos:
+    #         synonyms = []
+    #         if self.normalize_pos(pos) is not None:
+    #             synonyms = list(self.__synonym_dict[word])
+    #         ret.append(synonyms)
+    #
+    #     return ret
+    #
+    # def get_antonyms(self, sent):
+    #     r"""
+    #     Get antonyms from Dictionary.
+    #
+    #     :param str sent: The text.
+    #     :return: A list of str, represents the sense of each input token.
+    #
+    #     """
+    #     assert isinstance(sent, str)
+    #
+    #     def generate_antonym_dict(antonym_file):
+    #         from collections import defaultdict
+    #         antonym_dict = defaultdict(set)
+    #         f = open(antonym_file, 'r', encoding='utf-8')
+    #         lines = f.readlines()
+    #         for line in lines:
+    #             try:
+    #                 word1, word2 = line.strip().replace('-', ' ').replace('—', ' ').replace('─', ' ').replace('―',' ').split()
+    #             except Exception:
+    #                 pass
+    #             antonym_dict[word1].add(word2)
+    #             antonym_dict[word2].add(word1)
+    #         return antonym_dict
+    #
+    #     if self.__antonym_dict is None:
+    #         self.__antonym_dict = generate_antonym_dict('dictionary/dict_antonym.txt')
+    #
+    #     words_and_pos = self.get_word_pos(sent, self.get_pos_tag(sent))
+    #
+    #     ret = []
+    #     for word, pos in words_and_pos:
+    #         antonyms = []
+    #         if self.normalize_pos(pos) is not None:
+    #             antonyms = list(self.__antonym_dict[word])
+    #         ret.append(antonyms)
+    #
+    #     return ret
 
     @staticmethod
     def normalize_pos(pos):
