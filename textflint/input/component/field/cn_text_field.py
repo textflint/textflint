@@ -344,3 +344,12 @@ class CnTextField(Field):
         """
         return self.replace_at_indices([index], [new_items])
 
+    def replace_mask(self, values):
+        if not isinstance(values, list):
+            raise ValueError(f"Cant replace mask values with {values}")
+        if len(values) != len(self.tokens):
+            raise ValueError(f"Mask values length {len(values)} "
+                             f"unequal with words length {len(self.words)}")
+
+        for index, value in enumerate(values):
+            self.set_mask(index, value)
