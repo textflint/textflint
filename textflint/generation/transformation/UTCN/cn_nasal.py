@@ -7,14 +7,14 @@ __all__ = ['CnNasal']
 
 import random
 from copy import copy
-from ...transformation import WordSubstitute
+from ...transformation import CnWordSubstitute
 
 from pypinyin import lazy_pinyin
 from Pinyin2Hanzi import DefaultHmmParams
 from Pinyin2Hanzi import viterbi
 
 hmmparams = DefaultHmmParams()
-class CnNasal(WordSubstitute):
+class CnNasal(CnWordSubstitute):
     r"""
     Transforms an input by replacing its tokens with words of mask language
     predicted.
@@ -59,45 +59,7 @@ class CnNasal(WordSubstitute):
         return 'CNNASAL'
 
 
-    def _transform(self, sample, field='x', n=1, **kwargs):
-        r"""
-        Transform text string according field.
-
-        :param Sample sample: input data, normally one data component.
-        :param str field: indicate which field to apply transformation
-        :param int n: number of generated samples
-        :param kwargs:
-        :return list trans_samples: transformed sample list.
-
-        """
-        tokens = sample.get_tokens(field)
-        tokens_mask = sample.get_mask(field)
-
-        #find legal indices
-        legal_indices = self.skip_aug(tokens, tokens_mask)
-
-        if not legal_indices:
-            return []
-
-        new_tokens = []
-        for index in legal_indices:
-            new_token_list  = self._get_candidates(tokens[index],n)
-            if new_token_list is not None:
-                for new_token in new_token_list:
-                    new_tokens.append((new_token,index))
-
-        trans_samples = []
-
-        for i in range(len(new_tokens)):
-            if i >= n:
-                break
-            trans_samples.append(
-                sample.unequal_replace_field_at_indices(field, [new_tokens[i][1]], [new_tokens[i][0]]))
-
-        return trans_samples
-
-
-    def _get_candidates(self, token, n):
+    def _get_candidates(self, word, pos=None, n=5, **kwargs):
         r"""
         Get candidates from MLM model.
 
@@ -108,23 +70,34 @@ class CnNasal(WordSubstitute):
         :param int n: candidates number
         :return: list candidates
         """
-        pinyin = lazy_pinyin(token)[0]
-        if pinyin =='en' or pinyin =='an' or pinyin =='ang':
-            return None
-        if len(pinyin) >= 2 and (pinyin[-2:] =='in' or pinyin[-2:] =='en' or pinyin[-2:] =='an' ):
-            pinyin = pinyin+ 'g'
-        elif len(pinyin) >= 3 and (pinyin[-3:] =='ing' or pinyin[-3:] =='eng' or pinyin[-2:] =='ang' ):
-            pinyin = pinyin[:-1]
-        else:
-            return None
-        result = viterbi(hmm_params=hmmparams, observations=[pinyin], path_num=n + 1)
+        pinyins = lazy_pinyin(word)
+        new_pinyins = []
+        for pinyin in pinyins:
+            if ('eng' in pinyin):
+                pinyin = pinyin.replace('eng','en')
+            elif ('en' in pinyin) and pinyin != 'en':
+                pinyin = pinyin.replace('en','eng')
 
+            if ('ang' in pinyin):
+                pinyin = pinyin.replace('ang','an')
+            elif ('an' in pinyin):
+                pinyin = pinyin.replace('an','ang')
+
+            if ('ing' in pinyin):
+                pinyin = pinyin.replace('ing','in')
+            elif ('in' in pinyin):
+                pinyin = pinyin.replace('in','ing')
+            new_pinyins.append(pinyin)
+        try:
+            result = viterbi(hmm_params=hmmparams, observations=new_pinyins, path_num=n + 1)
+        except:
+            return []
         ret = []
         for i in result:
-            if ''.join(i.path) != token:
+            if ''.join(i.path) != word:
                 ret.append(''.join(i.path))
         return ret
 
-    def skip_aug(self, tokens, mask, pos=None):
-        return self.pre_skip_aug(tokens, mask)
+    def skip_aug(self, words, words_indices, tokens, mask, **kwargs):
+        return self.pre_skip_aug(words, words_indices, tokens, mask)
 

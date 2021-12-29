@@ -72,10 +72,10 @@ class AppendIrr(Transformation):
     def _get_beginnings(self, n):
         beginnings = self.sample_num(self.beginnings, n)
         return [self.cn_processor.tokenize(
-            beginning) for beginning in beginnings]
+            beginning,cws=False) for beginning in beginnings]
 
     def _get_proverbs(self, n):
         proverbs = self.sample_num(self.proverbs, n)
 
-        return [self.cn_processor.tokenize(proverb) for proverb in proverbs]
+        return [self.cn_processor.tokenize(proverb,cws=False) for proverb in proverbs]
 

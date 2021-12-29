@@ -82,14 +82,14 @@ class BackTrans(Transformation):
             self.get_model()
         text = sample.get_text(field)
         # translate
-        input_ids = self.from_tokenizer.encode(text, return_tensors="pt")
+        input_ids = self.from_tokenizer.encode(text, return_tensors="pt",truncation = True, max_length= 512)
         input_ids = input_ids.to(self.device)
         outputs = self.from_model.generate(input_ids)
         translated_text = self.from_tokenizer.decode(
             outputs[0], skip_special_tokens=True)
         # back_translate
         input_ids = self.to_tokenizer.encode(
-            translated_text, return_tensors="pt")
+            translated_text, return_tensors="pt",truncation = True, max_length= 512)
         input_ids = input_ids.to(self.device)
         outputs = self.to_model.generate(input_ids)
         back_translated_text = self.to_tokenizer.decode(
