@@ -41,6 +41,9 @@ NLP_TASK_MAP = {
     'RE': 'Relation Extraction',
     'COREF': 'Coreference resolution',
     'WSD': 'Word Sense Disambiguation',
+
+    'UTCN':'Chinese Universal transform',
+    'MRCCN': 'Chinese Machine Reading Comprehension',
 }
 
 TRANSFORM_FIELDS = {
@@ -57,6 +60,9 @@ TRANSFORM_FIELDS = {
     'RE': 'x',
     'COREF': 'x',
     'WSD': 'sentence',
+
+    'UTCN':'x',
+    'MRCCN': 'context',
 }
 TASK_SUBPOPULATION_PATH = dict(
     (task, os.path.join(SUBPOPULATION_PATH, task))
@@ -76,9 +82,30 @@ UT_SUBPOPULATIONS = [
     "PrejudiceSubPopulation"
 ]
 ALLOWED_SUBPOPULATIONS = {
-    key: copy.copy(UT_SUBPOPULATIONS) for key in NLP_TASK_MAP if key != 'CWS'
+    key: copy.copy(UT_SUBPOPULATIONS) for key in NLP_TASK_MAP if key != 'CWS' and key != 'UTCN' and key != 'MRCCN'
 }
 ALLOWED_SUBPOPULATIONS['CWS'] = []
+ALLOWED_SUBPOPULATIONS['UTCN'] = []
+ALLOWED_SUBPOPULATIONS['MRCCN'] = []
+
+
+UTCN_TRANSFORMATIONS = [
+    'AppendIrr',
+    'BackTrans',
+    'CnNasal',
+    'CnSwapSynWordEmbedding',
+    'InsertAdv',
+    'MLMSuggestion',
+    'CnSwapNum',
+    'CnSwapNamedEnt',
+    'CnSpellingError',
+    'CnPunctuation',
+    'CnPrejudice',
+    'CnDigit2Char',
+    'CnHomophones',
+    'CnSynonym',
+    'CnAntonym',
+]
 
 UT_TRANSFORMATIONS = [
     'InsertAdv',
@@ -102,6 +129,7 @@ UT_TRANSFORMATIONS = [
     'SwapSynWordNet',
     'Prejudice'
 ]
+
 
 UNMATCH_UT_TRANSFORMATIONS = {
     'UT': [],
@@ -142,6 +170,14 @@ UNMATCH_UT_TRANSFORMATIONS = {
     'WSD': [
         'BackTrans',
         'Prejudice'
+    ],
+
+    'UTCN': [],
+    'MRCCN': [
+        'CnSwapNum',
+        'CnAntonym',
+        'CnSwapNamedEnt',
+        'BackTrans',
     ],
 }
 
@@ -214,7 +250,16 @@ TASK_TRANSFORMATIONS = {
     'WSD': [
         'SwapTarget',
     ],
+
+    'UTCN':UTCN_TRANSFORMATIONS,
+    'MRCCN': [
+        'ModifyPos',
+        'PerturbAnswer',
+        'PerturbQuestion',
+    ],
+
 }
+
 
 # indicate allowed transformations of specific task
 ALLOWED_TRANSFORMATIONS = {
@@ -222,6 +267,13 @@ ALLOWED_TRANSFORMATIONS = {
               ^ set(UNMATCH_UT_TRANSFORMATIONS[key]))
     for key in TASK_TRANSFORMATIONS
 }
+
+ALLOWED_cn_TRANSFORMATIONS = {
+    key: list(set(TASK_TRANSFORMATIONS[key] + UTCN_TRANSFORMATIONS)
+              ^ set(UNMATCH_UT_TRANSFORMATIONS[key]))
+    for key in TASK_TRANSFORMATIONS
+}
+
 
 ALLOWED_VALIDATORS = {
     key: [
@@ -294,6 +346,12 @@ CN_CORENLP_ENTITY_MAP = {
     'Ni': 'ORGANIZATION',
     'Ns': 'LOCATION'
 }
+CN_LOC_PATH = 'UT_DATA_CN/cn_loc.json'
+CN_ORG_PATH = 'UT_DATA_CN/cn_organizations.json'
+CN_NAME_PATH = 'UT_DATA_CN/names.json'
+
+CN_PREJUDICE_WORD_PATH = 'UT_DATA_CN/prejudice.txt'
+CN_LOC2IDX_PATH = 'UT_DATA_CN/cn_loc2idx.txt'
 
 ENTITIES_PATH = 'UT_DATA/lop_entities.json'
 #cn_file_path

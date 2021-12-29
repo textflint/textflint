@@ -1,7 +1,7 @@
 import unittest
 
 from textflint.input.component.sample import MRCCnSample
-from textflint.generation.transformation.MRC_cn import PerturbAnswer
+from textflint.generation.transformation.MRCCN import PerturbAnswer
 import random
 seed = 123
 random.seed(seed)

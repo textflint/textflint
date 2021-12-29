@@ -194,9 +194,9 @@ class MRCCnSample(CnSample):
         else:
             if not self.is_legal():
                 raise ValueError("Answer spans mismatch answer text.")
-            spans = self.convert_idx(self.context.text, self.context.words)
+            spans = self.convert_idx(self.context.text, self.context.tokens)
             answers = [{'text': answer['text'],
-                        'answer_start': spans[answer['start']][0]}
+                        'answer_start': answer['start']}
                        for answer in self.answers]
         return {
             'context': self.context.text,

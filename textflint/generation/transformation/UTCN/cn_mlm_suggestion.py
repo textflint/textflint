@@ -171,6 +171,8 @@ class MLMSuggestion(CnWordSubstitute):
             if candidates:
                 candidates_indices.append(legal_indices[index])
                 candidates_list.append(candidates)
+            if index > n*3:
+                break
         return candidates_list, candidates_indices
 
 
@@ -191,8 +193,12 @@ class MLMSuggestion(CnWordSubstitute):
 
         word_length = len(word)
         mask_sentence = '[MASK]'*word_length
+
+        if word_position[1] >510:
+            return []
+
         new_text = text[:word_position[0]]+mask_sentence + text[word_position[1]:]
-        new_text_tensor = self.tokenizer(new_text,return_tensors="pt",padding = True)
+        new_text_tensor = self.tokenizer(new_text,return_tensors="pt",truncation = True, max_length= 512)
 
 
         with torch.no_grad():

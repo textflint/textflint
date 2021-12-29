@@ -1,6 +1,6 @@
 import unittest
 
-from textflint.input.component.sample.ut_cnsample import *
+from textflint.input.component.sample.utcn_sample import *
 
 sample = UTCnSample({'x': '今天天气很好。', 'y': 1})
 

@@ -6,7 +6,7 @@ SwapNamedEnt substitute class
 __all__ = ['CnSwapNamedEnt']
 
 from ..transformation import Transformation
-from ....common.settings import ENTITIES_PATH, CN_CORENLP_ENTITY_MAP
+from ....common.settings import CN_CORENLP_ENTITY_MAP, CN_NAME_PATH, CN_LOC_PATH, CN_ORG_PATH
 from ....common.utils.load import json_loader
 from ....common.utils.list_op import trade_off_sub_words
 from ....common.utils.install import download_if_needed
@@ -18,21 +18,21 @@ class CnSwapNamedEnt(Transformation):
 
     """
     def __init__(
-        self,
-        entity_res=None,
-        **kwargs
+            self,
+            entity_res=None,
+            **kwargs
     ):
         r"""
         :param dict entity_res: dic of categories and their entities.
         """
         super().__init__()
-        entities_path = entity_res if entity_res else download_if_needed(
-            ENTITIES_PATH)
-        self.entities_dic = json_loader(entities_path)
+        name_path = download_if_needed(CN_NAME_PATH)
+        loc_path = download_if_needed(CN_LOC_PATH)
+        org_path = download_if_needed(CN_ORG_PATH)
         self.entities_dic = {
-            'PERSON': ['小明', '汤姆', '马云'],
-            'LOCATION': ['北京', '上海', '广州'],
-            'ORGANIZATION': ['阿里', '腾讯', '美团'],
+            'PERSON': json_loader(name_path)['name'],
+            'LOCATION': json_loader(loc_path),
+            'ORGANIZATION': json_loader(org_path),
         }
 
     def __repr__(self):

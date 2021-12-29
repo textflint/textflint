@@ -1,8 +1,10 @@
 import unittest
 
+import random
 from textflint.input.component.sample import UTCnSample
-from textflint.generation.transformation.UT_cn import InsertAdv
+from textflint.generation.transformation.UTCN import InsertAdv
 
+random.seed(100)
 sent1 = '那只敏捷的棕色狐狸跳过了那只懒惰的狗。'
 data_sample = UTCnSample({'x': sent1, 'y': "negative"})
 trans_method = InsertAdv()
@@ -11,8 +13,8 @@ trans_method = InsertAdv()
 class TestAddAdverb(unittest.TestCase):
     def test_transformation(self):
         # test the change num
-        change_sample = trans_method.transform(data_sample, n=10)
-        self.assertEqual(10, len(change_sample))
+        change_sample = trans_method.transform(data_sample, n=5)
+        self.assertEqual(5, len(change_sample))
 
         special_sample = UTCnSample({'x': '', 'y': "negative"})
         self.assertEqual([], trans_method.transform(special_sample))

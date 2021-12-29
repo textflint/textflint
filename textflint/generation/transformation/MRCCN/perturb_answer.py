@@ -8,7 +8,7 @@ from copy import deepcopy
 
 from ....common.settings import ORIGIN
 from ..transformation import Transformation
-from ..UT_cn import CnSwapSynWordEmbedding
+from ..UTCN import CnSwapSynWordEmbedding
 from ....input.component.sample import MRCCnSample,UTCnSample
 from ....common.settings import CN_EMBEDDING_PATH
 from ....common.utils.load import json_lines_loader

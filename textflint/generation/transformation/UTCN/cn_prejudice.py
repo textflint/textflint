@@ -10,10 +10,9 @@ import random
 from ..transformation import Transformation
 from ....common.utils.file_io import read_json
 from ....common.utils.list_op import descartes
-from ....common.utils.load import plain_lines_loader
+from ....common.utils.load import plain_lines_loader, json_loader
 from ....common.utils.install import download_if_needed
-from ....common.settings import PREJUDICE_PATH, PREJUDICE_WORD_PATH, \
-    PREJUDICE_LOC_PATH, PREJUDICE_LOC2IDX
+from ....common.settings import PREJUDICE_LOC2IDX, CN_NAME_PATH, CN_PREJUDICE_WORD_PATH, CN_LOC2IDX_PATH
 
 
 class CnPrejudice(Transformation):
@@ -22,10 +21,10 @@ class CnPrejudice(Transformation):
 
     """
     def __init__(
-        self,
-        change_type='Loc',
-        prejudice_tendency=None,
-        **kwargs
+            self,
+            change_type='Loc',
+            prejudice_tendency=None,
+            **kwargs
     ):
         r"""
         :param str change_type: change type, only support ['Name', 'Loc']
@@ -44,19 +43,24 @@ class CnPrejudice(Transformation):
                 raise ValueError(
                     'Prejudice tendency not support name type {0}, '
                     'please choose change type from woman and man'.
-                    format(change_type))
+                        format(change_type))
             self.type = self.prejudice_tendency
-            # self.man_name, self.woman_name = self.get_data(
-            #     download_if_needed(PREJUDICE_PATH))
             # self.word = self.get_word(
             #     download_if_needed(PREJUDICE_WORD_PATH),
             #     prejudice_tendency)
-            self.man_name = ['小明', '小强', '小刚']
-            self.woman_name = ['小丽', '小娜']
-            self.word = {
-                '他': '她',
-                '他的': '她的',
-            }
+            name_path = download_if_needed(CN_NAME_PATH)
+            name_dict = json_loader(name_path)
+            self.man_name = name_dict['man_name']
+            self.woman_name = name_dict['woman_name']
+
+            self.word = {}
+            prejudice_word_path = download_if_needed(CN_PREJUDICE_WORD_PATH)
+            f = open(prejudice_word_path, encoding='utf-8')
+            lines = f.readlines()
+            for line in lines:
+                line = line.strip().split()
+                self.word[line[0]] = line[1]
+
         elif change_type == 'Loc':
             self.flag_type = False
             if not prejudice_tendency:
@@ -72,11 +76,18 @@ class CnPrejudice(Transformation):
                         'Japan,India'.format(prejudice_type))
             self.prejudice_tendency = [PREJUDICE_LOC2IDX[i] for i in prejudice_tendency]
             self.max_len_loc = 0
-            self.loc2idx = {'纽约': 1, '华盛顿': 1, '巴黎': 2, '柏林': 2}
-            self.idx2loc = {
-                1: ['纽约', '华盛顿'],
-                2: ['巴黎', '柏林'],
-            }
+
+            from collections import defaultdict
+            self.loc2idx = {}
+            self.idx2loc = defaultdict(list)
+            loc2idx_path = download_if_needed(CN_LOC2IDX_PATH)
+            f = open(loc2idx_path, encoding='utf-8')
+            lines = f.readlines()
+            for line in lines:
+                line = line.strip().split('\t')
+                city, idx = line[0], int(line[1])
+                self.loc2idx[city] = idx
+                self.idx2loc[idx].append(city)
             self.type = ''.join([k[:2] for k in prejudice_tendency])
             self.prejudice_data = [
                 j for i in self.prejudice_tendency for j in self.idx2loc[i]]

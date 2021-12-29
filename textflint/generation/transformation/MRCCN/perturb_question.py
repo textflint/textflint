@@ -5,7 +5,7 @@ Perturb Answer with BackTrans or MLM
 __all__ = ['PerturbQuestion']
 
 from ..transformation import Transformation
-from ...transformation.UT_cn import BackTrans, MLMSuggestion
+from ...transformation.UTCN import BackTrans, MLMSuggestion
 
 
 class PerturbQuestion(Transformation):
