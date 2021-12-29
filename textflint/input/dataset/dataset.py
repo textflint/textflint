@@ -7,7 +7,7 @@ dataset: textflint dataset
 from tqdm import tqdm
 
 from ...common.utils import logger
-from ..component.sample import Sample
+from ..component.sample import Sample,CnSample
 from ...common.utils.load import task_class_load
 from ...common.settings import SAMPLE_PATH, NLP_TASK_MAP
 from ...common.utils.file_io import read_csv, read_json, save_csv, save_json
@@ -17,7 +17,7 @@ def get_sample_map():
     return task_class_load(SAMPLE_PATH,
                            [key.upper() for key in NLP_TASK_MAP.keys()],
                            Sample,
-                           filter_str='_sample')
+                           filter_str='_sample',other_base_class= CnSample)
 
 
 sample_map = get_sample_map()
@@ -132,7 +132,7 @@ class Dataset:
         """
         sample_id = 0
 
-        if isinstance(dataset, (Sample, list, dict)):
+        if isinstance(dataset, (Sample, CnSample, list, dict)):
             logger.info('******Start load!******')
 
             success_count = 0
@@ -222,7 +222,7 @@ class Dataset:
         """
         load_success = False
         # default Sample input with sample_id
-        if isinstance(data_sample, Sample):
+        if isinstance(data_sample, Sample) or isinstance(data_sample, CnSample):
             # different type would raise error
             if self.task.lower() not in data_sample.__repr__().lower():
                 logger.error(
@@ -324,7 +324,7 @@ class Dataset:
             for i in range(data_size):
                 norm_samples.append(
                     dict([(key, data_samples[key][i]) for key in keys]))
-        elif isinstance(data_samples, Sample):
+        elif isinstance(data_samples, (Sample,CnSample)):
             norm_samples = [data_samples]
         else:
             raise ValueError(
