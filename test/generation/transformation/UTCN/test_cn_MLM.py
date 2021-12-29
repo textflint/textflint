@@ -1,7 +1,7 @@
 import unittest
 
 from textflint.input.component.sample import UTCnSample
-from textflint.generation.transformation.UT_cn   import MLMSuggestion
+from textflint.generation.transformation.UTCN   import MLMSuggestion
 
 
 class TestMLM(unittest.TestCase):

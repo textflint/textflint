@@ -1,7 +1,7 @@
 import unittest
 
 from textflint.input.component.sample import UTCnSample
-from textflint.generation.transformation.UT_cn import BackTrans
+from textflint.generation.transformation.UTCN import BackTrans
 
 
 class TestBackTrans(unittest.TestCase):

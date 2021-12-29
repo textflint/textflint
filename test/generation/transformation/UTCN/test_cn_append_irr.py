@@ -2,7 +2,7 @@ import unittest
 import random
 
 from textflint.input.component.sample import UTCnSample
-from textflint.generation.transformation.UT_cn.cn_append_irr import *
+from textflint.generation.transformation.UTCN.cn_append_irr import *
 
 sent1 = '那只敏捷的棕色狐狸跳过了那只懒惰的狗。'
 data_sample = UTCnSample({'x': sent1, 'y': "negative"})
