@@ -227,8 +227,11 @@ class Generator(ABC):
         flint_type = Transformation if flint_path is TASK_TRANSFORMATION_PATH \
             else SubPopulation
         flint_classes = pkg_class_load(flint_path[self.task], flint_type)
-        if self.task != 'UT' and self.task != 'CWS':
+        if self.task != 'UT' and self.task != 'CWS' and 'CN' in self.task:
+            flint_classes.update(pkg_class_load(flint_path['UTCN'], flint_type))
+        elif self.task != 'UT' and self.task != 'CWS':
             flint_classes.update(pkg_class_load(flint_path['UT'], flint_type))
+
 
         if isinstance(flint_methods, list):
             if len(flint_methods) == 0:

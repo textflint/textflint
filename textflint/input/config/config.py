@@ -12,7 +12,7 @@ import copy
 from ...common.utils.logger import logger
 from ...common.settings import NLP_TASK_MAP, \
     ALLOWED_TRANSFORMATIONS, TRANSFORM_FIELDS, \
-    ALLOWED_SUBPOPULATIONS, ALLOWED_VALIDATORS
+    ALLOWED_SUBPOPULATIONS, ALLOWED_VALIDATORS,ALLOWED_cn_TRANSFORMATIONS
 
 
 class Config:
@@ -70,11 +70,16 @@ class Config:
         self.fields = fields if fields else TRANSFORM_FIELDS[self.task]
         self.flint_model = flint_model
         self.random_seed = random_seed
-
-        self.trans_methods = \
-            self.get_generate_methods(trans_methods,
-                                      ALLOWED_TRANSFORMATIONS,
-                                      allow_pipeline=True)
+        if len(task) >=2 and task[-2:] == 'cn':
+            self.trans_methods = \
+                self.get_generate_methods(trans_methods,
+                                          ALLOWED_cn_TRANSFORMATIONS,
+                                          allow_pipeline=True)
+        else:
+            self.trans_methods = \
+                self.get_generate_methods(trans_methods,
+                                          ALLOWED_TRANSFORMATIONS,
+                                          allow_pipeline=True)
         self.trans_config = trans_config \
             if trans_config else {}
         # TODO, support the function. default not return origin and return unk
