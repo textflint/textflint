@@ -1,7 +1,7 @@
-textflint.generation\_layer.subpopulation.UT.prejudice
+textflint.generation.subpopulation.UT.prejudice
 =============================================================
 
-.. automodule:: textflint.generation_layer.subpopulation.UT.prejudice
+.. automodule:: textflint.generation.subpopulation.UT.prejudice
    :members:
    :undoc-members:
    :show-inheritance:

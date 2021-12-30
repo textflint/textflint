@@ -1,7 +1,7 @@
-textflint.input\_layer.config.config
+textflint.input.config.config
 ===========================================
 
-.. automodule:: textflint.input_layer.config.config
+.. automodule:: textflint.input.config.config
    :members:
    :undoc-members:
    :show-inheritance:

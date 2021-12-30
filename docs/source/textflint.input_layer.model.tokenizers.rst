@@ -1,7 +1,7 @@
-textflint.input\_layer.model.tokenizers
+textflint.input.model.tokenizers
 ===============================================
 
-.. automodule:: textflint.input_layer.model.tokenizers
+.. automodule:: textflint.input.model.tokenizers
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,4 +12,4 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
-   textflint.input_layer.model.tokenizers.glove_tokenizer
+   textflint.input.model.tokenizers.glove_tokenizer

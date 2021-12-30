@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.POS
+textflint.generation.transformation.POS
 ======================================================
 
-.. automodule:: textflint.generation_layer.transformation.POS
+.. automodule:: textflint.generation.transformation.POS
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,5 +12,5 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
-   textflint.generation_layer.transformation.POS.multi_pos_swap
-   textflint.generation_layer.transformation.POS.prefix_swap
+   textflint.generation.transformation.POS.multi_pos_swap
+   textflint.generation.transformation.POS.prefix_swap

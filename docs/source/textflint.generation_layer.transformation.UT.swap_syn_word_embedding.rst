@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.UT.swap\_syn\_word\_embedding
+textflint.generation.transformation.UT.swap\_syn\_word\_embedding
 ===============================================================================
 
-.. automodule:: textflint.generation_layer.transformation.UT.swap_syn_word_embedding
+.. automodule:: textflint.generation.transformation.UT.swap_syn_word_embedding
    :members:
    :undoc-members:
    :show-inheritance:

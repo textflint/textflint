@@ -1,7 +1,7 @@
-textflint.generation\_layer.generator.generator
+textflint.generation.generator.generator
 ======================================================
 
-.. automodule:: textflint.generation_layer.generator.generator
+.. automodule:: textflint.generation.generator.generator
    :members:
    :undoc-members:
    :show-inheritance:

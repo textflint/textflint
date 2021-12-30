@@ -1,7 +1,7 @@
-textflint.generation\_layer.subpopulation.UT.phrase
+textflint.generation.subpopulation.UT.phrase
 ==========================================================
 
-.. automodule:: textflint.generation_layer.subpopulation.UT.phrase
+.. automodule:: textflint.generation.subpopulation.UT.phrase
    :members:
    :undoc-members:
    :show-inheritance:

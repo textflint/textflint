@@ -1,7 +1,7 @@
-textflint.generation\_layer.validator.sentence\_encoding
+textflint.generation.validator.sentence\_encoding
 ===============================================================
 
-.. automodule:: textflint.generation_layer.validator.sentence_encoding
+.. automodule:: textflint.generation.validator.sentence_encoding
    :members:
    :undoc-members:
    :show-inheritance:

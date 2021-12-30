@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.CWS.reduplication
+textflint.generation.transformation.CWS.reduplication
 ===================================================================
 
-.. automodule:: textflint.generation_layer.transformation.CWS.reduplication
+.. automodule:: textflint.generation.transformation.CWS.reduplication
    :members:
    :undoc-members:
    :show-inheritance:

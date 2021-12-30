@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.transformation
+textflint.generation.transformation.transformation
 ================================================================
 
-.. automodule:: textflint.generation_layer.transformation.transformation
+.. automodule:: textflint.generation.transformation.transformation
    :members:
    :undoc-members:
    :show-inheritance:

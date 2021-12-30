@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.UT.reverse\_neg
+textflint.generation.transformation.UT.reverse\_neg
 =================================================================
 
-.. automodule:: textflint.generation_layer.transformation.UT.reverse_neg
+.. automodule:: textflint.generation.transformation.UT.reverse_neg
    :members:
    :undoc-members:
    :show-inheritance:
