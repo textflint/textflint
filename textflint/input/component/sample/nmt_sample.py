@@ -69,7 +69,7 @@ class NMTSample(Sample):
 
     def dump(self):
         if not self.is_legal():
-            raise ValueError("Data sample " + str(self.data) + " is not legal, the sorce and target are same or their length of text is 0")
+            raise ValueError("Data sample " + str(self.data) + " is not legal, their length of text is 0")
         return {
             'source': self.source.text,
             'target': self.target.text,

@@ -17,7 +17,6 @@ class TestNMTSample(unittest.TestCase):
         self.assertRaises(AssertionError, NMTSample, {'source': [], 'target': []})
         self.assertRaises(AssertionError, NMTSample, {'source': 'the US', 'target': []})
         self.assertRaises(ValueError, NMTSample, {'source': 'the US', 'target': ''})
-        self.assertRaises(ValueError, NMTSample, {'source': 'the US', 'target': 'the US'})
         self.assertRaises(ValueError, NMTSample, {'source': '', 'target': ''})
 
     def test_get_words(self):
