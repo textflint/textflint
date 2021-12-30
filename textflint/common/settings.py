@@ -41,6 +41,7 @@ NLP_TASK_MAP = {
     'RE': 'Relation Extraction',
     'COREF': 'Coreference resolution',
     'WSD': 'Word Sense Disambiguation',
+    'NMT': 'Neural Machine Translation'
 }
 
 TRANSFORM_FIELDS = {
@@ -57,6 +58,7 @@ TRANSFORM_FIELDS = {
     'RE': 'x',
     'COREF': 'x',
     'WSD': 'sentence',
+    'NMT': ['source', 'target'],
 }
 TASK_SUBPOPULATION_PATH = dict(
     (task, os.path.join(SUBPOPULATION_PATH, task))
@@ -143,6 +145,19 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'BackTrans',
         'Prejudice'
     ],
+    'NMT': [
+        'AppendIrr',
+        'BackTrans',
+        'InsertAdv',
+        'MLMSuggestion',
+        'Prejudice',
+        'ReverseNeg',
+        'SwapAntWordNet',
+        'SwapNamedEnt',
+        'SwapNum',
+        'Tense',
+        'TwitterType'
+    ],
 }
 
 TASK_TRANSFORMATIONS = {
@@ -213,6 +228,11 @@ TASK_TRANSFORMATIONS = {
     ],
     'WSD': [
         'SwapTarget',
+    ],
+    'NMT': [
+        'ParallelTwitterType',
+        'SwapParallelNum',
+        'SwapParallelSameWord'
     ],
 }
 
