@@ -41,7 +41,7 @@ NLP_TASK_MAP = {
     'RE': 'Relation Extraction',
     'COREF': 'Coreference resolution',
     'WSD': 'Word Sense Disambiguation',
-
+    'NMT': 'Neural Machine Translation',
     'UTCN':'Chinese Universal transform',
     'MRCCN': 'Chinese Machine Reading Comprehension',
 }
@@ -60,7 +60,7 @@ TRANSFORM_FIELDS = {
     'RE': 'x',
     'COREF': 'x',
     'WSD': 'sentence',
-
+    'NMT': ['source', 'target'],
     'UTCN':'x',
     'MRCCN': 'context',
 }
@@ -171,7 +171,19 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'BackTrans',
         'Prejudice'
     ],
-
+    'NMT': [
+        'AppendIrr',
+        'BackTrans',
+        'InsertAdv',
+        'MLMSuggestion',
+        'Prejudice',
+        'ReverseNeg',
+        'SwapAntWordNet',
+        'SwapNamedEnt',
+        'SwapNum',
+        'Tense',
+        'TwitterType'
+    ],
     'UTCN': [],
     'MRCCN': [
         'CnSwapNum',
@@ -250,7 +262,11 @@ TASK_TRANSFORMATIONS = {
     'WSD': [
         'SwapTarget',
     ],
-
+    'NMT': [
+        'ParallelTwitterType',
+        'SwapParallelNum',
+        'SwapParallelSameWord'
+    ],
     'UTCN':UTCN_TRANSFORMATIONS,
     'MRCCN': [
         'ModifyPos',

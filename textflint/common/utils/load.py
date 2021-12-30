@@ -199,3 +199,12 @@ def load_morfessor_model(path):
     model = io.read_any_model(tmp_file_.name)
     os.remove(tmp_file_.name)
     return model
+
+
+# -------------------------NMT load-------------------------
+def nmt_dataset_loader(source_pref, target_pref, source_lang, target_lang):
+    sources = plain_lines_loader(source_pref + '.' + source_lang)
+    targets = plain_lines_loader(target_pref + '.' + target_lang)
+    assert len(sources) == len(targets), "The number of sources is not equal to targets," + \
+        "len(sources)={}, len(targets)={}".format(len(sources), len(targets))
+    return sources, targets
