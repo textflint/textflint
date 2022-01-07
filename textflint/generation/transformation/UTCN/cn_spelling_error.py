@@ -26,11 +26,10 @@ class CnSpellingError(CnWordSubstitute):
             self,
             trans_min=1,
             trans_max=10,
-            trans_p=0.3,
+            trans_p=0.1,
             stop_words=None,
             include_reverse=True,
             rules_path=None,
-            get_pos=None,
             **kwargs
     ):
         r"""
@@ -54,8 +53,9 @@ class CnSpellingError(CnWordSubstitute):
             trans_max=trans_max,
             trans_p=trans_p,
             stop_words=stop_words,
-            get_pos=get_pos
         )
+        self.get_pos=True
+
 
     def __repr__(self):
         return 'CnSpellingError'

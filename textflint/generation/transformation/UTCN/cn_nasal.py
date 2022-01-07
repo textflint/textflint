@@ -27,7 +27,7 @@ class CnNasal(CnWordSubstitute):
             self,
             trans_min=1,
             trans_max=10,
-            trans_p=0.2,
+            trans_p=0.1,
             stop_words=None,
             **kwargs
     ):

@@ -24,6 +24,10 @@ class CnPrejudice(Transformation):
             self,
             change_type='Loc',
             prejudice_tendency=None,
+            trans_min=1,
+            trans_max=10,
+            trans_p=0.1,
+            stop_words=None,
             **kwargs
     ):
         r"""
@@ -32,7 +36,12 @@ class CnPrejudice(Transformation):
             tendency according to change_type
 
         """
-        super().__init__()
+        super().__init__(
+            trans_min=trans_min,
+            trans_max=trans_max,
+            trans_p=trans_p,
+            stop_words=stop_words,
+        )
         if change_type == 'Name':
             self.flag_type = True
             if not prejudice_tendency or prejudice_tendency == 'woman':

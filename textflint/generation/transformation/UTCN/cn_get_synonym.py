@@ -16,10 +16,20 @@ class CnSynonym(CnWordSubstitute):
     """
     def __init__(
         self,
-        get_pos=None,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words=None,
         **kwargs
     ):
-        super().__init__(get_pos=get_pos)
+        super().__init__(
+            trans_min=trans_min,
+            trans_max=trans_max,
+            trans_p=trans_p,
+            stop_words=stop_words,
+        )
+        self.get_pos=True
+
         self.cn_processor = CnProcessor()
 
     def __repr__(self):
