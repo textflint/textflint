@@ -25,6 +25,7 @@ class CnHomophones(CnWordSubstitute):
         trans_max=10,
         trans_p=0.3,
         stop_words=None,
+        islist=False,
         **kwargs
     ):
         super().__init__(
@@ -33,7 +34,8 @@ class CnHomophones(CnWordSubstitute):
             trans_p=trans_p,
             stop_words=stop_words,
         )
-        self.get_pos=True
+        self.get_pos = True
+        self.islist = islist
 
     def __repr__(self):
         return 'CnHomophones'
@@ -57,7 +59,10 @@ class CnHomophones(CnWordSubstitute):
 
     def homophones(self, word, n):
         pinyin = lazy_pinyin(word)
-        result = viterbi(hmm_params=hmmparams, observations=pinyin, path_num=n + 1)
+        try:
+            result = viterbi(hmm_params=hmmparams, observations=pinyin, path_num=n + 1)
+        except Exception:
+            return []
         ret = []
         for i in result:
             if ''.join(i.path) != word:
@@ -65,5 +70,8 @@ class CnHomophones(CnWordSubstitute):
         return ret
 
     def skip_aug(self, words, words_indices, tokens, mask, **kwargs):
-        return self.pre_skip_aug(words, words_indices, tokens, mask)
+        if self.islist:
+            return self.pre_skip_aug_list(words, words_indices, tokens, mask)
+        else:
+            return self.pre_skip_aug(words, words_indices, tokens, mask)
 

@@ -29,6 +29,7 @@ class CnNasal(CnWordSubstitute):
             trans_max=10,
             trans_p=0.1,
             stop_words=None,
+            islist=False,
             **kwargs
     ):
         r"""
@@ -54,6 +55,7 @@ class CnNasal(CnWordSubstitute):
             trans_p=trans_p,
             stop_words=stop_words
         )
+        self.islist = islist
 
     def __repr__(self):
         return 'CNNASAL'
@@ -99,5 +101,8 @@ class CnNasal(CnWordSubstitute):
         return ret
 
     def skip_aug(self, words, words_indices, tokens, mask, **kwargs):
-        return self.pre_skip_aug(words, words_indices, tokens, mask)
+        if self.islist:
+            return self.pre_skip_aug_list(words, words_indices, tokens, mask)
+        else:
+            return self.pre_skip_aug(words, words_indices, tokens, mask)
 

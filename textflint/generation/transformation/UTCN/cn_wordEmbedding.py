@@ -23,6 +23,7 @@ class CnSwapSynWordEmbedding(CnWordSubstitute):
             trans_max=10,
             trans_p=0.1,
             stop_words=None,
+            islist=False,
             **kwargs
     ):
         super().__init__(
@@ -32,6 +33,7 @@ class CnSwapSynWordEmbedding(CnWordSubstitute):
             stop_words=stop_words
         )
         self.get_pos = True
+        self.islist = islist
         self.sim_dic = json_lines_loader(download_if_needed(CN_EMBEDDING_PATH))[0]
 
     def __repr__(self):
@@ -59,5 +61,8 @@ class CnSwapSynWordEmbedding(CnWordSubstitute):
             return []
 
     def skip_aug(self, words, words_indices, tokens, mask, **kwargs):
-        return self.pre_skip_aug(words, words_indices, tokens, mask)
+        if self.islist:
+            return self.pre_skip_aug_list(words, words_indices, tokens, mask)
+        else:
+            return self.pre_skip_aug(words, words_indices, tokens, mask)
 
