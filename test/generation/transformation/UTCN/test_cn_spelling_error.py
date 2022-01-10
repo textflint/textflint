@@ -8,7 +8,7 @@ sample = UTCnSample({
     'x': '我接受了她的礼物。',
     'y': 1,
 })
-trans_method = CnSpellingError(get_pos=True)
+trans_method = CnSpellingError()
 
 
 class TestSpellingError(unittest.TestCase):

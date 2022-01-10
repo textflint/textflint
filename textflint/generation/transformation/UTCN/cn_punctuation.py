@@ -17,6 +17,10 @@ class CnPunctuation(Transformation):
     """
     def __init__(
         self,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words = None,
         add_bracket=True,
         **kwargs
     ):
@@ -25,7 +29,12 @@ class CnPunctuation(Transformation):
             beginning and end of sentence.
 
         """
-        super().__init__()
+        super().__init__(
+            trans_min=trans_min,
+            trans_max=trans_max,
+            trans_p=trans_p,
+            stop_words=stop_words,
+        )
         self.add_bracket = add_bracket
 
     def __repr__(self):

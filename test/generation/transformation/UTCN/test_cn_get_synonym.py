@@ -7,7 +7,7 @@ sample = UTCnSample({
     'x': '我接受了她的礼物。',
     'y': 1,
 })
-trans_method = CnSynonym(get_pos=True)
+trans_method = CnSynonym()
 
 
 class TestSynonym(unittest.TestCase):
@@ -21,9 +21,6 @@ class TestSynonym(unittest.TestCase):
         # test if the item change
         change_sample = trans_method.transform(sample, n=3)
         self.assertEqual(3, len(change_sample))
-        for s in change_sample:
-            self.assertEqual(sample.get_tokens('x')[:1], s.get_tokens('x')[:1])
-            self.assertEqual(sample.get_tokens('x')[-6:], s.get_tokens('x')[-6:])
 
 
 if __name__ == "__main__":

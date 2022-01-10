@@ -36,6 +36,7 @@ class MLMSuggestion(CnWordSubstitute):
             trans_max=10,
             trans_p=0.2,
             stop_words=None,
+            islist=False,
             **kwargs
     ):
         r"""
@@ -69,6 +70,7 @@ class MLMSuggestion(CnWordSubstitute):
         self.tokenizer = None
         self.model = None
         self.pos_allowed_token_id = None
+        self.islist = islist
 
     def __repr__(self):
         return 'MLMSuggestion'
@@ -211,4 +213,7 @@ class MLMSuggestion(CnWordSubstitute):
 
 
     def skip_aug(self, words, words_indices, tokens, mask, **kwargs):
-        return self.pre_skip_aug(words, words_indices, tokens, mask)
+        if self.islist:
+            return self.pre_skip_aug_list(words, words_indices, tokens, mask)
+        else:
+            return self.pre_skip_aug(words, words_indices, tokens, mask)

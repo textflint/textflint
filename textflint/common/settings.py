@@ -44,6 +44,7 @@ NLP_TASK_MAP = {
     'NMT': 'Neural Machine Translation',
     'UTCN':'Chinese Universal transform',
     'MRCCN': 'Chinese Machine Reading Comprehension',
+    'DPCN': 'Chinese Dependency Parsing'
 }
 
 TRANSFORM_FIELDS = {
@@ -63,6 +64,7 @@ TRANSFORM_FIELDS = {
     'NMT': ['source', 'target'],
     'UTCN':'x',
     'MRCCN': 'context',
+    'DPCN': 'x'
 }
 TASK_SUBPOPULATION_PATH = dict(
     (task, os.path.join(SUBPOPULATION_PATH, task))
@@ -87,6 +89,7 @@ ALLOWED_SUBPOPULATIONS = {
 ALLOWED_SUBPOPULATIONS['CWS'] = []
 ALLOWED_SUBPOPULATIONS['UTCN'] = []
 ALLOWED_SUBPOPULATIONS['MRCCN'] = []
+ALLOWED_SUBPOPULATIONS['DPCN'] = []
 
 
 UTCN_TRANSFORMATIONS = [
@@ -191,6 +194,7 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'CnSwapNamedEnt',
         'BackTrans',
     ],
+    'DPCN':[],
 }
 
 TASK_TRANSFORMATIONS = {
@@ -273,7 +277,7 @@ TASK_TRANSFORMATIONS = {
         'PerturbAnswer',
         'PerturbQuestion',
     ],
-
+    'DPCN': []
 }
 
 

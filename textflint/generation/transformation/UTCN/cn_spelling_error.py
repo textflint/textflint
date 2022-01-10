@@ -26,11 +26,11 @@ class CnSpellingError(CnWordSubstitute):
             self,
             trans_min=1,
             trans_max=10,
-            trans_p=0.3,
+            trans_p=0.1,
             stop_words=None,
             include_reverse=True,
             rules_path=None,
-            get_pos=None,
+            islist=False,
             **kwargs
     ):
         r"""
@@ -54,8 +54,10 @@ class CnSpellingError(CnWordSubstitute):
             trans_max=trans_max,
             trans_p=trans_p,
             stop_words=stop_words,
-            get_pos=get_pos
         )
+        self.get_pos = True
+        self.islist = islist
+
 
     def __repr__(self):
         return 'CnSpellingError'
@@ -77,7 +79,10 @@ class CnSpellingError(CnWordSubstitute):
         return candidates
 
     def skip_aug(self, words, words_indices, tokens, mask, **kwargs):
-        return self.pre_skip_aug(words, words_indices, tokens, mask)
+        if self.islist:
+            return self.pre_skip_aug_list(words, words_indices, tokens, mask)
+        else:
+            return self.pre_skip_aug(words, words_indices, tokens, mask)
 
     def spell(self, word):
         spell_error_rule = {

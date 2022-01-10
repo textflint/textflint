@@ -183,6 +183,34 @@ class CnWordSubstitute(Transformation):
 
         return results
 
+    def pre_skip_aug_list(self, words, words_indices, tokens, mask):
+        r"""
+        Skip the tokens in stop words list or punctuation list.
+
+        :param list tokens: the list of tokens
+        :param list mask: the list of mask
+                Indicates whether each word is allowed to be substituted.
+                ORIGIN is allowed, while TASK_MASK and MODIFIED_MASK is not.
+        :return list: List of possible substituted token index.
+
+        """
+        assert len(words) == len(mask)
+        results = []
+
+        for (start, end), word in zip(words_indices, words):
+            # skip punctuation
+            if word in ['。', '，', '！', '？']:
+                continue
+            # skip stopwords by list
+            if self.is_stop_words(word):
+                continue
+            if sum(mask[start:end]) != ORIGIN:
+                continue
+
+            results.append((start, end))
+
+        return results
+
     def get_trans_cnt(self, size):
         r"""
         Get the num of words/chars transformation.
