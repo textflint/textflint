@@ -7,7 +7,7 @@ sample = UTCnSample({
     'x': '我接受了她的礼物。',
     'y': 1,
 })
-trans_method = CnAntonym(get_pos=True)
+trans_method = CnAntonym()
 
 
 class TestAntonym(unittest.TestCase):

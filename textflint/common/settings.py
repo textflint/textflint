@@ -44,7 +44,8 @@ NLP_TASK_MAP = {
     'NMT': 'Neural Machine Translation',
     'UTCN':'Chinese Universal transform',
     'MRCCN': 'Chinese Machine Reading Comprehension',
-    'SACN': 'Chinese Sentiment Analysis'
+    'SACN': 'Chinese Sentiment Analysis',
+    'DPCN': 'Chinese Dependency Parsing'
 }
 
 TRANSFORM_FIELDS = {
@@ -89,6 +90,7 @@ ALLOWED_SUBPOPULATIONS = {
 ALLOWED_SUBPOPULATIONS['CWS'] = []
 ALLOWED_SUBPOPULATIONS['UTCN'] = []
 ALLOWED_SUBPOPULATIONS['MRCCN'] = []
+ALLOWED_SUBPOPULATIONS['DPCN'] = []
 
 
 UTCN_TRANSFORMATIONS = [

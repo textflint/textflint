@@ -17,9 +17,18 @@ class CnDigit2Char(CnWordSubstitute):
     """
     def __init__(
         self,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words=None,
+        islist=False,
         **kwargs
     ):
-        super().__init__()
+        super().__init__(            trans_min=trans_min,
+                                     trans_max=trans_max,
+                                     trans_p=trans_p,
+                                     stop_words=stop_words,)
+        self.islist = islist
 
     def __repr__(self):
         return 'CnDigit2Char'
@@ -70,5 +79,8 @@ class CnDigit2Char(CnWordSubstitute):
             return result[::-1]
 
     def skip_aug(self, words, words_indices, tokens, mask, **kwargs):
-        return self.pre_skip_aug(words, words_indices, tokens, mask)
+        if self.islist:
+            return self.pre_skip_aug_list(words, words_indices, tokens, mask)
+        else:
+            return self.pre_skip_aug(words, words_indices, tokens, mask)
 
