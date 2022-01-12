@@ -1,4 +1,5 @@
 from .generator import Generator
+from .nercn_generator import NERCNGenerator
 from .ut_generator import UTGenerator
 from .utcn_generator import UTCNGenerator
 from .mrccn_generator import MRCCNGenerator

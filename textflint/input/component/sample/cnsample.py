@@ -6,6 +6,8 @@ Base Chinese Sample Abstract Class
 import copy
 from abc import ABC, abstractmethod
 
+from textflint.input.component.field.list_field import ListField
+
 from ..field import CnTextField
 from ....common.settings import MODIFIED_MASK
 from ....common.preprocess.cn_processor import CnProcessor
@@ -239,7 +241,7 @@ class CnSample(ABC):
 
         sample = self.clone(self)
         field_obj = getattr(self, field)
-        assert isinstance(field_obj, (CnTextField,))
+        assert isinstance(field_obj, (CnTextField,ListField))
         rep_field = field_obj.replace_at_indices(indices, items)
         setattr(sample, field, rep_field)
 
@@ -316,7 +318,7 @@ class CnSample(ABC):
         sample = self.clone(self)
         field_obj = getattr(sample, field)
 
-        assert isinstance(field_obj, (CnTextField,))
+        assert isinstance(field_obj, (CnTextField,ListField))
         del_field = field_obj.delete_at_indices(indices)
         setattr(sample, field, del_field)
 
@@ -355,7 +357,7 @@ class CnSample(ABC):
         sample = self.clone(self)
 
         field_obj = getattr(sample, field)
-        assert isinstance(field_obj, (CnTextField,))
+        assert isinstance(field_obj, (CnTextField,ListField))
         rep_obj = field_obj.insert_before_indices(indices, items)
         setattr(sample, field, rep_obj)
 
@@ -391,7 +393,7 @@ class CnSample(ABC):
         sample = self.clone(self)
 
         field_obj = getattr(sample, field)
-        assert isinstance(field_obj, (CnTextField,))
+        assert isinstance(field_obj, (CnTextField,ListField))
         rep_obj = field_obj.insert_after_indices(indices, items)
         setattr(sample, field, rep_obj)
 
@@ -422,7 +424,7 @@ class CnSample(ABC):
         sample = self.clone(self)
 
         field_obj = getattr(sample, field)
-        assert isinstance(field_obj, (CnTextField,))
+        assert isinstance(field_obj, (CnTextField,ListField))
         rep_obj = field_obj.swap_at_index(first_index, second_index)
         setattr(sample, field, rep_obj)
 
