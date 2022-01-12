@@ -24,7 +24,7 @@ class TestNERCnSample(unittest.TestCase):
     def test_dump(self):
         self.assertEqual({'x': ['上', '海', '浦', '东', '开', '发', '与', '法', '制', '建', '设', '同', '步'],
                             'y': ['B-GPE','E-GPE','B-GPE','E-GPE','O','O','O','O','O','O','O','O','O'],
- '                          sample_id': None},
+                           'sample_id': None},
                          cnner_sample.dump())
 
 
