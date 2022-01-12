@@ -176,11 +176,12 @@ class NERCnSample(CnSample):
         sample = self.clone(self)
 
         offset = 0
+        entities_info = sorted(entities_info,key=lambda x: x['start'])
         for entity,candidate in zip(entities_info, candidates):
             
             rep_range = (entity['start']+offset, entity['end']+offset+1)
             candidate = list(candidate)
-            
+
             len_candidate = len(candidate)
             offset += (len_candidate - len(entity['entity']))
             ent_label = entity['tag']

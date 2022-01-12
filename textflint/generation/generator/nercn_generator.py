@@ -2,7 +2,7 @@ r"""
 NER Generator aims to apply NER data generation function
 ==========================================================
 """
-__all__ = ["NERGenerator"]
+__all__ = ["NERCNGenerator"]
 from tqdm import tqdm
 
 from ...common import logger
@@ -25,7 +25,7 @@ class NERCNGenerator(Generator):
     """
     def __init__(
         self,
-        task='NER',
+        task='NERCN',
         max_trans=1,
         fields='text',
         trans_methods=None,
