@@ -7,8 +7,7 @@ Generate some samples by templates
 """
 import sys
 import os
-import json
-import jieba
+
 # sys.path.append(os.getcwd())
 sys.path.insert(0, os.getcwd())
 print(os.getcwd())
