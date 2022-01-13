@@ -10,7 +10,6 @@ import os
 
 # sys.path.append(os.getcwd())
 sys.path.insert(0, os.getcwd())
-print(os.getcwd())
 from textflint.generation.transformation import Transformation
 from textflint.common.utils.c_overlap_templates import *
 from textflint.input.component.sample import SMCNSample
