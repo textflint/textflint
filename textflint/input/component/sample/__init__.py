@@ -15,3 +15,4 @@ from .absa_sample import ABSASample
 from .re_sample import RESample
 from .ner_sample import NERSample
 from .nmt_sample import NMTSample
+from .smcn_sample import SMCNSample
