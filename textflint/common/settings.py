@@ -45,6 +45,7 @@ NLP_TASK_MAP = {
     'UTCN':'Chinese Universal transform',
     'MRCCN': 'Chinese Machine Reading Comprehension',
     'DPCN': 'Chinese Dependency Parsing',
+    'SMCN':'Chinese Semantic Matching',
     'NERCN':'Chinese Named Entity Recognition',
 }
 
@@ -66,6 +67,7 @@ TRANSFORM_FIELDS = {
     'UTCN':'x',
     'MRCCN': 'context',
     'DPCN': 'x',
+    'SMCN': ['sentence1', 'sentence2'],
     
     'NERCN':'text',
 }
@@ -93,7 +95,11 @@ ALLOWED_SUBPOPULATIONS['CWS'] = []
 ALLOWED_SUBPOPULATIONS['UTCN'] = []
 ALLOWED_SUBPOPULATIONS['MRCCN'] = []
 ALLOWED_SUBPOPULATIONS['DPCN'] = []
+
+ALLOWED_SUBPOPULATIONS['SMCN'] = []
+
 ALLOWED_SUBPOPULATIONS['NERCN'] = []
+
 
 
 UTCN_TRANSFORMATIONS = [
@@ -199,7 +205,11 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'BackTrans',
     ],
     'DPCN':[],
+
+    'SMCN': [],
+
     'NERCN':[],
+
 }
 
 TASK_TRANSFORMATIONS = {
@@ -283,11 +293,18 @@ TASK_TRANSFORMATIONS = {
         'PerturbQuestion',
     ],
     'DPCN': [],
+    'SM': [
+        'SwapWord',
+        'SwapNum',
+        'Overlap'
+    ],
+
     'NERCN':[
         'EntTypos',
         'SwapEnt',
         'ConcatSent',
     ]
+
 }
 
 

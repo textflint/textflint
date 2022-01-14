@@ -1,5 +1,7 @@
 import unittest
-
+import os
+import sys
+sys.path.insert(0,os.getcwd())
 from textflint.common import logger
 from textflint.input.dataset import Dataset
 from textflint.generation.generator.nli_generator import NLIGenerator
