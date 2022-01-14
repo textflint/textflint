@@ -80,3 +80,4 @@ class SMCNSample(CnSample):
         if self.y.field_value not in ['0', '1']:
             return False
         return True
+

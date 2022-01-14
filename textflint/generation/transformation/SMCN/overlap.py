@@ -125,15 +125,8 @@ class Overlap(Transformation):
                         'sentence2': example[1],
                         'y': label
                     }
-                    #(trans_sample)
 
-                    sent1 = trans_sample['sentence1']
-                    sent1=sent1.replace(" ", "")
-                    sent2 = trans_sample['sentence2']
-                    sent2=sent2.replace(" ","")
-                    lab = trans_sample['y']
-                    #esults=process(sent1,sent2,lab)
-                    w.write(lab+'\t'+sent1+'\t'+sent2+'\n')
+
                     trans_list.append(SMCNSample(trans_sample))
                     count_examples += 1
                     example_counter += 1

@@ -65,14 +65,13 @@ class SwapWord(Transformation):
         if label_tag != '1':
             return None
         tokens = sample.get_words('sentence2')
-        tokens="".join(tokens)
-        cnantonym=CnAntonym()
-        sample1 = UTCnSample({'x': tokens})
-        sentence2 = cnantonym._transform(sample1)
+        tokens = "".join(tokens)
+        cnantonym = CnAntonym()
+        sentence2 = cnantonym._transform(UTCnSample({'x':tokens}))
         if len(sentence2)>0:
             sentence2 = sentence2[0].get_tokens('x')
             sentence2 = "".join(sentence2)
-            newtokens=sentence2
+            newtokens = sentence2
         else:
             return None
 
