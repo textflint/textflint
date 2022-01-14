@@ -45,7 +45,8 @@ NLP_TASK_MAP = {
     'UTCN':'Chinese Universal transform',
     'MRCCN': 'Chinese Machine Reading Comprehension',
     'DPCN': 'Chinese Dependency Parsing',
-    'SMCN':'Chinese Semantic Matching'
+    'SMCN':'Chinese Semantic Matching',
+    'NERCN':'Chinese Named Entity Recognition',
 }
 
 TRANSFORM_FIELDS = {
@@ -67,6 +68,8 @@ TRANSFORM_FIELDS = {
     'MRCCN': 'context',
     'DPCN': 'x',
     'SMCN': ['sentence1', 'sentence2'],
+    
+    'NERCN':'text',
 }
 TASK_SUBPOPULATION_PATH = dict(
     (task, os.path.join(SUBPOPULATION_PATH, task))
@@ -92,7 +95,12 @@ ALLOWED_SUBPOPULATIONS['CWS'] = []
 ALLOWED_SUBPOPULATIONS['UTCN'] = []
 ALLOWED_SUBPOPULATIONS['MRCCN'] = []
 ALLOWED_SUBPOPULATIONS['DPCN'] = []
+
 ALLOWED_SUBPOPULATIONS['SMCN'] = []
+
+ALLOWED_SUBPOPULATIONS['NERCN'] = []
+
+
 
 UTCN_TRANSFORMATIONS = [
     'AppendIrr',
@@ -197,7 +205,11 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'BackTrans',
     ],
     'DPCN':[],
+
     'SMCN': [],
+
+    'NERCN':[],
+
 }
 
 TASK_TRANSFORMATIONS = {
@@ -286,6 +298,13 @@ TASK_TRANSFORMATIONS = {
         'SwapNum',
         'Overlap'
     ],
+
+    'NERCN':[
+        'EntTypos',
+        'SwapEnt',
+        'ConcatSent',
+    ]
+
 }
 
 
@@ -595,3 +614,17 @@ QUESTION = [
 ]
 # ---------------------------WSD settings---------------------------
 PUNC = string.punctuation + "`` ！？｡＂“＃＄％＆＇（）＊＋－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘'‛“”„‟…‧﹏"
+
+# ---------------------------Chinese NER settings---------------------------
+CN_LONG_ENTITIES = 'CNNER_DATA/long_dict.json'
+CN_OOV_ENTITIES = 'CNNER_DATA/OOVentities.json'
+
+LABEL_TRANS = {
+    'PER':'PER',
+    'LOC':'LOC',
+    'ORG':'ORG',
+    'GPE':'GPE',
+    'NS':'LOC',
+    'NT':'ORG',
+    'NR':'PER',    
+}
