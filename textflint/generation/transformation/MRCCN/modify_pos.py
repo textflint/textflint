@@ -35,7 +35,7 @@ class ModifyPos(Transformation):
 
         for idx, sent in enumerate(sents):
             trivial = True
-            sent_len = len(self.cn_processor.tokenize(sent,cws=False))
+            sent_len = len(self.cn_processor.tokenize(sent, cws=False))
             for answer in answers:
                 if answer['start'] >= sent_start and answer['end'] \
                         <= sent_start + sent_len:

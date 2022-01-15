@@ -91,6 +91,7 @@ ALLOWED_SUBPOPULATIONS['CWS'] = []
 ALLOWED_SUBPOPULATIONS['UTCN'] = []
 ALLOWED_SUBPOPULATIONS['MRCCN'] = []
 ALLOWED_SUBPOPULATIONS['DPCN'] = []
+ALLOWED_SUBPOPULATIONS['SACN'] = []
 
 
 UTCN_TRANSFORMATIONS = [
@@ -195,7 +196,15 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'CnSwapNamedEnt',
         'BackTrans',
     ],
-    'SACN': []
+    'SACN': [
+        'CnNasal',
+        'InsertAdv',
+        'MLMSuggestion',
+        'CnDigit2Char',
+        'CnAntonym',
+        'BackTrans',
+        'CnPrejudice',
+    ]
 }
 
 TASK_TRANSFORMATIONS = {
