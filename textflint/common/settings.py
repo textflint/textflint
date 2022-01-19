@@ -41,10 +41,12 @@ NLP_TASK_MAP = {
     'RE': 'Relation Extraction',
     'COREF': 'Coreference resolution',
     'WSD': 'Word Sense Disambiguation',
-
+    'NMT': 'Neural Machine Translation',
     'UTCN':'Chinese Universal transform',
     'MRCCN': 'Chinese Machine Reading Comprehension',
-    'DPCN': 'Chinese Dependency Parsing'
+    'DPCN': 'Chinese Dependency Parsing',
+    'SMCN':'Chinese Semantic Matching',
+    'NERCN':'Chinese Named Entity Recognition',
 }
 
 TRANSFORM_FIELDS = {
@@ -61,10 +63,13 @@ TRANSFORM_FIELDS = {
     'RE': 'x',
     'COREF': 'x',
     'WSD': 'sentence',
-
+    'NMT': ['source', 'target'],
     'UTCN':'x',
     'MRCCN': 'context',
-    'DPCN': 'x'
+    'DPCN': 'x',
+    'SMCN': ['sentence1', 'sentence2'],
+    
+    'NERCN':'text',
 }
 TASK_SUBPOPULATION_PATH = dict(
     (task, os.path.join(SUBPOPULATION_PATH, task))
@@ -90,6 +95,11 @@ ALLOWED_SUBPOPULATIONS['CWS'] = []
 ALLOWED_SUBPOPULATIONS['UTCN'] = []
 ALLOWED_SUBPOPULATIONS['MRCCN'] = []
 ALLOWED_SUBPOPULATIONS['DPCN'] = []
+
+ALLOWED_SUBPOPULATIONS['SMCN'] = []
+
+ALLOWED_SUBPOPULATIONS['NERCN'] = []
+
 
 
 UTCN_TRANSFORMATIONS = [
@@ -174,7 +184,19 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'BackTrans',
         'Prejudice'
     ],
-
+    'NMT': [
+        'AppendIrr',
+        'BackTrans',
+        'InsertAdv',
+        'MLMSuggestion',
+        'Prejudice',
+        'ReverseNeg',
+        'SwapAntWordNet',
+        'SwapNamedEnt',
+        'SwapNum',
+        'Tense',
+        'TwitterType'
+    ],
     'UTCN': [],
     'MRCCN': [
         'CnSwapNum',
@@ -183,6 +205,11 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'BackTrans',
     ],
     'DPCN':[],
+
+    'SMCN': [],
+
+    'NERCN':[],
+
 }
 
 TASK_TRANSFORMATIONS = {
@@ -254,14 +281,30 @@ TASK_TRANSFORMATIONS = {
     'WSD': [
         'SwapTarget',
     ],
-
+    'NMT': [
+        'ParallelTwitterType',
+        'SwapParallelNum',
+        'SwapParallelSameWord'
+    ],
     'UTCN':UTCN_TRANSFORMATIONS,
     'MRCCN': [
         'ModifyPos',
         'PerturbAnswer',
         'PerturbQuestion',
     ],
-    'DPCN': []
+    'DPCN': [],
+    'SM': [
+        'SwapWord',
+        'SwapNum',
+        'Overlap'
+    ],
+
+    'NERCN':[
+        'EntTypos',
+        'SwapEnt',
+        'ConcatSent',
+    ]
+
 }
 
 
@@ -571,3 +614,17 @@ QUESTION = [
 ]
 # ---------------------------WSD settings---------------------------
 PUNC = string.punctuation + "`` ！？｡＂“＃＄％＆＇（）＊＋－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘'‛“”„‟…‧﹏"
+
+# ---------------------------Chinese NER settings---------------------------
+CN_LONG_ENTITIES = 'CNNER_DATA/long_dict.json'
+CN_OOV_ENTITIES = 'CNNER_DATA/OOVentities.json'
+
+LABEL_TRANS = {
+    'PER':'PER',
+    'LOC':'LOC',
+    'ORG':'ORG',
+    'GPE':'GPE',
+    'NS':'LOC',
+    'NT':'ORG',
+    'NR':'PER',    
+}
