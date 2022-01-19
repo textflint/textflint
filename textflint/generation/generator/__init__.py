@@ -6,3 +6,4 @@ from .mrccn_generator import MRCCNGenerator
 from .absa_generator import ABSAGenerator
 from .coref_generator import CorefGenerator
 from .smcn_generator import SMCNGenerator
+from .wsc_generator import WSCGenerator
