@@ -8,6 +8,7 @@ import time
 import pandas as pd
 import torch
 import glob
+
 from . import device
 from .install import download_if_needed
 
@@ -208,3 +209,12 @@ def nmt_dataset_loader(source_pref, target_pref, source_lang, target_lang):
     assert len(sources) == len(targets), "The number of sources is not equal to targets," + \
         "len(sources)={}, len(targets)={}".format(len(sources), len(targets))
     return sources, targets
+
+# -------------------------WSC load-------------------------
+
+def load_jsonlines(path):
+    with open(path, 'r') as reader:
+        data_list = []
+        for data in reader:
+            data_list.append(data)
+        return data_list
