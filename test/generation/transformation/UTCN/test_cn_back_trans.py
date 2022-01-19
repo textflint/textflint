@@ -13,7 +13,7 @@ class TestBackTrans(unittest.TestCase):
         data_sample = UTCnSample({'x': sent1, 'y': "negative"})
         trans = BackTrans(device='cpu')
         x = trans.transform(data_sample, n=1)
-        self.assertEqual('敏捷的棕色狐狸跳过懒狗。', x[0].get_text('x'))
+        self.assertEqual('敏捷的棕色狐狸跳过懒狗', x[0].get_text('x'))
 
 
 
