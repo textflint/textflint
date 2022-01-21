@@ -3,6 +3,7 @@ from pathlib import Path
 import platform
 import copy
 import string
+
 # default settings
 current_path = Path(__file__).resolve().parent
 if platform.system() == 'Windows':
@@ -42,11 +43,12 @@ NLP_TASK_MAP = {
     'COREF': 'Coreference resolution',
     'WSD': 'Word Sense Disambiguation',
     'NMT': 'Neural Machine Translation',
-    'UTCN':'Chinese Universal transform',
+    'UTCN': 'Chinese Universal transform',
     'MRCCN': 'Chinese Machine Reading Comprehension',
     'DPCN': 'Chinese Dependency Parsing',
-    'SMCN':'Chinese Semantic Matching',
-    'NERCN':'Chinese Named Entity Recognition',
+    'SMCN': 'Chinese Semantic Matching',
+    'NERCN': 'Chinese Named Entity Recognition',
+    'WSC': 'Winograd Schema Challenge',
 }
 
 TRANSFORM_FIELDS = {
@@ -64,12 +66,13 @@ TRANSFORM_FIELDS = {
     'COREF': 'x',
     'WSD': 'sentence',
     'NMT': ['source', 'target'],
-    'UTCN':'x',
+    'UTCN': 'x',
     'MRCCN': 'context',
     'DPCN': 'x',
     'SMCN': ['sentence1', 'sentence2'],
-    
-    'NERCN':'text',
+
+    'NERCN': 'text',
+    'WSC': 'text',
 }
 TASK_SUBPOPULATION_PATH = dict(
     (task, os.path.join(SUBPOPULATION_PATH, task))
@@ -99,8 +102,6 @@ ALLOWED_SUBPOPULATIONS['DPCN'] = []
 ALLOWED_SUBPOPULATIONS['SMCN'] = []
 
 ALLOWED_SUBPOPULATIONS['NERCN'] = []
-
-
 
 UTCN_TRANSFORMATIONS = [
     'AppendIrr',
@@ -143,7 +144,6 @@ UT_TRANSFORMATIONS = [
     'Prejudice'
 ]
 
-
 UNMATCH_UT_TRANSFORMATIONS = {
     'UT': [],
     'ABSA': [
@@ -173,7 +173,7 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'SwapAntWordNet',
         'ReverseNeg',
         'SwapNamedEnt'
-        ],
+    ],
     'NLI': [],
     'SM': [],
     'COREF': [
@@ -199,16 +199,15 @@ UNMATCH_UT_TRANSFORMATIONS = {
     ],
     'UTCN': [],
     'MRCCN': [
-        'CnSwapNum',
-        'CnAntonym',
-        'CnSwapNamedEnt',
         'BackTrans',
     ],
-    'DPCN':[],
+    'DPCN': [],
 
     'SMCN': [],
 
-    'NERCN':[],
+    'NERCN': [],
+
+    'WSC': [],
 
 }
 
@@ -286,7 +285,7 @@ TASK_TRANSFORMATIONS = {
         'SwapParallelNum',
         'SwapParallelSameWord'
     ],
-    'UTCN':UTCN_TRANSFORMATIONS,
+    'UTCN': UTCN_TRANSFORMATIONS,
     'MRCCN': [
         'ModifyPos',
         'PerturbAnswer',
@@ -299,14 +298,20 @@ TASK_TRANSFORMATIONS = {
         'Overlap'
     ],
 
-    'NERCN':[
+    'NERCN': [
         'EntTypos',
         'SwapEnt',
         'ConcatSent',
-    ]
+    ],
+
+    'WSC': [
+        'SwapGender',
+        'SwapNames',
+        'SwitchVoice',
+        'InsertRelativeClause',
+    ],
 
 }
-
 
 # indicate allowed transformations of specific task
 ALLOWED_TRANSFORMATIONS = {
@@ -320,7 +325,6 @@ ALLOWED_cn_TRANSFORMATIONS = {
               ^ set(UNMATCH_UT_TRANSFORMATIONS[key]))
     for key in TASK_TRANSFORMATIONS
 }
-
 
 ALLOWED_VALIDATORS = {
     key: [
@@ -401,7 +405,7 @@ CN_PREJUDICE_WORD_PATH = 'UT_DATA_CN/prejudice.txt'
 CN_LOC2IDX_PATH = 'UT_DATA_CN/cn_loc2idx.txt'
 
 ENTITIES_PATH = 'UT_DATA/lop_entities.json'
-#cn_file_path
+# cn_file_path
 CN_BEGINNING_PATH = 'UT_DATA_CN/beginning.txt'
 CN_PROVERB_PATH = 'UT_DATA_CN/proverb.txt'
 CN_ADVERB_PATH = 'UT_DATA_CN/adverb_word.txt'
@@ -620,11 +624,17 @@ CN_LONG_ENTITIES = 'CNNER_DATA/long_dict.json'
 CN_OOV_ENTITIES = 'CNNER_DATA/OOVentities.json'
 
 LABEL_TRANS = {
-    'PER':'PER',
-    'LOC':'LOC',
-    'ORG':'ORG',
-    'GPE':'GPE',
-    'NS':'LOC',
-    'NT':'ORG',
-    'NR':'PER',    
+    'PER': 'PER',
+    'LOC': 'LOC',
+    'ORG': 'ORG',
+    'GPE': 'GPE',
+    'NS': 'LOC',
+    'NT': 'ORG',
+    'NR': 'PER',
 }
+
+# ---------------------------WSC settings---------------------------
+FILE_NAME_DICT = {'SwapNames_PATH': 'WSC_DATA/SwapNames.jsonl',
+                  'InsertRelativeClause_PATH': 'WSC_DATA/InsertRelativeClause.jsonl',
+                  'SwapGender_PATH': 'WSC_DATA/SwapGender.jsonl',
+                  'SwitchVoice_PATH': 'WSC_DATA/SwitchVoice.jsonl'}

@@ -17,3 +17,4 @@ from .ner_sample import NERSample
 from .nmt_sample import NMTSample
 from .smcn_sample import SMCNSample
 from .nercn_sample import NERCnSample
+from .wsc_sample import WSCSample
