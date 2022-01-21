@@ -1,5 +1,7 @@
 import unittest
-
+import os
+import sys
+sys.path.insert(0,os.getcwd())
 from textflint.input.dataset import Dataset
 from textflint.input.component.sample import DPSample
 from textflint.generation.generator.dp_generator import DPGenerator

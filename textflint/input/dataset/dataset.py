@@ -131,7 +131,7 @@ class Dataset:
 
         """
         sample_id = 0
-
+        
         if isinstance(dataset, (Sample, CnSample, list, dict)):
             logger.info('******Start load!******')
 

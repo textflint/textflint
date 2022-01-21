@@ -17,3 +17,4 @@ fuzzywuzzy
 plotly
 pypinyin
 Pinyin2Hanzi
+
