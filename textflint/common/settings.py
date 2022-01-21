@@ -45,6 +45,7 @@ NLP_TASK_MAP = {
     'NMT': 'Neural Machine Translation',
     'UTCN': 'Chinese Universal transform',
     'MRCCN': 'Chinese Machine Reading Comprehension',
+    'SACN': 'Chinese Sentiment Analysis',
     'DPCN': 'Chinese Dependency Parsing',
     'SMCN': 'Chinese Semantic Matching',
     'NERCN': 'Chinese Named Entity Recognition',
@@ -68,11 +69,14 @@ TRANSFORM_FIELDS = {
     'NMT': ['source', 'target'],
     'UTCN': 'x',
     'MRCCN': 'context',
+    'SACN': 'x'
+
     'DPCN': 'x',
     'SMCN': ['sentence1', 'sentence2'],
 
     'NERCN': 'text',
     'WSC': 'text',
+
 }
 TASK_SUBPOPULATION_PATH = dict(
     (task, os.path.join(SUBPOPULATION_PATH, task))
@@ -98,6 +102,7 @@ ALLOWED_SUBPOPULATIONS['CWS'] = []
 ALLOWED_SUBPOPULATIONS['UTCN'] = []
 ALLOWED_SUBPOPULATIONS['MRCCN'] = []
 ALLOWED_SUBPOPULATIONS['DPCN'] = []
+ALLOWED_SUBPOPULATIONS['SACN'] = []
 
 ALLOWED_SUBPOPULATIONS['SMCN'] = []
 
@@ -201,6 +206,16 @@ UNMATCH_UT_TRANSFORMATIONS = {
     'MRCCN': [
         'BackTrans',
     ],
+    'SACN': [
+        'CnNasal',
+        'InsertAdv',
+        'MLMSuggestion',
+        'CnDigit2Char',
+        'CnAntonym',
+        'BackTrans',
+        'CnPrejudice',
+    ]
+
     'DPCN': [],
 
     'SMCN': [],
@@ -291,12 +306,22 @@ TASK_TRANSFORMATIONS = {
         'PerturbAnswer',
         'PerturbQuestion',
     ],
+
+    'SACN': [
+        'SentenceOrderSwap',
+        'ExtentAdjust',
+        'CNDoubleDenial'
+    ],
+
+}
+
     'DPCN': [],
     'SM': [
         'SwapWord',
         'SwapNum',
         'Overlap'
     ],
+
 
     'NERCN': [
         'EntTypos',
@@ -519,6 +544,22 @@ SA_DOUBLE_DENIAL_DICT = {
     'awesome': 'not ugly',
     'impressed': 'not impressed'
 }
+
+
+# -------------------------CN SA settings -----------------------------
+CNSA_DOUBLE_DENIAL_DICT = {
+    '好': '不差', '糟': '不好', '乱': '不整洁', '用': '不难用',
+    '得': '不得不', '可': '不能不', '会': '不会不', '是': '不是不', '敢': '不敢不',
+    '都': '无不', '只': '无非', '有': '没有不', '推': '不反对', '破': '不好',
+    '脏': '不干净', '净': '不脏',
+    '能': '不能不', '全': '无不',
+}
+
+CNSA_EXTENT_LIST = [
+    '很', '非常', '特别', '极其', '有些', '有点', '稍微', '十分', '略微',
+    '稍稍', '绝对', '最', '比较', '顶级', '太', '更', '格外', '分外', '一直',
+    '才', '只是', '总', '一般', '大多', '相对'
+]
 
 # -------------------------POS settings---------------------------
 MORPHEME_ANALYZER = 'POS_DATA/en.morph.tar.bz2'
