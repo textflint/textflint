@@ -69,11 +69,9 @@ TRANSFORM_FIELDS = {
     'NMT': ['source', 'target'],
     'UTCN': 'x',
     'MRCCN': 'context',
-    'SACN': 'x'
-
+    'SACN': 'x',
     'DPCN': 'x',
     'SMCN': ['sentence1', 'sentence2'],
-
     'NERCN': 'text',
     'WSC': 'text',
 
@@ -214,7 +212,7 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'CnAntonym',
         'BackTrans',
         'CnPrejudice',
-    ]
+    ],
 
     'DPCN': [],
 
@@ -312,8 +310,6 @@ TASK_TRANSFORMATIONS = {
         'ExtentAdjust',
         'CNDoubleDenial'
     ],
-
-}
 
     'DPCN': [],
     'SM': [
