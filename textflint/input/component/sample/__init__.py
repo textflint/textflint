@@ -11,3 +11,4 @@ from .cws_sample import CWSSample
 from .absa_sample import ABSASample
 from .re_sample import RESample
 from .ner_sample import NERSample
+from .wsd_sample import WSDSample
