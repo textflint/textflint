@@ -1,7 +1,7 @@
-textflint.generation\_layer
+textflint.generation
 ===================================
 
-.. automodule:: textflint.generation_layer
+.. automodule:: textflint.generation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,8 +12,8 @@ Subpackages
 .. toctree::
    :maxdepth: 1
 
-   textflint.generation_layer.attack
-   textflint.generation_layer.generator
-   textflint.generation_layer.subpopulation
-   textflint.generation_layer.transformation
-   textflint.generation_layer.validator
+   textflint.generation.attack
+   textflint.generation.generator
+   textflint.generation.subpopulation
+   textflint.generation.transformation
+   textflint.generation.validator

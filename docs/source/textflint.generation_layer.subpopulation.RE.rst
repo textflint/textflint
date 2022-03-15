@@ -1,7 +1,7 @@
-textflint.generation\_layer.subpopulation.RE
+textflint.generation.subpopulation.RE
 ====================================================
 
-.. automodule:: textflint.generation_layer.subpopulation.RE
+.. automodule:: textflint.generation.subpopulation.RE
    :members:
    :undoc-members:
    :show-inheritance:

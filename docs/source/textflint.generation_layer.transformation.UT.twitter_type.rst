@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.UT.twitter\_type
+textflint.generation.transformation.UT.twitter\_type
 ==================================================================
 
-.. automodule:: textflint.generation_layer.transformation.UT.twitter_type
+.. automodule:: textflint.generation.transformation.UT.twitter_type
    :members:
    :undoc-members:
    :show-inheritance:

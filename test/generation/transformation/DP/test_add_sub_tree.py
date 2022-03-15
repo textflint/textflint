@@ -82,7 +82,7 @@ class TestSpecialAddSubtree(unittest.TestCase):
         except FlintError:
             print('Cannot access Wikidata')
         else:
-            self.assertEqual('which is a Chief tax-writing comittee of the '
+            self.assertEqual('which is a chief tax-writing comittee of the '
                              'United States House of Representatives',
                              clause_add)
 

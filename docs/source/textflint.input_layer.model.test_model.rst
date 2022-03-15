@@ -1,7 +1,7 @@
-textflint.input\_layer.model.test\_model
+textflint.input.model.test\_model
 ================================================
 
-.. automodule:: textflint.input_layer.model.test_model
+.. automodule:: textflint.input.model.test_model
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,7 +12,7 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
-   textflint.input_layer.model.test_model.glove_embedding
-   textflint.input_layer.model.test_model.model_helper
-   textflint.input_layer.model.test_model.textcnn_tf_model
-   textflint.input_layer.model.test_model.textcnn_torch_model
+   textflint.input.model.test_model.glove_embedding
+   textflint.input.model.test_model.model_helper
+   textflint.input.model.test_model.textcnn_tf_model
+   textflint.input.model.test_model.textcnn_torch_model

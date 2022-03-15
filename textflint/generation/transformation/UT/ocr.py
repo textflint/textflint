@@ -144,8 +144,10 @@ class Ocr(WordSubstitute):
             for cand_char in cand_chars:
                 replaced_tokens.append(
                     self.chars2token(
-                        chars[:replace_idx] + [cand_char] + chars[
-                                                            replace_idx + 1:]))
+                        chars[:replace_idx] + [cand_char]
+                        + chars[replace_idx + 1:]
+                    )
+                )
 
         return replaced_tokens
 

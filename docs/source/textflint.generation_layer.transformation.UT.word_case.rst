@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.UT.word\_case
+textflint.generation.transformation.UT.word\_case
 ===============================================================
 
-.. automodule:: textflint.generation_layer.transformation.UT.word_case
+.. automodule:: textflint.generation.transformation.UT.word_case
    :members:
    :undoc-members:
    :show-inheritance:

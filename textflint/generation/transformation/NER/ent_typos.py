@@ -18,11 +18,12 @@ class EntTypos(Transformation):
     """
 
     def __init__(
-            self,
-            mode="random",
-            skip_first_char=True,
-            skip_last_char=False,
-            **kwargs):
+        self,
+        mode="random",
+        skip_first_char=True,
+        skip_last_char=False,
+        **kwargs
+    ):
         r"""
         :param str mode: just support
         ['random', 'replace', 'swap', 'insert', 'delete']
@@ -56,15 +57,18 @@ class EntTypos(Transformation):
             entity_tokens = cur_entity.split(" ")
             rep_idx = random.randint(0, len(entity_tokens) - 1)
             rep_tokens = self._get_replacement_words(
-                entity_tokens[rep_idx], n=n)
+                entity_tokens[rep_idx], n=n
+            )
 
             if rep_tokens:
                 rep_entities.append(entity)
-                candidates.append([" ".join(entity_tokens[:rep_idx] +
-                                            [rep_token] +
-                                            entity_tokens[
-                                            rep_idx + 1:]) for
-                                   rep_token in rep_tokens])
+                candidates.append([
+                    " ".join(
+                        entity_tokens[:rep_idx] +
+                        [rep_token] +
+                        entity_tokens[rep_idx + 1:]
+                        ) for rep_token in rep_tokens
+                    ])
         candidates, rep_entities = trade_off_sub_words(
             candidates, rep_entities, n=n)
 

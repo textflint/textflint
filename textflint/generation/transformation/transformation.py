@@ -11,6 +11,7 @@ from ...common.utils import logger
 from ...common.utils.list_op import trade_off_sub_words
 from ...common.utils.error import FlintError
 from ...common.preprocess.en_processor import EnProcessor
+from ...common.preprocess.cn_processor import CnProcessor
 
 
 class Transformation(ABC):
@@ -20,7 +21,7 @@ class Transformation(ABC):
 
     """
     processor = EnProcessor()
-
+    cn_processor = CnProcessor()
     def __init__(
             self,
             **kwargs

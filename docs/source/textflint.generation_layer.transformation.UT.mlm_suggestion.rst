@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.UT.mlm\_suggestion
+textflint.generation.transformation.UT.mlm\_suggestion
 ====================================================================
 
-.. automodule:: textflint.generation_layer.transformation.UT.mlm_suggestion
+.. automodule:: textflint.generation.transformation.UT.mlm_suggestion
    :members:
    :undoc-members:
    :show-inheritance:

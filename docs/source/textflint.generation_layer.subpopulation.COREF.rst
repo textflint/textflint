@@ -1,7 +1,7 @@
-textflint.generation\_layer.subpopulation.COREF
+textflint.generation.subpopulation.COREF
 =======================================================
 
-.. automodule:: textflint.generation_layer.subpopulation.COREF
+.. automodule:: textflint.generation.subpopulation.COREF
    :members:
    :undoc-members:
    :show-inheritance:

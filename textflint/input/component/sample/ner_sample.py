@@ -54,7 +54,6 @@ class NERSample(Sample):
 
     def is_legal(self):
         if len(self.text.words) != len(self.tags):
-            print('here')
             return False
         return True
 
@@ -71,11 +70,13 @@ class NERSample(Sample):
 
         # set mask to prevent UT transform modify entity word.
         if self.mode == 'BIO':
-            self.entities = ListField(self.find_entities_BIO(
-                self.text.words, self.tags))
+            self.entities = ListField(
+                self.find_entities_BIO(self.text.words, self.tags)
+            )
         elif self.mode == 'BIOES':
-            self.entities = ListField(self.find_entities_BIOES(
-                self.text.words, self.tags))
+            self.entities = ListField(
+                self.find_entities_BIOES(self.text.words, self.tags)
+            )
         if not self.is_legal():
             raise ValueError('A failed transformation which leads to '
                              'mismatch between input and output.')

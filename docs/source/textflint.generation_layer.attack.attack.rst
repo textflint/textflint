@@ -1,7 +1,7 @@
-textflint.generation\_layer.attack.attack
+textflint.generation.attack.attack
 ================================================
 
-.. automodule:: textflint.generation_layer.attack.attack
+.. automodule:: textflint.generation.attack.attack
    :members:
    :undoc-members:
    :show-inheritance:

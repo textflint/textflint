@@ -1,4 +1,5 @@
 import unittest
+
 from textflint.input.component.sample.cws_sample import CWSSample
 from textflint.input.dataset import Dataset
 from textflint.generation.generator.cws_generator import CWSGenerator

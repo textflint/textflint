@@ -1,7 +1,7 @@
-textflint.generation\_layer.validator.edit\_distance
+textflint.generation.validator.edit\_distance
 ===========================================================
 
-.. automodule:: textflint.generation_layer.validator.edit_distance
+.. automodule:: textflint.generation.validator.edit_distance
    :members:
    :undoc-members:
    :show-inheritance:

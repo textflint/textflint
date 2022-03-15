@@ -1,7 +1,7 @@
-textflint.generation\_layer.subpopulation.CWS
+textflint.generation.subpopulation.CWS
 =====================================================
 
-.. automodule:: textflint.generation_layer.subpopulation.CWS
+.. automodule:: textflint.generation.subpopulation.CWS
    :members:
    :undoc-members:
    :show-inheritance:

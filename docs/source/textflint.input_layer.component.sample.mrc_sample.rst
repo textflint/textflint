@@ -1,7 +1,7 @@
-textflint.input\_layer.component.sample.mrc\_sample
+textflint.input.component.sample.mrc\_sample
 ==========================================================
 
-.. automodule:: textflint.input_layer.component.sample.mrc_sample
+.. automodule:: textflint.input.component.sample.mrc_sample
    :members:
    :undoc-members:
    :show-inheritance:

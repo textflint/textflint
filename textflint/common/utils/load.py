@@ -28,7 +28,7 @@ def module_loader(dir_path, filter_str=''):
         # yield module.module_finder.find_loader(module.name)[0].load_module()
 
 
-def task_class_load(pkg_path, task_list, base_class, filter_str=''):
+def task_class_load(pkg_path, task_list, base_class, filter_str='', other_base_class = None):
     modules = module_loader(pkg_path, filter_str)
     task_class_map = {}
     for module in modules:
@@ -38,9 +38,10 @@ def task_class_load(pkg_path, task_list, base_class, filter_str=''):
 
         for attr in dir(module):
             reference = getattr(module, attr)
+            name = type(reference).__name__
             if type(reference).__name__ not in ['classobj', 'ABCMeta']:
                 continue
-            if issubclass(reference, base_class) and reference != base_class:
+            if (issubclass(reference, base_class) or issubclass(reference, other_base_class) ) and reference != base_class and reference != other_base_class:
                 task_class = reference
                 break
 
@@ -199,3 +200,21 @@ def load_morfessor_model(path):
     model = io.read_any_model(tmp_file_.name)
     os.remove(tmp_file_.name)
     return model
+
+
+# -------------------------NMT load-------------------------
+def nmt_dataset_loader(source_pref, target_pref, source_lang, target_lang):
+    sources = plain_lines_loader(source_pref + '.' + source_lang)
+    targets = plain_lines_loader(target_pref + '.' + target_lang)
+    assert len(sources) == len(targets), "The number of sources is not equal to targets," + \
+        "len(sources)={}, len(targets)={}".format(len(sources), len(targets))
+    return sources, targets
+
+# -------------------------WSC load-------------------------
+
+def load_jsonlines(path):
+    with open(path, 'r') as reader:
+        data_list = []
+        for data in reader:
+            data_list.append(data)
+        return data_list

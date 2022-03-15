@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.CWS.swap\_verb
+textflint.generation.transformation.CWS.swap\_verb
 ================================================================
 
-.. automodule:: textflint.generation_layer.transformation.CWS.swap_verb
+.. automodule:: textflint.generation.transformation.CWS.swap_verb
    :members:
    :undoc-members:
    :show-inheritance:

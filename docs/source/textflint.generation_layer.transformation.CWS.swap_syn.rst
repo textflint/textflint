@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation.CWS.swap\_syn
+textflint.generation.transformation.CWS.swap\_syn
 ===============================================================
 
-.. automodule:: textflint.generation_layer.transformation.CWS.swap_syn
+.. automodule:: textflint.generation.transformation.CWS.swap_syn
    :members:
    :undoc-members:
    :show-inheritance:

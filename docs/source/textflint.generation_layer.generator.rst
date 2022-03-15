@@ -1,7 +1,7 @@
-textflint.generation\_layer.generator
+textflint.generation.generator
 =============================================
 
-.. automodule:: textflint.generation_layer.generator
+.. automodule:: textflint.generation.generator
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,16 +12,16 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
-   textflint.generation_layer.generator.absa_generator
-   textflint.generation_layer.generator.coref_generator
-   textflint.generation_layer.generator.cws_generator
-   textflint.generation_layer.generator.dp_generator
-   textflint.generation_layer.generator.generator
-   textflint.generation_layer.generator.mrc_generator
-   textflint.generation_layer.generator.ner_generator
-   textflint.generation_layer.generator.nli_generator
-   textflint.generation_layer.generator.pos_generator
-   textflint.generation_layer.generator.re_generator
-   textflint.generation_layer.generator.sa_generator
-   textflint.generation_layer.generator.sm_generator
-   textflint.generation_layer.generator.ut_generator
+   textflint.generation.generator.absa_generator
+   textflint.generation.generator.coref_generator
+   textflint.generation.generator.cws_generator
+   textflint.generation.generator.dp_generator
+   textflint.generation.generator.generator
+   textflint.generation.generator.mrc_generator
+   textflint.generation.generator.ner_generator
+   textflint.generation.generator.nli_generator
+   textflint.generation.generator.pos_generator
+   textflint.generation.generator.re_generator
+   textflint.generation.generator.sa_generator
+   textflint.generation.generator.sm_generator
+   textflint.generation.generator.ut_generator
