@@ -1,7 +1,7 @@
-textflint.generation\_layer.validator.max\_words\_perturbed
+textflint.generation.validator.max\_words\_perturbed
 ==================================================================
 
-.. automodule:: textflint.generation_layer.validator.max_words_perturbed
+.. automodule:: textflint.generation.validator.max_words_perturbed
    :members:
    :undoc-members:
    :show-inheritance:

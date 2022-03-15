@@ -1,4 +1,5 @@
 import unittest
+
 from textflint.input.dataset import Dataset
 from textflint.generation.generator.ner_generator import NERGenerator
 

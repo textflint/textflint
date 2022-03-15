@@ -3,6 +3,7 @@ from pathlib import Path
 import platform
 import copy
 import string
+
 # default settings
 current_path = Path(__file__).resolve().parent
 if platform.system() == 'Windows':
@@ -41,6 +42,14 @@ NLP_TASK_MAP = {
     'RE': 'Relation Extraction',
     'COREF': 'Coreference resolution',
     'WSD': 'Word Sense Disambiguation',
+    'NMT': 'Neural Machine Translation',
+    'UTCN': 'Chinese Universal transform',
+    'MRCCN': 'Chinese Machine Reading Comprehension',
+    'SACN': 'Chinese Sentiment Analysis',
+    'DPCN': 'Chinese Dependency Parsing',
+    'SMCN': 'Chinese Semantic Matching',
+    'NERCN': 'Chinese Named Entity Recognition',
+    'WSC': 'Winograd Schema Challenge',
 }
 
 TRANSFORM_FIELDS = {
@@ -57,6 +66,15 @@ TRANSFORM_FIELDS = {
     'RE': 'x',
     'COREF': 'x',
     'WSD': 'sentence',
+    'NMT': ['source', 'target'],
+    'UTCN': 'x',
+    'MRCCN': 'context',
+    'SACN': 'x',
+    'DPCN': 'x',
+    'SMCN': ['sentence1', 'sentence2'],
+    'NERCN': 'text',
+    'WSC': 'text',
+
 }
 TASK_SUBPOPULATION_PATH = dict(
     (task, os.path.join(SUBPOPULATION_PATH, task))
@@ -76,9 +94,35 @@ UT_SUBPOPULATIONS = [
     "PrejudiceSubPopulation"
 ]
 ALLOWED_SUBPOPULATIONS = {
-    key: copy.copy(UT_SUBPOPULATIONS) for key in NLP_TASK_MAP if key != 'CWS'
+    key: copy.copy(UT_SUBPOPULATIONS) for key in NLP_TASK_MAP if key != 'CWS' and key != 'UTCN' and key != 'MRCCN'
 }
 ALLOWED_SUBPOPULATIONS['CWS'] = []
+ALLOWED_SUBPOPULATIONS['UTCN'] = []
+ALLOWED_SUBPOPULATIONS['MRCCN'] = []
+ALLOWED_SUBPOPULATIONS['DPCN'] = []
+ALLOWED_SUBPOPULATIONS['SACN'] = []
+
+ALLOWED_SUBPOPULATIONS['SMCN'] = []
+
+ALLOWED_SUBPOPULATIONS['NERCN'] = []
+
+UTCN_TRANSFORMATIONS = [
+    'AppendIrr',
+    'BackTrans',
+    'CnNasal',
+    'CnSwapSynWordEmbedding',
+    'InsertAdv',
+    'MLMSuggestion',
+    'CnSwapNum',
+    'CnSwapNamedEnt',
+    'CnSpellingError',
+    'CnPunctuation',
+    'CnPrejudice',
+    'CnDigit2Char',
+    'CnHomophones',
+    'CnSynonym',
+    'CnAntonym',
+]
 
 UT_TRANSFORMATIONS = [
     'InsertAdv',
@@ -132,7 +176,7 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'SwapAntWordNet',
         'ReverseNeg',
         'SwapNamedEnt'
-        ],
+    ],
     'NLI': [],
     'SM': [],
     'COREF': [
@@ -143,6 +187,41 @@ UNMATCH_UT_TRANSFORMATIONS = {
         'BackTrans',
         'Prejudice'
     ],
+    'NMT': [
+        'AppendIrr',
+        'BackTrans',
+        'InsertAdv',
+        'MLMSuggestion',
+        'Prejudice',
+        'ReverseNeg',
+        'SwapAntWordNet',
+        'SwapNamedEnt',
+        'SwapNum',
+        'Tense',
+        'TwitterType'
+    ],
+    'UTCN': [],
+    'MRCCN': [
+        'BackTrans',
+    ],
+    'SACN': [
+        'CnNasal',
+        'InsertAdv',
+        'MLMSuggestion',
+        'CnDigit2Char',
+        'CnAntonym',
+        'BackTrans',
+        'CnPrejudice',
+    ],
+
+    'DPCN': [],
+
+    'SMCN': [],
+
+    'NERCN': [],
+
+    'WSC': [],
+
 }
 
 TASK_TRANSFORMATIONS = {
@@ -214,11 +293,56 @@ TASK_TRANSFORMATIONS = {
     'WSD': [
         'SwapTarget',
     ],
+    'NMT': [
+        'ParallelTwitterType',
+        'SwapParallelNum',
+        'SwapParallelSameWord'
+    ],
+    'UTCN': UTCN_TRANSFORMATIONS,
+    'MRCCN': [
+        'ModifyPos',
+        'PerturbAnswer',
+        'PerturbQuestion',
+    ],
+
+    'SACN': [
+        'SentenceOrderSwap',
+        'ExtentAdjust',
+        'CNDoubleDenial'
+    ],
+
+    'DPCN': [],
+    'SM': [
+        'SwapWord',
+        'SwapNum',
+        'Overlap'
+    ],
+
+
+    'NERCN': [
+        'EntTypos',
+        'SwapEnt',
+        'ConcatSent',
+    ],
+
+    'WSC': [
+        'SwapGender',
+        'SwapNames',
+        'SwitchVoice',
+        'InsertRelativeClause',
+    ],
+
 }
 
 # indicate allowed transformations of specific task
 ALLOWED_TRANSFORMATIONS = {
     key: list(set(TASK_TRANSFORMATIONS[key] + UT_TRANSFORMATIONS)
+              ^ set(UNMATCH_UT_TRANSFORMATIONS[key]))
+    for key in TASK_TRANSFORMATIONS
+}
+
+ALLOWED_cn_TRANSFORMATIONS = {
+    key: list(set(TASK_TRANSFORMATIONS[key] + UTCN_TRANSFORMATIONS)
               ^ set(UNMATCH_UT_TRANSFORMATIONS[key]))
     for key in TASK_TRANSFORMATIONS
 }
@@ -252,15 +376,19 @@ STOP_WORDS = [
     'have', 'Has', 'has', 'in', 'In', 'by', 'By',
     'on', 'On', 'of', 'Of', 'at', 'At', 'from', 'From'
 ]
+CN_STOP_WORDS = []
 
 # sentence splitter prefixes
 EN_NON_BREAKING_PRE = 'UT_DATA/en_non_breaking_prefixes.txt'
 
 BERT_MODEL_NAME = 'bert-base-uncased'
+CN_BERT_MODEL_NAME = 'hfl/chinese-bert-wwm-ext'
 
 # back translation model
 TRANS_FROM_MODEL = "facebook/wmt19-en-de"  # "allenai/wmt16-en-de-dist-6-1"
 TRANS_TO_MODEL = "facebook/wmt19-de-en"  # allenai/wmt19-de-en-6-6-base"
+CN_TRANS_FROM_MODEL = "Helsinki-NLP/opus-mt-zh-en"
+CN_TRANS_TO_MODEL = "Helsinki-NLP/opus-mt-en-zh"
 
 # Offline Vocabulary
 EMBEDDING_PATH = 'UT_DATA/sim_words_dic.json'
@@ -282,8 +410,27 @@ PREJUDICE_LOC2IDX = {
     'America': 1, 'Europe': 2, 'Africa': 3, 'China': 4,
     'Japan': 5, 'India': 6, 'Middle East': 7
 }
+# zx
+CN_SYNONYM_PATH = 'UT_DATA_CN/dict_synonym.txt'
+CN_ANTONYM_PATH = 'UT_DATA_CN/dict_antonym.txt'
+CN_CORENLP_ENTITY_MAP = {
+    'Nh': 'PERSON',
+    'Ni': 'ORGANIZATION',
+    'Ns': 'LOCATION'
+}
+CN_LOC_PATH = 'UT_DATA_CN/cn_loc.json'
+CN_ORG_PATH = 'UT_DATA_CN/cn_organizations.json'
+CN_NAME_PATH = 'UT_DATA_CN/names.json'
+
+CN_PREJUDICE_WORD_PATH = 'UT_DATA_CN/prejudice.txt'
+CN_LOC2IDX_PATH = 'UT_DATA_CN/cn_loc2idx.txt'
 
 ENTITIES_PATH = 'UT_DATA/lop_entities.json'
+# cn_file_path
+CN_BEGINNING_PATH = 'UT_DATA_CN/beginning.txt'
+CN_PROVERB_PATH = 'UT_DATA_CN/proverb.txt'
+CN_ADVERB_PATH = 'UT_DATA_CN/adverb_word.txt'
+CN_EMBEDDING_PATH = 'UT_DATA_CN/CnSynEmbedding.json'
 
 # Verb pos tag
 VERB_TAG = ['VB', 'VBP', 'VBZ', 'VBG', 'VBD', 'VBN']
@@ -394,6 +541,22 @@ SA_DOUBLE_DENIAL_DICT = {
     'impressed': 'not impressed'
 }
 
+
+# -------------------------CN SA settings -----------------------------
+CNSA_DOUBLE_DENIAL_DICT = {
+    '好': '不差', '糟': '不好', '乱': '不整洁', '用': '不难用',
+    '得': '不得不', '可': '不能不', '会': '不会不', '是': '不是不', '敢': '不敢不',
+    '都': '无不', '只': '无非', '有': '没有不', '推': '不反对', '破': '不好',
+    '脏': '不干净', '净': '不脏',
+    '能': '不能不', '全': '无不',
+}
+
+CNSA_EXTENT_LIST = [
+    '很', '非常', '特别', '极其', '有些', '有点', '稍微', '十分', '略微',
+    '稍稍', '绝对', '最', '比较', '顶级', '太', '更', '格外', '分外', '一直',
+    '才', '只是', '总', '一般', '大多', '相对'
+]
+
 # -------------------------POS settings---------------------------
 MORPHEME_ANALYZER = 'POS_DATA/en.morph.tar.bz2'
 
@@ -492,3 +655,23 @@ QUESTION = [
 ]
 # ---------------------------WSD settings---------------------------
 PUNC = string.punctuation + "`` ！？｡＂“＃＄％＆＇（）＊＋－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘'‛“”„‟…‧﹏"
+
+# ---------------------------Chinese NER settings---------------------------
+CN_LONG_ENTITIES = 'CNNER_DATA/long_dict.json'
+CN_OOV_ENTITIES = 'CNNER_DATA/OOVentities.json'
+
+LABEL_TRANS = {
+    'PER': 'PER',
+    'LOC': 'LOC',
+    'ORG': 'ORG',
+    'GPE': 'GPE',
+    'NS': 'LOC',
+    'NT': 'ORG',
+    'NR': 'PER',
+}
+
+# ---------------------------WSC settings---------------------------
+FILE_NAME_DICT = {'SwapNames_PATH': 'WSC_DATA/SwapNames.jsonl',
+                  'InsertRelativeClause_PATH': 'WSC_DATA/InsertRelativeClause.jsonl',
+                  'SwapGender_PATH': 'WSC_DATA/SwapGender.jsonl',
+                  'SwitchVoice_PATH': 'WSC_DATA/SwitchVoice.jsonl'}

@@ -1,7 +1,7 @@
-textflint.generation\_layer.validator.translate\_score
+textflint.generation.validator.translate\_score
 =============================================================
 
-.. automodule:: textflint.generation_layer.validator.translate_score
+.. automodule:: textflint.generation.validator.translate_score
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,7 +1,7 @@
-textflint.generation\_layer.transformation
+textflint.generation.transformation
 ==================================================
 
-.. automodule:: textflint.generation_layer.transformation
+.. automodule:: textflint.generation.transformation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,18 +12,18 @@ Subpackages
 .. toctree::
    :maxdepth: 1
 
-   textflint.generation_layer.transformation.ABSA
-   textflint.generation_layer.transformation.COREF
-   textflint.generation_layer.transformation.CWS
-   textflint.generation_layer.transformation.DP
-   textflint.generation_layer.transformation.MRC
-   textflint.generation_layer.transformation.NER
-   textflint.generation_layer.transformation.NLI
-   textflint.generation_layer.transformation.POS
-   textflint.generation_layer.transformation.RE
-   textflint.generation_layer.transformation.SA
-   textflint.generation_layer.transformation.SM
-   textflint.generation_layer.transformation.UT
+   textflint.generation.transformation.ABSA
+   textflint.generation.transformation.COREF
+   textflint.generation.transformation.CWS
+   textflint.generation.transformation.DP
+   textflint.generation.transformation.MRC
+   textflint.generation.transformation.NER
+   textflint.generation.transformation.NLI
+   textflint.generation.transformation.POS
+   textflint.generation.transformation.RE
+   textflint.generation.transformation.SA
+   textflint.generation.transformation.SM
+   textflint.generation.transformation.UT
 
 Submodules
 ----------
@@ -31,6 +31,6 @@ Submodules
 .. toctree::
    :maxdepth: 1
 
-   textflint.generation_layer.transformation.pipeline
-   textflint.generation_layer.transformation.transformation
-   textflint.generation_layer.transformation.word_substitute
+   textflint.generation.transformation.pipeline
+   textflint.generation.transformation.transformation
+   textflint.generation.transformation.word_substitute

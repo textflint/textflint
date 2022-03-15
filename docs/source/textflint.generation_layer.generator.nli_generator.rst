@@ -1,7 +1,7 @@
-textflint.generation\_layer.generator.nli\_generator
+textflint.generation.generator.nli\_generator
 ===========================================================
 
-.. automodule:: textflint.generation_layer.generator.nli_generator
+.. automodule:: textflint.generation.generator.nli_generator
    :members:
    :undoc-members:
    :show-inheritance:

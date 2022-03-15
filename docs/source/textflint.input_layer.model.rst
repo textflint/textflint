@@ -1,7 +1,7 @@
-textflint.input\_layer.model
+textflint.input.model
 ====================================
 
-.. automodule:: textflint.input_layer.model
+.. automodule:: textflint.input.model
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,7 +12,7 @@ Subpackages
 .. toctree::
    :maxdepth: 1
 
-   textflint.input_layer.model.flint_model
-   textflint.input_layer.model.metrics
-   textflint.input_layer.model.test_model
-   textflint.input_layer.model.tokenizers
+   textflint.input.model.flint_model
+   textflint.input.model.metrics
+   textflint.input.model.test_model
+   textflint.input.model.tokenizers

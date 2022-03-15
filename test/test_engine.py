@@ -8,7 +8,7 @@ from textflint.input.config.config import Config
 from textflint.common.settings import UNMATCH_UT_TRANSFORMATIONS, \
     TASK_TRANSFORMATIONS
 tasks = ['ABSA', 'COREF', 'CWS', 'DP',
-                 'MRC', 'NER', 'NLI', 'POS', 'RE', 'SA', 'SM','WSD']
+                 'MRC', 'NER', 'NLI', 'POS', 'RE', 'SA', 'SM','WSD','NERCN']
 test_config = {
     "max_trans": 1,
     "return_unk": True,
@@ -30,6 +30,7 @@ def get_test(task):
     engine = Engine()
     engine.run(os.path.normcase(download_if_needed('TEST/' + task + '.json')),
                config)
+
     shutil.rmtree(out_dir_path)
 
 
@@ -40,26 +41,26 @@ class TestEngine(unittest.TestCase):
 #     def test_sa_engine(self):
 #         get_test('SA')
 # 
-#     def test_cws_engin(self):
-#         get_test('CWS')
+    # def test_cws_engin(self):
+    #     get_test('CWS')
 # 
 #     def test_mrc_engine(self):
 #         get_test('MRC')
 # 
 #     def test_nli_engine(self):
 #         get_test('NLI')
-# 
-#     def test_sm_engine(self):
-#         get_test('SM')
+
+    # def test_sm_engine(self):
+    #     get_test('SM')
 # 
 #     def test_pos_engine(self):
 #         get_test('POS')
 # 
-#     def test_re_engine(self):
-#         get_test('RE')
+    # def test_re_engine(self):
+    #     get_test('RE')
 # 
-#     def test_ner_engine(self):
-#         get_test('NER')
+    # def test_ner_engine(self):
+    #     get_test('NER')
 # 
 #     def test_dp_engine(self):
 #         get_test('DP')
@@ -68,8 +69,10 @@ class TestEngine(unittest.TestCase):
 #         get_test('COREF')
 #
 #     def test_coref_engine(self):
-#         get_test('WSD')
-
+# #         get_test('WSD')
+    # def test_cnner_engine(self):
+    #     get_test('NERCN')
+    
 
 if __name__ == "__main__":
     unittest.main()
