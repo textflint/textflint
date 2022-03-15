@@ -1,8 +1,5 @@
 import unittest
-import sys
-import os
-sys.path.insert(0, os.getcwd())
-print(os.getcwd())
+
 from textflint.input.dataset import Dataset
 from textflint.generation.generator.smcn_generator import SMCNGenerator
 

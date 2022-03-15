@@ -1,8 +1,5 @@
 import unittest
-import sys
-import os
-sys.path.insert(0, os.getcwd())
-print(os.getcwd())
+
 from textflint.input.component.sample.smcn_sample import *
 
 data = {'sentence1': '我喜欢这本书。',

@@ -5,9 +5,7 @@ SMCN Generator Class
 """
 __all__ = ['SMCNGenerator']
 import unittest
-import os
-import sys
-sys.path.insert(0,os.getcwd())
+
 from textflint.generation.generator import Generator
 
 

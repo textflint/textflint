@@ -5,11 +5,7 @@ Generate some samples by templates
        In order to generate some sample whose premise is the sequence of the hypothesis but the semantic are different.
 ==========================================================
 """
-import sys
-import os
 
-# sys.path.append(os.getcwd())
-sys.path.insert(0, os.getcwd())
 from textflint.generation.transformation import Transformation
 from textflint.common.utils.c_overlap_templates import *
 from textflint.input.component.sample import SMCNSample

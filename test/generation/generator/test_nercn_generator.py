@@ -21,39 +21,14 @@ gene = NERCNGenerator()
 class TestSpecialEntityTyposSwap(unittest.TestCase):
 
     def test_generate(self):
-        # test task transformation
-
-
         # test wrong trans_methods
         gene = NERCNGenerator(trans_methods=["wrong_transform_method"],
-                            sub_methods=[])
+                              sub_methods=[])
+        self.assertRaises(ValueError, next, gene.generate(dataset))
         self.assertRaises(ValueError, next, gene.generate(dataset))
 
+        gene = NERCNGenerator(trans_methods="OOV", sub_methods=[])
         self.assertRaises(ValueError, next, gene.generate(dataset))
-        gene = NERCNGenerator(trans_methods="OOV",
-                            sub_methods=[])
-        self.assertRaises(ValueError, next, gene.generate(dataset))
-        # # test part of UT transformations
-        # gene = NERCNGenerator(trans_methods=['WordCase'],
-        #                     sub_methods=[])
-        # for original_samples, trans_rst, trans_type in gene.generate(dataset):
-        #     self.assertEqual(3, len(original_samples))
-        #     for index in range(len(original_samples)):
-        #         for trans_word, ori_word in \
-        #                 zip(trans_rst[index].get_tokens('text'),
-        #                     original_samples[index].get_tokens('text')):
-        #             self.assertEqual(trans_word, ori_word.upper())
-
-        # gene = NERCNGenerator(trans_methods=['SwapNum'],
-        #                     sub_methods=[])
-        # for original_samples, trans_rst, trans_type in gene.generate(dataset):
-        #     self.assertEqual(1, len(original_samples))
-        #     for index in range(len(original_samples)):
-        #         for trans_word, ori_word in \
-        #                 zip(trans_rst[index].get_tokens('text'),
-        #                     original_samples[index].get_tokens('text')):
-        #             if ori_word.isdigit():
-        #                 self.assertTrue(ori_word != trans_word)
 
 
 if __name__ == "__main__":

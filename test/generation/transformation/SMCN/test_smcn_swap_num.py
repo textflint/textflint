@@ -1,7 +1,5 @@
 import unittest
-import os
-import sys
-sys.path.insert(0, os.getcwd())
+
 from textflint.input.component.sample.smcn_sample import SMCNSample
 from textflint.generation.transformation.SMCN import SwapNum
 
