@@ -1,13 +1,13 @@
 __all__ = ["SwapNames"]
-from nltk.wsd import lesk
 
 from ...transformation import Transformation
 from ....common.utils.install import download_if_needed
 from ....common.utils.load import load_jsonlines
 from ....common.utils import logger
-from textflint.input.component.sample.wsc_sample import WSCSample
+from ....input.component.sample.wsc_sample import WSCSample
 from ....common.settings import FILE_NAME_DICT
 import json
+
 
 class SwapNames(Transformation):
     def __init__(self, wsc_task='SwapNames', **kwargs):
@@ -28,11 +28,8 @@ class SwapNames(Transformation):
             index = data['index']
             self.sample_dict[index] = sample
 
-
-
     def __repr__(self):
         return 'SwapNames'
-
 
     def _transform(self, sample, n=1, **kwargs):
         wsc_samples = []

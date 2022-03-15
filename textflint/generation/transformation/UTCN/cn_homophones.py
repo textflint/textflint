@@ -5,14 +5,15 @@ homophones
 
 __all__ = ['CnHomophones']
 
-import random
-
-from ...transformation import CnWordSubstitute
 from pypinyin import lazy_pinyin
 from Pinyin2Hanzi import DefaultHmmParams
 from Pinyin2Hanzi import viterbi
 
+from ...transformation import CnWordSubstitute
+
+
 hmmparams = DefaultHmmParams()
+
 
 class CnHomophones(CnWordSubstitute):
     r"""
@@ -74,4 +75,3 @@ class CnHomophones(CnWordSubstitute):
             return self.pre_skip_aug_list(words, words_indices, tokens, mask)
         else:
             return self.pre_skip_aug(words, words_indices, tokens, mask)
-

@@ -18,13 +18,13 @@ class CnSwapSynWordEmbedding(CnWordSubstitute):
 
     """
     def __init__(
-            self,
-            trans_min=1,
-            trans_max=10,
-            trans_p=0.1,
-            stop_words=None,
-            islist=False,
-            **kwargs
+        self,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words=None,
+        islist=False,
+        **kwargs
     ):
         super().__init__(
             trans_min=trans_min,
@@ -65,4 +65,3 @@ class CnSwapSynWordEmbedding(CnWordSubstitute):
             return self.pre_skip_aug_list(words, words_indices, tokens, mask)
         else:
             return self.pre_skip_aug(words, words_indices, tokens, mask)
-

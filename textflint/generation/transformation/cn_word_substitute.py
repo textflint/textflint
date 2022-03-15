@@ -3,7 +3,6 @@ CnWordSubstitute Base Class
 ============================================
 """
 __all__ = ["CnWordSubstitute"]
-import string
 from abc import abstractmethod
 
 from ..transformation import Transformation
@@ -89,7 +88,8 @@ class CnWordSubstitute(Transformation):
         for i in range(len(sub_words)):
             single_sub_words = sub_words[i]
             trans_samples.append(
-                sample.unequal_replace_field_at_indices(field, sub_indices, single_sub_words))
+                sample.unequal_replace_field_at_indices(field, sub_indices, single_sub_words)
+            )
 
         return trans_samples
 

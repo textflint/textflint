@@ -19,9 +19,10 @@ class PerturbQuestion(Transformation):
     """
 
     def __init__(
-            self,
-            transform_method='BackTrans',
-            device="cpu"):
+        self,
+        transform_method='BackTrans',
+        device="cpu"
+    ):
         r"""
         :param transform_method: paraphrase method
         :param device: GPU device or CPU

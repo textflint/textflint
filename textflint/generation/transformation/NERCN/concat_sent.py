@@ -12,8 +12,9 @@ class ConcatSent(Transformation):
 
     """
     def __init__(
-            self,
-            **kwargs):
+        self,
+        **kwargs
+    ):
         r"""
         :param string res_path: dir for vocab/dict
         :param **kwargs:

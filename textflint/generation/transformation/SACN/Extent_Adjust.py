@@ -42,7 +42,6 @@ class ExtentAdjust(Transformation):
             one sample
 
         """
-        tokens = sample.get_words('x')
         tags = sample.get_pos('x')
         a_tags = [tag for tag in tags if tag[0] == 'a']
         if not a_tags:

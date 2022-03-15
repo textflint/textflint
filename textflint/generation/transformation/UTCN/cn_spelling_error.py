@@ -6,13 +6,16 @@ Transformation that apply spelling error simulation to textual input.
 
 __all__ = ['CnSpellingError']
 
-from ...transformation import CnWordSubstitute
+import random
 from pypinyin import lazy_pinyin
 from Pinyin2Hanzi import DefaultHmmParams
 from Pinyin2Hanzi import viterbi
-import random
+
+from ...transformation import CnWordSubstitute
+
 
 hmmparams = DefaultHmmParams()
+
 
 class CnSpellingError(CnWordSubstitute):
     r"""
@@ -23,15 +26,13 @@ class CnSpellingError(CnWordSubstitute):
 
     """
     def __init__(
-            self,
-            trans_min=1,
-            trans_max=10,
-            trans_p=0.1,
-            stop_words=None,
-            include_reverse=True,
-            rules_path=None,
-            islist=False,
-            **kwargs
+        self,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words=None,
+        islist=False,
+        **kwargs
     ):
         r"""
         :param int trans_min: Minimum number of character will be augmented.
@@ -57,7 +58,6 @@ class CnSpellingError(CnWordSubstitute):
         )
         self.get_pos = True
         self.islist = islist
-
 
     def __repr__(self):
         return 'CnSpellingError'
@@ -112,6 +112,3 @@ class CnSpellingError(CnWordSubstitute):
             if ''.join(i.path) != word:
                 ret.append(''.join(i.path))
         return ret
-
-
-

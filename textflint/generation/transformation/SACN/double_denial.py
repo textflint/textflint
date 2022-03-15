@@ -80,6 +80,7 @@ class CNDoubleDenial(Transformation):
                     double_denial_words.append(
                         self.polarity_dict[polarity_word])
                 except ValueError:
+                    # TODO, add log info
                     pass
 
         return indices, double_denial_words

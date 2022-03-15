@@ -5,8 +5,6 @@ convert digit to char
 
 __all__ = ['CnDigit2Char']
 
-import random
-
 from ...transformation import CnWordSubstitute
 
 
@@ -24,10 +22,10 @@ class CnDigit2Char(CnWordSubstitute):
         islist=False,
         **kwargs
     ):
-        super().__init__(            trans_min=trans_min,
-                                     trans_max=trans_max,
-                                     trans_p=trans_p,
-                                     stop_words=stop_words,)
+        super().__init__(trans_min=trans_min,
+                         trans_max=trans_max,
+                         trans_p=trans_p,
+                         stop_words=stop_words)
         self.islist = islist
 
     def __repr__(self):
@@ -54,11 +52,14 @@ class CnDigit2Char(CnWordSubstitute):
 
     def num_to_char(self, num):
         _MAPPING = (
-        u'零', u'一', u'二', u'三', u'四', u'五', u'六', u'七', u'八', u'九', u'十', u'十一', u'十二', u'十三', u'十四', u'十五', u'十六', u'十七',
-        u'十八', u'十九')
+            u'零', u'一', u'二', u'三', u'四', u'五', u'六', u'七', u'八', u'九', u'十',
+            u'十一', u'十二', u'十三', u'十四', u'十五', u'十六', u'十七', u'十八', u'十九'
+        )
         _P0 = (u'', u'十', u'百', u'千',)
         _S4 = 10 ** 4
+
         assert (0 <= num and num < _S4)
+
         if num < 20:
             return _MAPPING[num]
         else:
@@ -83,4 +84,3 @@ class CnDigit2Char(CnWordSubstitute):
             return self.pre_skip_aug_list(words, words_indices, tokens, mask)
         else:
             return self.pre_skip_aug(words, words_indices, tokens, mask)
-

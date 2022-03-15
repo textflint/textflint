@@ -3,16 +3,14 @@ Perturb Answer by altering the sentence that contains answer
 ==========================================================
 """
 
-import collections
 from copy import deepcopy
 
 from ....common.settings import ORIGIN
 from ..transformation import Transformation
-from ..UTCN import CnSwapSynWordEmbedding
-from ....input.component.sample import MRCCnSample,UTCnSample
 from ....common.settings import CN_EMBEDDING_PATH
 from ....common.utils.load import json_lines_loader
 from ....common.utils.install import download_if_needed
+
 
 class PerturbAnswer(Transformation):
     r"""
@@ -59,7 +57,6 @@ class PerturbAnswer(Transformation):
             return []
         answers = sample.get_answers()
         answer_token_start = answers[0]['start']
-        answer_token_end = answers[0]['end']
         answer_text = answers[0]['text']
         sentences = sample.get_sentences('context')
 
@@ -104,19 +101,19 @@ class PerturbAnswer(Transformation):
 
         return transform_samples
 
-    def alter_sentence(self,sent):
+    def alter_sentence(self, sent):
         sent = deepcopy(sent)
         words = self.cn_processor.tokenize(sent)
         cnt = 0
         for word in words:
             if cnt > 4:
                 break
-            synwords  = self.word_in_sim_dic(word)
+            synwords = self.word_in_sim_dic(word)
             if synwords and len(word) == len(synwords[0]):
                 cnt += 1
-                sent = sent.replace(word,synwords[0])
-        indices = range(0,len(sent))
-        return sent,indices
+                sent = sent.replace(word, synwords[0])
+        indices = range(0, len(sent))
+        return sent, indices
 
     def word_in_sim_dic(self, word):
         if word in self.sim_dic:

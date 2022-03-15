@@ -1,13 +1,14 @@
 __all__ = ["SwitchVoice"]
-from nltk.wsd import lesk
+
+import json
 
 from ...transformation import Transformation
 from ....common.utils.install import download_if_needed
 from ....common.utils.load import load_jsonlines
 from ....common.utils import logger
-from textflint.input.component.sample.wsc_sample import WSCSample
+from ....input.component.sample.wsc_sample import WSCSample
 from ....common.settings import FILE_NAME_DICT
-import json
+
 
 class SwitchVoice(Transformation):
     def __init__(self, wsc_task='SwitchVoice', **kwargs):
@@ -30,7 +31,6 @@ class SwitchVoice(Transformation):
 
     def __repr__(self):
         return 'SwitchVoice'
-
 
     def _transform(self, sample, n=1, **kwargs):
         wsc_samples = []

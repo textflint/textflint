@@ -24,8 +24,8 @@ class AppendIrr(Transformation):
     """
 
     def __init__(
-            self,
-            **kwargs
+        self,
+        **kwargs
     ):
         super().__init__()
         self.beginnings = plain_lines_loader(
@@ -78,4 +78,3 @@ class AppendIrr(Transformation):
         proverbs = self.sample_num(self.proverbs, n)
 
         return [self.cn_processor.tokenize(proverb,cws=False) for proverb in proverbs]
-

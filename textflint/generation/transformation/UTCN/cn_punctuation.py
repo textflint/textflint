@@ -5,8 +5,6 @@ Add punctuation at the beginning and end of a sentence
 
 __all__ = ['CnPunctuation']
 
-import string
-
 from ..transformation import Transformation
 
 
@@ -20,7 +18,7 @@ class CnPunctuation(Transformation):
         trans_min=1,
         trans_max=10,
         trans_p=0.1,
-        stop_words = None,
+        stop_words=None,
         add_bracket=True,
         **kwargs
     ):
@@ -114,4 +112,3 @@ class CnPunctuation(Transformation):
                                                 random_brackets[i][-1]]
             else:
                 yield [], [random_puns[i]]
-

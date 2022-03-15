@@ -76,9 +76,6 @@ class ParallelTwitterType(TwitterType):
         contractions = []
         indices = []
 
-        source_tokens = sample.get_words(field[0])
-        target_tokens = sample.get_words(field[1])
-
         for twitter_phrase in self.twitter_dic:
             twitter_words = self.processor.tokenize(twitter_phrase)
 

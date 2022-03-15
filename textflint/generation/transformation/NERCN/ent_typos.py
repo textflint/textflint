@@ -4,49 +4,23 @@ Swap/replace random character for entities
 """
 __all__ = ["EntTypos"]
 
-import string
-from string import ascii_lowercase
 from ....common.utils.word_op import *
 from ..transformation import Transformation
 from ....common.utils.list_op import trade_off_sub_words
 from textflint.generation.transformation.UTCN import CnHomophones
+
 
 def _get_random_character():
     """
     :return: return a random charactor
     """
     return random.choice(string.ascii_letters+string.digits)
+
+
 def _get_homophone(char):
     ch = CnHomophones(get_pos=True)
     return ch.homophones(char, n=1)[0]
 
-# def _insert_cn(word, num=1, skip_first=True, skip_last=False):
-#     """
-#     Perturb the word with 1 random chinese character inserted.
-
-#     :param str word: word to be inserted
-#     :param int num: number of typos to add
-#     :param bool skip_first: whether insert char at the beginning of word
-#     :param bool skip_last: whether insert char at the end of word
-#     :return: perturbed strings
-#     """
-#     if len(word) <= 1:
-#         return word
-
-#     chars = list(word)
-#     start, end = get_start_end(word, skip_first, skip_last)
-
-#     if end - start + 2 < num:
-#         return None
-
-#     swap_idxes = random.sample(list(range(start, end + 2)), num)
-#     swap_idxes.sort(reverse=True)
-
-#     for idx in swap_idxes:
-#         insert_char = _get_random_character()
-#         chars = chars[:idx] + [insert_char] + chars[idx:]
-
-#     return "".join(chars)
 
 def _replace_cn(word, num=1, skip_first=True, skip_last=False):
     """
@@ -131,7 +105,8 @@ class EntTypos(Transformation):
                 candidates.append(rep_token)
 
         candidates, rep_entities = trade_off_sub_words(
-            candidates, rep_entities, n=n)
+            candidates, rep_entities, n=n
+        )
 
         if not candidates:
             return []
@@ -141,8 +116,9 @@ class EntTypos(Transformation):
             _candidates = candidates[i]
             rep_samples.append(
                 sample.entities_replace(
-                    rep_entities, _candidates))
-
+                    rep_entities, _candidates
+                )
+            )
 
         return rep_samples
 
@@ -193,5 +169,3 @@ class EntTypos(Transformation):
 
         else:
             return random.choice([_replace_cn, swap])
-
-

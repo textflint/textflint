@@ -18,13 +18,12 @@ class CnSwapNamedEnt(Transformation):
 
     """
     def __init__(
-            self,
-            trans_min=1,
-            trans_max=10,
-            trans_p=0.1,
-            stop_words=None,
-            entity_res=None,
-            **kwargs
+        self,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words=None,
+        **kwargs
     ):
         r"""
         :param dict entity_res: dic of categories and their entities.

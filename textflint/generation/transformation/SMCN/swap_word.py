@@ -2,13 +2,14 @@ r"""
 Getting antonym of word
 ==========================================================
 """
+__all__ = ['SwapWord']
 from textflint.generation.transformation.UTCN.cn_get_antonym import CnAntonym
 from textflint.input.component.sample.utcn_sample import UTCnSample
 from ..transformation import Transformation
+
+
 LOWER_YEAR_NUM = 1000
 UPPER_YEAR_NUM = 2020
-
-__all__ = ['SwapWord']
 
 
 class SwapWord(Transformation):
@@ -74,7 +75,6 @@ class SwapWord(Transformation):
             newtokens = sentence2
         else:
             return None
-
 
         sample = sample.replace_fields(['sentence2', 'y'], [newtokens, '0'])
 

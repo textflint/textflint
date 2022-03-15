@@ -5,14 +5,11 @@ Generate some samples by templates
        In order to generate some sample whose premise is the sequence of the hypothesis but the semantic are different.
 ==========================================================
 """
-
+__all__ = ['Overlap']
 from textflint.generation.transformation import Transformation
 from textflint.common.utils.c_overlap_templates import *
 from textflint.input.component.sample import SMCNSample
 
-__all__ = ['Overlap']
-output_file = './output.txt'
-w = open(output_file, 'w',encoding='utf-8')
 
 def no_the(sentence):
     return sentence.replace("the ", "")
@@ -92,26 +89,23 @@ class Overlap(Transformation):
         example_counter = 0
         trans_list = []
 
-
         for template_tuple in template_list:
             label = template_tuple[2]
             if label == 'entailment':
                 label = '1'
             else:
                 label = '0'
+
             template = template_tuple[3]
-
             example_dict = {}
-
             count_examples = 0
 
             while count_examples < n:
                 example = template_filler(template)
-                #print(example)
                 flag = example[2]
-                if_repeat=repeaters(example[0])
+                if_repeat = repeaters(example[0])
                 if flag == 'temp53' or flag == 'temp54':
-                    if_repeat=False
+                    if_repeat = False
                 example_sents = tuple(example[:2])
 
                 if example_sents not in example_dict and not if_repeat:
@@ -121,7 +115,6 @@ class Overlap(Transformation):
                         'sentence2': example[1],
                         'y': label
                     }
-
 
                     trans_list.append(SMCNSample(trans_sample))
                     count_examples += 1

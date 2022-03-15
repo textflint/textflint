@@ -5,15 +5,16 @@ Swapping words by Mask Language Model
 
 __all__ = ['CnNasal']
 
-import random
-from copy import copy
 from ...transformation import CnWordSubstitute
 
 from pypinyin import lazy_pinyin
 from Pinyin2Hanzi import DefaultHmmParams
 from Pinyin2Hanzi import viterbi
 
+
 hmmparams = DefaultHmmParams()
+
+
 class CnNasal(CnWordSubstitute):
     r"""
     Transforms an input by replacing its tokens with words of mask language
@@ -24,13 +25,13 @@ class CnNasal(CnWordSubstitute):
     """
 
     def __init__(
-            self,
-            trans_min=1,
-            trans_max=10,
-            trans_p=0.1,
-            stop_words=None,
-            islist=False,
-            **kwargs
+        self,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words=None,
+        islist=False,
+        **kwargs
     ):
         r"""
         :param str masked_model: masked language model to predicate candidates
@@ -60,7 +61,6 @@ class CnNasal(CnWordSubstitute):
     def __repr__(self):
         return 'CNNASAL'
 
-
     def _get_candidates(self, word, pos=None, n=5, **kwargs):
         r"""
         Get candidates from MLM model.
@@ -74,6 +74,7 @@ class CnNasal(CnWordSubstitute):
         """
         pinyins = lazy_pinyin(word)
         new_pinyins = []
+
         for pinyin in pinyins:
             if ('eng' in pinyin):
                 pinyin = pinyin.replace('eng','en')
@@ -93,11 +94,14 @@ class CnNasal(CnWordSubstitute):
         try:
             result = viterbi(hmm_params=hmmparams, observations=new_pinyins, path_num=n + 1)
         except:
+            # TODO  add log
             return []
+
         ret = []
         for i in result:
             if ''.join(i.path) != word:
                 ret.append(''.join(i.path))
+
         return ret
 
     def skip_aug(self, words, words_indices, tokens, mask, **kwargs):
@@ -105,4 +109,3 @@ class CnNasal(CnWordSubstitute):
             return self.pre_skip_aug_list(words, words_indices, tokens, mask)
         else:
             return self.pre_skip_aug(words, words_indices, tokens, mask)
-

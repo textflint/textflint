@@ -59,4 +59,3 @@ class CnSynonym(CnWordSubstitute):
             return self.pre_skip_aug_list(words, words_indices, tokens, mask)
         else:
             return self.pre_skip_aug(words, words_indices, tokens, mask)
-

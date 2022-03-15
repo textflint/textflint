@@ -8,9 +8,8 @@ __all__ = ['CnPrejudice']
 import random
 
 from ..transformation import Transformation
-from ....common.utils.file_io import read_json
 from ....common.utils.list_op import descartes
-from ....common.utils.load import plain_lines_loader, json_loader
+from ....common.utils.load import json_loader
 from ....common.utils.install import download_if_needed
 from ....common.settings import PREJUDICE_LOC2IDX, CN_NAME_PATH, CN_PREJUDICE_WORD_PATH, CN_LOC2IDX_PATH
 
@@ -21,14 +20,14 @@ class CnPrejudice(Transformation):
 
     """
     def __init__(
-            self,
-            change_type='Loc',
-            prejudice_tendency=None,
-            trans_min=1,
-            trans_max=10,
-            trans_p=0.1,
-            stop_words=None,
-            **kwargs
+        self,
+        change_type='Loc',
+        prejudice_tendency=None,
+        trans_min=1,
+        trans_max=10,
+        trans_p=0.1,
+        stop_words=None,
+        **kwargs
     ):
         r"""
         :param str change_type: change type, only support ['Name', 'Loc']
@@ -54,9 +53,6 @@ class CnPrejudice(Transformation):
                     'please choose change type from woman and man'.
                         format(change_type))
             self.type = self.prejudice_tendency
-            # self.word = self.get_word(
-            #     download_if_needed(PREJUDICE_WORD_PATH),
-            #     prejudice_tendency)
             name_path = download_if_needed(CN_NAME_PATH)
             name_dict = json_loader(name_path)
             self.man_name = name_dict['man_name']
@@ -200,4 +196,3 @@ class CnPrejudice(Transformation):
                 change_pos.append(words_indices[i])
                 change_items.append(random.sample(self.prejudice_data, n))
         return change_pos, change_items
-

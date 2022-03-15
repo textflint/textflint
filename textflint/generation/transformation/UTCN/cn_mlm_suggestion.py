@@ -5,11 +5,7 @@ Swapping words by Mask Language Model
 
 __all__ = ['MLMSuggestion']
 
-import random
-
 import torch
-from copy import copy
-from collections import defaultdict
 
 from ....common import device as default_device
 from ...transformation import CnWordSubstitute
@@ -202,7 +198,6 @@ class MLMSuggestion(CnWordSubstitute):
         new_text = text[:word_position[0]]+mask_sentence + text[word_position[1]:]
         new_text_tensor = self.tokenizer(new_text,return_tensors="pt",truncation = True, max_length= 512)
 
-
         with torch.no_grad():
             output = self.model(**new_text_tensor)
         output = output.logits[0][word_position[0]+1:word_position[1]+1,:]
@@ -210,7 +205,6 @@ class MLMSuggestion(CnWordSubstitute):
         tokens = [self.tokenizer.decode(word,skip_special_tokens=True, clean_up_tokenization_spaces=True).replace(' ','') for word in output]
         tokens = [token for token in tokens if token != word and token != '']
         return tokens
-
 
     def skip_aug(self, words, words_indices, tokens, mask, **kwargs):
         if self.islist:

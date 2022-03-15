@@ -12,6 +12,7 @@ from ....common.utils.install import download_if_needed
 from ....common.utils.load import json_loader
 from ..transformation import Transformation
 
+
 class SwapEnt(Transformation):
     r"""
     Swap entities which shorter than threshold to longer ones.
@@ -37,12 +38,10 @@ class SwapEnt(Transformation):
                 res_path
             self.res_dic = json_loader(res_path)
 
-
         elif swap_type == 'OOV':
             res_path = download_if_needed(CN_OOV_ENTITIES) if not res_path else \
                 res_path
             self.res_dic = json_loader(res_path)
-
 
     def __repr__(self):
         return self.swap_type
@@ -62,18 +61,15 @@ class SwapEnt(Transformation):
         candidates = []
 
         for entity in entities:
-            assert entity['tag'] in ['PER','LOC','GPE','ORG','NS','NT','NR'], \
+            assert entity['tag'] in ['PER', 'LOC', 'GPE', 'ORG', 'NS', 'NT', 'NR'], \
                 '{0} is not supported'.format(entity['tag'])
 
-            if self.swap_type=='SwapLonger' and entity['entity'] in self.res_dic:
-               
+            if self.swap_type == 'SwapLonger' and entity['entity'] in self.res_dic:
                 rep_entities.append(entity)
                 candidates.append(self.res_dic[entity['entity']])
             
-            elif self.swap_type=='OOV':
-                
+            elif self.swap_type == 'OOV':
                 trans_tag = LABEL_TRANS[entity['tag']]
-                
                 rep_entities.append(entity)
                 candidates.append(random.sample(self.res_dic[trans_tag], n)[0])
 
@@ -85,5 +81,3 @@ class SwapEnt(Transformation):
                 rep_entities, _candidates))
 
         return rep_samples
-
-

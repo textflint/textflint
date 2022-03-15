@@ -154,9 +154,9 @@ class ParallelWordSubstitute(WordSubstitute):
         source_legal_words = [words[0][index] for index in legal_indices[0]]
         target_legal_words = [words[1][index] for index in legal_indices[1]]
         source_legal_words_pos = [pos[0][index]
-                           for index in legal_indices[0]] if self.get_pos else None
+                                  for index in legal_indices[0]] if self.get_pos else None
         target_legal_words_pos = [pos[1][index]
-                           for index in legal_indices[1]] if self.get_pos else None
+                                  for index in legal_indices[1]] if self.get_pos else None
 
         candidates_list = []
         candidates_indices = []
@@ -165,8 +165,8 @@ class ParallelWordSubstitute(WordSubstitute):
         for index, word in enumerate(source_legal_words):
             _source_pos = source_legal_words_pos[index] if self.get_pos else None
             _target_pos = target_legal_words_pos[index] if self.get_pos else None
-            candidates, target_index = self._get_candidates(word, (target_legal_words, legal_indices[1], last_target_index),
-                    pos=_source_pos, n=n)
+            candidates, target_index = self._get_candidates(word, (target_legal_words, legal_indices[1],
+                                                                   last_target_index), pos=_source_pos, n=n)
             # filter no word without candidates
             if candidates and target_index:
                 candidates_indices.append([legal_indices[0][index], target_index])
