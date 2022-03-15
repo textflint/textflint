@@ -1,5 +1,5 @@
 r"""
-Swapping words by Mask Language Model
+Change the front and back nasal sounds of Chinese characters
 ==========================================================
 """
 
