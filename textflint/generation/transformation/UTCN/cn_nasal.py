@@ -63,14 +63,13 @@ class CnNasal(CnWordSubstitute):
 
     def _get_candidates(self, word, pos=None, n=5, **kwargs):
         r"""
-        Get candidates from MLM model.
+        Get a list of transformed tokens. Default one word replace one char.
 
-        :param torch.tensor batch_tokens_tensor: tokens tensor input
-        :param torch.tensor segments_tensors: segment input
-        :param list mask_indices: indices to predict candidates
-        :param list mask_word_pos_list: pos tags of original target words
-        :param int n: candidates number
-        :return: list candidates
+        :param str word: token word to transform.
+        :param int n: number of transformed tokens to generate.
+        :param kwargs:
+        :return: candidate list
+
         """
         pinyins = lazy_pinyin(word)
         new_pinyins = []
