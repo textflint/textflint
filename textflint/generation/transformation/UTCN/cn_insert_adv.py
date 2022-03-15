@@ -83,7 +83,13 @@ class InsertAdv(Transformation):
         return verb_location
 
     def _get_random_adverbs(self, n):
-        sample_num = min(n, len(self.adverb_list))
+        r"""
+        Generate adverbs.
 
+        :param int n:
+        :return list: insert adverbs
+
+        """
+        sample_num = min(n, len(self.adverb_list))
         return random.sample(self.adverb_list, sample_num)
 

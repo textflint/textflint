@@ -78,6 +78,15 @@ class BackTrans(Transformation):
         self.to_model.to(self.device)
 
     def _transform(self, sample, n=1, field='x', **kwargs):
+        r"""
+        Transform text string according transform_field.
+
+        :param ~Sample sample:  input data, normally one data component.
+        :param str field: indicate which field to transform
+        :param int n: number of generated samples
+        :param kwargs:
+        :return list trans_samples: transformed sample list.
+        """
         if self.to_model is None:
             self.get_model()
         text = sample.get_text(field)

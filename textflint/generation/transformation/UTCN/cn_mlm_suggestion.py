@@ -176,14 +176,15 @@ class MLMSuggestion(CnWordSubstitute):
 
     def _get_candidates(self,word, pos=None, n=5, word_position = None, text = None):
         r"""
-        Get candidates from MLM model.
+        Returns a list containing all possible words .
 
-        :param torch.tensor batch_tokens_tensor: tokens tensor input
-        :param torch.tensor segments_tensors: segment input
-        :param list mask_indices: indices to predict candidates
-        :param list mask_word_pos_list: pos tags of original target words
-        :param int n: candidates number
-        :return: list candidates
+        :param str word: token word to transform.
+        :param str pos: pos tag
+        :param int n: max number of candidates
+        :param list[int] word_postion: position of word in the sentence
+
+        :return list candidates: candidates list
+
         """
         import torch
         if self.model  is None:
