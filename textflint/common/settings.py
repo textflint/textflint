@@ -216,7 +216,7 @@ UNMATCH_UT_TRANSFORMATIONS = {
 
     'DPCN': [],
 
-    'SMCN': [],
+    'SMCN': ['CnSwapNum'],
 
     'NERCN': [],
 
@@ -312,7 +312,7 @@ TASK_TRANSFORMATIONS = {
     ],
 
     'DPCN': [],
-    'SM': [
+    'SMCN': [
         'SwapWord',
         'SwapNum',
         'Overlap'
