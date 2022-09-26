@@ -66,9 +66,7 @@ class CnProcessor:
         from ltp import LTP
         if isinstance(sentence, list):
             # Turn the list into sentence
-            tmp = ''
-            for word in sentence:
-                tmp += word
+            tmp = ''.join([word for word in sentence])
             sentence = tmp
 
         if not sentence:
@@ -109,9 +107,7 @@ class CnProcessor:
         from ltp import LTP
         if isinstance(sentence, list):
             # Turn the list into sentence
-            tmp = ''
-            for word in sentence:
-                tmp += word
+            tmp = ''.join([word for word in sentence])
             sentence = tmp
 
         if not sentence:
@@ -142,9 +138,7 @@ class CnProcessor:
         from ltp import LTP
         if isinstance(sentence, list):
             # Turn the list into sentence
-            tmp = ''
-            for word in sentence:
-                tmp += word
+            tmp = ''.join([word for word in sentence])
             sentence = tmp
         if not sentence:
             return []
