@@ -15,7 +15,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "True"
 
 
 def textflint_url(uri):
-    return "http://textflint.oss-cn-beijing.aliyuncs.com/download/" + uri
+    return "https://textflint.oss-cn-beijing.aliyuncs.com/download/" + uri
 
 
 def path_in_cache(file_path):
@@ -69,33 +69,29 @@ def download_if_needed(folder_name):
     os.makedirs(os.path.dirname(cache_dest_path), exist_ok=True)
     # Use a lock to prevent concurrent downloads.
     cache_dest_lock_path = cache_dest_path + ".lock"
-    cache_file_lock = filelock.FileLock(cache_dest_lock_path)
-    cache_file_lock.acquire()
+    with filelock.FileLock(cache_dest_lock_path):
+        # Check again while holding the lock in case another process finished.
+        if os.path.exists(cache_dest_path):
+            return cache_dest_path
 
-    # Check if already downloaded.
-    if os.path.exists(cache_dest_path):
-        cache_file_lock.release()
+        downloaded_file = tempfile.NamedTemporaryFile(
+            dir=CACHE_DIR, delete=False
+        )
+        try:
+            with downloaded_file:
+                http_get(folder_name, downloaded_file)
+
+            # Only publish a completed, successful HTTP response to the cache.
+            if zipfile.is_zipfile(downloaded_file.name):
+                unzip_file(downloaded_file.name, cache_dest_path)
+            else:
+                logger.info(f"Copying {downloaded_file.name} to {cache_dest_path}.")
+                shutil.copyfile(downloaded_file.name, cache_dest_path)
+        finally:
+            os.remove(downloaded_file.name)
+
+        logger.info(f"Successfully saved {folder_name} to cache.")
         return cache_dest_path
-    # If the file isn't found yet, download the zip file to the cache.
-    downloaded_file = tempfile.NamedTemporaryFile(
-        dir=CACHE_DIR, delete=False
-    )
-    http_get(folder_name, downloaded_file)
-
-    # Move or unzip the file.
-    downloaded_file.close()
-    if zipfile.is_zipfile(downloaded_file.name):
-        unzip_file(downloaded_file.name, cache_dest_path)
-    else:
-        logger.info(f"Copying {downloaded_file.name} to {cache_dest_path}.")
-        shutil.copyfile(downloaded_file.name, cache_dest_path)
-    cache_file_lock.release()
-
-    # Remove the temporary file.
-    os.remove(downloaded_file.name)
-    logger.info(f"Successfully saved {folder_name} to cache.")
-
-    return cache_dest_path
 
 
 def http_get(folder_name, out_file, proxies=None):
@@ -108,17 +104,25 @@ def http_get(folder_name, out_file, proxies=None):
     """
     folder_url = textflint_url(folder_name)
     logger.info(f"Downloading {folder_url}.")
-    req = requests.get(folder_url, stream=True, proxies=proxies)
-    content_length = req.headers.get("Content-Length")
-    total = int(content_length) if content_length is not None else None
-    if req.status_code == 403:  # Not found on AWS
-        raise Exception(f"Could not find {folder_name} on server.")
-    progress = tqdm.tqdm(unit="B", unit_scale=True, total=total)
-    for chunk in req.iter_content(chunk_size=1024):
-        if chunk:  # filter out keep-alive new chunks
-            progress.update(len(chunk))
-            out_file.write(chunk)
-    progress.close()
+    # Never follow an HTTPS URL to a potentially insecure redirect target.
+    with requests.get(folder_url, stream=True, proxies=proxies,
+                      timeout=(10, 60), allow_redirects=False) as req:
+        req.raise_for_status()
+        if req.status_code != 200:
+            raise requests.HTTPError(
+                f"Unexpected HTTP status {req.status_code} for {folder_url}.",
+                response=req,
+            )
+        content_length = req.headers.get("Content-Length")
+        total = int(content_length) if content_length is not None else None
+        progress = tqdm.tqdm(unit="B", unit_scale=True, total=total)
+        try:
+            for chunk in req.iter_content(chunk_size=1024):
+                if chunk:  # filter out keep-alive new chunks
+                    progress.update(len(chunk))
+                    out_file.write(chunk)
+        finally:
+            progress.close()
 
 
 if "TR_CACHE_DIR" in os.environ:
