@@ -55,6 +55,26 @@ pip install textflint
 
 Once TextFlint is installed, you can run it via command-line (`textflint ...`) or integrate it inside another NLP project.
 
+### Download transport
+
+Automatic resource downloads use the same OSS bucket and resource paths over
+HTTPS, with normal certificate verification. Downloads require a direct HTTP 200
+response: redirects (including redirects to another HTTPS URL), partial responses,
+and HTTP errors are rejected before their bodies can enter the cache. Existing
+cached resources are still used without a network request. Network failures remove
+the temporary download and release its cache lock.
+
+The connection timeout is 10 seconds and the read-inactivity timeout is 60 seconds
+(not a total-download deadline). Networks or mirrors that require redirects, or
+pause longer than this between reads, are no longer accepted automatically; place
+trusted resources at the expected cache path instead of disabling TLS checks.
+Run `python test/common/utils/test_install_http.py -v` for the download regression
+tests. They use synthetic bytes and a loopback HTTP server, without fetching
+models or datasets; they do not establish live availability or integrity of every
+resource. The loopback checks require `requests`, `filelock` and `tqdm`; they are
+skipped if these download dependencies are not installed.
+
+
 ## Usage
 
 ### Workflow
